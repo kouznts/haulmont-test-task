@@ -45,14 +45,6 @@ public abstract class Dao {
         }
     }
 
-    public boolean createSchema(final String schema) {
-        return false;
-    }
-
-    public boolean dropSchema(final String schema) {
-        return false;
-    }
-
     public boolean execSqlQuery(final String sqlQuery) {
         boolean result = false;
 
