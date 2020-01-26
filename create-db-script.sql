@@ -1,18 +1,13 @@
-﻿CREATE DATABASE pharmacy CHARACTER SET utf8;
-
-USE pharmacy;
-
-CREATE TABLE patient (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+﻿CREATE TABLE patient (
+  id BIGINT NOT NULL IDENTITY PRIMARY KEY,
   forename VARCHAR(100) NOT NULL,
   patronymic VARCHAR(100) NOT NULL,
   surname VARCHAR(100) NOT NULL,
-  phone CHAR(11) NOT NULL,
-  PRIMARY KEY (id)
+  phone CHAR(11) NOT NULL
 );
 
 CREATE TABLE doctor (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL IDENTITY PRIMARY KEY,
   forename VARCHAR(100) NOT NULL,
   patronymic VARCHAR(100) NOT NULL,
   surname VARCHAR NOT(100) NULL,
@@ -20,21 +15,18 @@ CREATE TABLE doctor (
   creation_date DATETIME NOT NULL,
   validity_date DATETIME NOT NULL,
   priority TINYINT(1) NOT NULL DEFAULT 3 CHECK(priority > 0 AND priority < 4),
-  PRIMARY KEY (id)
 );
 
 CREATE TABLE doctor_specialization (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL IDENTITY PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
-  PRIMARY KEY (id)
 );
 
 CREATE TABLE medical_prescription (
-  id BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL IDENTITY PRIMARY KEY,
   description TEXT NOT NULL,
   patient_id BIGINT NOT NULL,
   doctor_id BIGINT NOT NULL,
-  PRIMARY KEY (id)
 );
 
 ALTER TABLE doctor ADD FOREIGN KEY (specialization_id) REFERENCES doctor_specialization (id);
