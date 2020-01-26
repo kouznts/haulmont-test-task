@@ -23,5 +23,6 @@
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-client-compiled:7.6.7" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-themes:7.6.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.5.0" level="project" />
   </component>
 </module>

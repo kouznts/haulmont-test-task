@@ -1,4 +1,8 @@
-﻿CREATE TABLE patient (
+﻿CREATE DATABASE pharmacy CHARACTER SET utf8;
+
+USE pharmacy;
+
+CREATE TABLE patient (
   id BIGINT NOT NULL AUTO_INCREMENT,
   forename VARCHAR(100) NOT NULL,
   patronymic VARCHAR(100) NOT NULL,
