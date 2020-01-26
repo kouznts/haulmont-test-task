@@ -11,7 +11,7 @@ CREATE TABLE doctor (
   forename VARCHAR(50) NOT NULL,
   patronymic VARCHAR(50) NOT NULL,
   surname VARCHAR(50) NULL,
-  specialization_id BIGINT NOT NULL,
+  specialization_id BIGINT NOT NULL
 );
 
 CREATE TABLE doctor_specialization (
