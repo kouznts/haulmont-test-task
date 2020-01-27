@@ -21,7 +21,7 @@ CREATE TABLE doctor_specialization (
 
 CREATE TABLE medical_prescription (
   id BIGINT NOT NULL IDENTITY,
-  description VARCHAR(500) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
   patient_id BIGINT NOT NULL,
   doctor_id BIGINT NOT NULL,
   creation_date DATETIME NOT NULL,
