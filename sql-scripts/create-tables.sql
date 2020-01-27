@@ -1,4 +1,4 @@
-CREATE TABLE patient (
+﻿CREATE TABLE patient (
   id BIGINT NOT NULL IDENTITY,
   forename VARCHAR(50) NOT NULL,
   patronymic VARCHAR(50) NOT NULL,
@@ -47,4 +47,22 @@ CREATE trigger updating_doctor
     FOR EACH ROW
     BEGIN ATOMIC
         SET new_doctor.specialization_id = (SELECT id FROM doctor_specialization WHERE id = new_doctor.specialization_id);
+    END
+
+CREATE trigger inserting_medical_prescription
+    BEFORE INSERT ON medical_prescription
+    REFERENCING NEW ROW AS new_medical_prescription
+    FOR EACH ROW
+    BEGIN ATOMIC
+        SET new_medical_prescription.patient_id = (SELECT id FROM patient WHERE id = new_medical_prescription.patient_id);
+        SET new_medical_prescription.doctor_id = (SELECT id FROM doctor WHERE id = new_medical_prescription.doctor_id);
+    END
+
+CREATE trigger updating_medical_prescription
+    BEFORE UPDATE ON medical_prescription
+    REFERENCING NEW ROW AS new_medical_prescription
+    FOR EACH ROW
+    BEGIN ATOMIC
+        SET new_medical_prescription.patient_id = (SELECT id FROM patient WHERE id = new_medical_prescription.patient_id);
+        SET new_medical_prescription.doctor_id = (SELECT id FROM doctor WHERE id = new_medical_prescription.doctor_id);
     END
