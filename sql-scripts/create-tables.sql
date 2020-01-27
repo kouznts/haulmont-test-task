@@ -32,3 +32,11 @@ CREATE TABLE medical_prescription (
 ALTER TABLE doctor ADD FOREIGN KEY (specialization_id) REFERENCES doctor_specialization (id);
 ALTER TABLE medical_prescription ADD FOREIGN KEY (patient_id) REFERENCES patient (id);
 ALTER TABLE medical_prescription ADD FOREIGN KEY (doctor_id) REFERENCES doctor (id);
+
+CREATE trigger inserting_doctor
+    BEFORE INSERT ON doctor
+    REFERENCING NEW ROW AS new_doctor
+    FOR EACH ROW
+    BEGIN ATOMIC
+        SET new_doctor.specialization_id = (SELECT id FROM doctor_specialization WHERE id = new_doctor.specialization_id);
+    END
