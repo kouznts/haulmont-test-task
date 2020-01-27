@@ -23,3 +23,8 @@
 hs_err_pid*
 
 .idea/libraries/
+
+.idea/uiDesigner.xml
+demodb.lck
+demodb.properties
+demodb.script
