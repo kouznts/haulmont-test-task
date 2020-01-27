@@ -9,16 +9,15 @@ insert into patient
 values ('ИМЯ', 'ОТЧЕСТВО', 'ФАМИЛИЯ', '00000000000')
 
 -- редактирование пациента
--- имя (id, forename)
-update patient set forename = 'Добрыня' where id = 0
--- отчество (id, patronymic)
-update patient set patronymic = 'Никитич' where id = 0
--- фамилия (id, surname)
-update patient set surname = 'Богатырёв' where id = 0
--- номер телефона (id, phone)
-update patient set phone = '0123456789' where id = 0
+update patient
+set
+    forename = 'Добрыня',
+    patronymic = 'Никитич',
+    surname = 'Богатырёв',
+    phone = '0123456789'
+where id = 0
 
--- удаление пациента (id)
+-- удаление пациента
 delete from patient where id = 0
 ------------------------------------------------------
 ------------------------------------------------------
@@ -34,20 +33,52 @@ insert into doctor
 values ('ИМЯ', 'ОТЧЕСТВО', 'ФАМИЛИЯ', 0)
 
 -- редактирование врача
--- имя (id, forename)
-update doctor set forename = 'Добрыня' where id = 0
--- отчество (id, patronymic)
-update doctor set patronymic = 'Никитич' where id = 0
--- фамилия (id, surname)
-update doctor set surname = 'Богатырёв' where id = 0
--- специализация (id, doctor_specialization_id)
-update doctor set specialization_id = 0 where id = 0
+update doctor
+set
+    forename = 'Добрыня',
+    patronymic = 'Никитич',
+    surname = 'Богатырёв',
+    specialization_id = 0
+where id = 0
 
--- удаление пациента (id)
+-- удаление пациента
 delete from doctor where id = 0
 
 -- отображение статистической информации по количеству рецептов,
 -- выписанных врачами
 select * from medical_prescription where doctor_id = 0
+------------------------------------------------------
+------------------------------------------------------
+
+-- РЕЦЕПТЫ
+------------------------------------------------------
+-- отображения списка рецептов
+select * from medical_prescription
+
+-- добавление нового рецепта
+insert into medical_prescription
+(description, patient_id, doctor_id, creation_date, validity_date, priority)
+VALUES ('ОПИСАНИЕ', 0, 0, CURRENT_TIMESTAMP, TIMESTAMP '2020-04-30 23:59:59', 3)
+
+-- редактирование рецепта
+update medical_prescription
+set
+    description = 'ОПИСАНИЕ',
+    patient_id = 0,
+    doctor_id = 0,
+    creation_date = TIMESTAMP '2020-01-01 00:00:00',
+    validity_date = TIMESTAMP '2020-04-30 23:59:59',
+    priority = 3
+where id = 0
+
+-- удаление рецепта
+delete from medical_prescription where id = 0
+
+-- фильтрация списка рецептов по описанию, приоритету и пациенту
+select * from medical_prescription
+where
+description like '%ОПИСАНИЕ%' AND
+patient_id = 0  AND
+priority = 3
 ------------------------------------------------------
 ------------------------------------------------------
