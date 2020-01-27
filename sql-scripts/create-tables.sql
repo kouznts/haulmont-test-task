@@ -40,3 +40,11 @@ CREATE trigger inserting_doctor
     BEGIN ATOMIC
         SET new_doctor.specialization_id = (SELECT id FROM doctor_specialization WHERE id = new_doctor.specialization_id);
     END
+
+CREATE trigger updating_doctor
+    BEFORE UPDATE ON doctor
+    REFERENCING NEW ROW AS new_doctor
+    FOR EACH ROW
+    BEGIN ATOMIC
+        SET new_doctor.specialization_id = (SELECT id FROM doctor_specialization WHERE id = new_doctor.specialization_id);
+    END
