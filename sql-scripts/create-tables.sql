@@ -66,3 +66,23 @@ CREATE trigger updating_medical_prescription
         SET new_medical_prescription.patient_id = (SELECT id FROM patient WHERE id = new_medical_prescription.patient_id);
         SET new_medical_prescription.doctor_id = (SELECT id FROM doctor WHERE id = new_medical_prescription.doctor_id);
     END
+
+CREATE trigger deleting_patient
+    BEFORE DELETE on patient
+    REFERENCING OLD ROW AS patient_to_delete
+    FOR EACH ROW
+    BEGIN ATOMIC
+        IF EXISTS(select patient_id from medical_prescription where patient_id = patient_to_delete.id)
+            THEN SIGNAL SQLSTATE 'HY008' SET MESSAGE_TEXT = 'cannot delete patient because he has a medical prescription';
+        END IF;
+    END
+
+CREATE trigger deleting_doctor
+    BEFORE DELETE on doctor
+    REFERENCING OLD ROW AS doctor_to_delete
+    FOR EACH ROW
+    BEGIN ATOMIC
+        IF EXISTS(select doctor_id from medical_prescription where doctor_id = doctor_to_delete.id)
+            THEN SIGNAL SQLSTATE 'HY008' SET MESSAGE_TEXT = 'cannot delete doctor because he has a medical prescription';
+        END IF;
+    END

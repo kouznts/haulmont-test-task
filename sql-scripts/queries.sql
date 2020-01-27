@@ -77,8 +77,8 @@ delete from medical_prescription where id = 0
 -- фильтрация списка рецептов по описанию, приоритету и пациенту
 select * from medical_prescription
 where
-description like '%ОПИСАНИЕ%' AND
-patient_id = 0  AND
+description like '%ОПИСАНИЕ%' and
+patient_id = 0 and
 priority = 3
 ------------------------------------------------------
 ------------------------------------------------------
