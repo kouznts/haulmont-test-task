@@ -1,4 +1,4 @@
-﻿CREATE TABLE patient (
+CREATE TABLE patient (
   id BIGINT NOT NULL IDENTITY,
   forename VARCHAR(50) NOT NULL,
   patronymic VARCHAR(50) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE medical_prescription (
   description VARCHAR(1000) NOT NULL,
   patient_id BIGINT NOT NULL,
   doctor_id BIGINT NOT NULL,
-  creation_date DATETIME NOT NULL,
+  creation_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   validity_date DATETIME NOT NULL,
   priority TINYINT DEFAULT 3 NOT NULL CHECK(priority > 0 AND priority < 4)
 );
