@@ -1,269 +1,269 @@
 ﻿insert into doctor_specialization (name)
-values ('акушер-гинеколог')
+values ('акушер-гинеколог');
 
 insert into doctor_specialization (name)
-values ('аллерголог-иммунолог')
+values ('аллерголог-иммунолог');
 
 insert into doctor_specialization (name)
-values ('ангиохирург')
+values ('ангиохирург');
 
 insert into doctor_specialization (name)
-values ('андролог-эндокринолог')
+values ('андролог-эндокринолог');
 
 insert into doctor_specialization (name)
-values ('анестезиолог-реаниматолог')
+values ('анестезиолог-реаниматолог');
 
 insert into doctor_specialization (name)
-values ('аритмолог')
+values ('аритмолог');
 
 insert into doctor_specialization (name)
-values ('ароматерапевт')
+values ('ароматерапевт');
 
 insert into doctor_specialization (name)
-values ('артролог')
+values ('артролог');
 
 insert into doctor_specialization (name)
-values ('бактериолог')
+values ('бактериолог');
 
 insert into doctor_specialization (name)
-values ('бальнеолог')
+values ('бальнеолог');
 
 insert into doctor_specialization (name)
-values ('валеолог')
+values ('валеолог');
 
 insert into doctor_specialization (name)
-values ('венеролог')
+values ('венеролог');
 
 insert into doctor_specialization (name)
-values ('вертебролог')
+values ('вертебролог');
 
 insert into doctor_specialization (name)
-values ('вирусолог')
+values ('вирусолог');
 
 insert into doctor_specialization (name)
-values ('врач УЗИ')
+values ('врач УЗИ');
 
 insert into doctor_specialization (name)
-values ('врач общей практики')
+values ('врач общей практики');
 
 insert into doctor_specialization (name)
-values ('гастроэнтеролог')
+values ('гастроэнтеролог');
 
 insert into doctor_specialization (name)
-values ('гематолог')
+values ('гематолог');
 
 insert into doctor_specialization (name)
-values ('генетик')
+values ('генетик');
 
 insert into doctor_specialization (name)
-values ('гепатолог')
+values ('гепатолог');
 
 insert into doctor_specialization (name)
-values ('гериатр')
+values ('гериатр');
 
 insert into doctor_specialization (name)
-values ('гинеколог')
+values ('гинеколог');
 
 insert into doctor_specialization (name)
-values ('гирудотерапевт')
+values ('гирудотерапевт');
 
 insert into doctor_specialization (name)
-values ('дерматовенеролог')
+values ('дерматовенеролог');
 
 insert into doctor_specialization (name)
-values ('дерматолог')
+values ('дерматолог');
 
 insert into doctor_specialization (name)
-values ('диагност')
+values ('диагност');
 
 insert into doctor_specialization (name)
-values ('диетолог')
+values ('диетолог');
 
 insert into doctor_specialization (name)
-values ('зубной врач')
+values ('зубной врач');
 
 insert into doctor_specialization (name)
-values ('иглорефлексотерапевт')
+values ('иглорефлексотерапевт');
 
 insert into doctor_specialization (name)
-values ('иммунолог')
+values ('иммунолог');
 
 insert into doctor_specialization (name)
-values ('имплантолог')
+values ('имплантолог');
 
 insert into doctor_specialization (name)
-values ('инфекционист')
+values ('инфекционист');
 
 insert into doctor_specialization (name)
-values ('кардиолог')
+values ('кардиолог');
 
 insert into doctor_specialization (name)
-values ('кардиоревматолог')
+values ('кардиоревматолог');
 
 insert into doctor_specialization (name)
-values ('кардиохирург')
+values ('кардиохирург');
 
 insert into doctor_specialization (name)
-values ('кинезиолог')
+values ('кинезиолог');
 
 insert into doctor_specialization (name)
-values ('колопроктолог')
+values ('колопроктолог');
 
 insert into doctor_specialization (name)
-values ('косметолог')
+values ('косметолог');
 
 insert into doctor_specialization (name)
-values ('курортолог')
+values ('курортолог');
 
 insert into doctor_specialization (name)
-values ('ЛОР')
+values ('ЛОР');
 
 insert into doctor_specialization (name)
-values ('лаборант')
+values ('лаборант');
 
 insert into doctor_specialization (name)
-values ('логопед')
+values ('логопед');
 
 insert into doctor_specialization (name)
-values ('маммолог')
+values ('маммолог');
 
 insert into doctor_specialization (name)
-values ('мануальный терапевт')
+values ('мануальный терапевт');
 
 insert into doctor_specialization (name)
-values ('массажист')
+values ('массажист');
 
 insert into doctor_specialization (name)
-values ('миколог')
+values ('миколог');
 
 insert into doctor_specialization (name)
-values ('нарколог')
+values ('нарколог');
 
 insert into doctor_specialization (name)
-values ('невролог')
+values ('невролог');
 
 insert into doctor_specialization (name)
-values ('невропатолог')
+values ('невропатолог');
 
 insert into doctor_specialization (name)
-values ('нейротравматолог')
+values ('нейротравматолог');
 
 insert into doctor_specialization (name)
-values ('нейрохирург')
+values ('нейрохирург');
 
 insert into doctor_specialization (name)
-values ('нефролог')
+values ('нефролог');
 
 insert into doctor_specialization (name)
-values ('окулист')
+values ('окулист');
 
 insert into doctor_specialization (name)
-values ('онкогинеколог')
+values ('онкогинеколог');
 
 insert into doctor_specialization (name)
-values ('онколог')
+values ('онколог');
 
 insert into doctor_specialization (name)
-values ('ортодонт')
+values ('ортодонт');
 
 insert into doctor_specialization (name)
-values ('ортопед')
+values ('ортопед');
 
 insert into doctor_specialization (name)
-values ('остеопат')
+values ('остеопат');
 
 insert into doctor_specialization (name)
-values ('отоларинголог')
+values ('отоларинголог');
 
 insert into doctor_specialization (name)
-values ('отоневролог')
+values ('отоневролог');
 
 insert into doctor_specialization (name)
-values ('офтальмолог')
+values ('офтальмолог');
 
 insert into doctor_specialization (name)
-values ('паразитолог')
+values ('паразитолог');
 
 insert into doctor_specialization (name)
-values ('паркинсонолог')
+values ('паркинсонолог');
 
 insert into doctor_specialization (name)
-values ('пародонтолог')
+values ('пародонтолог');
 
 insert into doctor_specialization (name)
-values ('подолог')
+values ('подолог');
 
 insert into doctor_specialization (name)
-values ('проктолог')
+values ('проктолог');
 
 insert into doctor_specialization (name)
-values ('психиатр')
+values ('психиатр');
 
 insert into doctor_specialization (name)
-values ('психолог')
+values ('психолог');
 
 insert into doctor_specialization (name)
-values ('радиолог')
+values ('радиолог');
 
 insert into doctor_specialization (name)
-values ('реаниматолог')
+values ('реаниматолог');
 
 insert into doctor_specialization (name)
-values ('ревматолог')
+values ('ревматолог');
 
 insert into doctor_specialization (name)
-values ('рентгенолог')
+values ('рентгенолог');
 
 insert into doctor_specialization (name)
-values ('репродуктолог')
+values ('репродуктолог');
 
 insert into doctor_specialization (name)
-values ('сексолог')
+values ('сексолог');
 
 insert into doctor_specialization (name)
-values ('сексопатолог')
+values ('сексопатолог');
 
 insert into doctor_specialization (name)
-values ('сомнолог')
+values ('сомнолог');
 
 insert into doctor_specialization (name)
-values ('стоматолог')
+values ('стоматолог');
 
 insert into doctor_specialization (name)
-values ('суггестолог')
+values ('суггестолог');
 
 insert into doctor_specialization (name)
-values ('сурдолог')
+values ('сурдолог');
 
 insert into doctor_specialization (name)
-values ('терапевт')
+values ('терапевт');
 
 insert into doctor_specialization (name)
-values ('токсиколог')
+values ('токсиколог');
 
 insert into doctor_specialization (name)
-values ('травматолог')
+values ('травматолог');
 
 insert into doctor_specialization (name)
-values ('трихолог')
+values ('трихолог');
 
 insert into doctor_specialization (name)
-values ('уролог')
+values ('уролог');
 
 insert into doctor_specialization (name)
-values ('фтизиатр')
+values ('фтизиатр');
 
 insert into doctor_specialization (name)
-values ('хирург')
+values ('хирург');
 
 insert into doctor_specialization (name)
-values ('эмбриолог')
+values ('эмбриолог');
 
 insert into doctor_specialization (name)
-values ('эндодонт')
+values ('эндодонт');
 
 insert into doctor_specialization (name)
-values ('эпидемиолог')
+values ('эпидемиолог');
 
 insert into doctor_specialization (name)
-values ('эпилептолог')
+values ('эпилептолог');

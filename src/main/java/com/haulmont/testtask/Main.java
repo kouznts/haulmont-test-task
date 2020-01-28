@@ -1,33 +1,58 @@
 package com.haulmont.testtask;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Main {
-    public static final String URL = "jdbc:hsqldb:file:demodb";
-    public static final String USER = "SA";
-    public static final String PASSWORD = "";
+    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
-    private static final String CREATE_TABLE_QUERY =
-            "CREATE TABLE users "
-                    + "(id BIGINT IDENTITY PRIMARY KEY,"
-                    + " username VARCHAR(50));";
+    private static final String DB_URL = "jdbc:hsqldb:file:testdb";
+    private static final String USER = "SA";
+    private static final String PASSWORD = "";
 
-    public static void main(String[] args) {
+    private static final String QUERY = "select * from patient";
+
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        // region регистрация драйвера
+        Class.forName(JDBC_DRIVER);
+        // endregion
+
+        // region создание соединения
         try {
-            Class.forName("org.hsqldb.jdbcDriver");
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         } catch (Exception exc) {
             System.out.println(exc.getMessage());
             exc.printStackTrace();
         }
+        // endregion
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement()) {
+        // region запрос
+        statement = connection.createStatement();
+        statement.execute(QUERY);
+        // resultSet = statement.executeQuery(QUERY);
+        // endregion
 
-           statement.executeUpdate(CREATE_TABLE_QUERY);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        // region вывод результата
+        /*while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String forename = resultSet.getString("forename");
+            String patronymic = resultSet.getString("patronymic");
+            String surname = resultSet.getString("surname");
+            String phone = resultSet.getString("phone");
+
+            System.out.println("\n================\n");
+            System.out.println(id);
+            System.out.println(forename);
+            System.out.println(patronymic);
+            System.out.println(surname);
+            System.out.println(phone);
+        }*/
+        // endregion
+
+        statement.close();
+        connection.close();
     }
 }
