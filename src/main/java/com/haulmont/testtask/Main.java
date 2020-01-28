@@ -1,40 +1,24 @@
 package com.haulmont.testtask;
 
-import java.sql.*;
+import com.haulmont.testtask.Dao.HsqldbDao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Main {
-    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
-
-    private static final String DB_URL = "jdbc:hsqldb:file:testdb";
+    private static final String CONNECTION_URL = "jdbc:hsqldb:file:testdb";
     private static final String USER = "SA";
     private static final String PASSWORD = "";
 
     private static final String QUERY = "select * from patient";
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Connection connection = null;
-        Statement statement = null;
+        HsqldbDao hsqldbDao = new HsqldbDao(CONNECTION_URL);
+        hsqldbDao.connect(USER, PASSWORD);
+
         ResultSet resultSet = null;
-
-        // region регистрация драйвера
-        Class.forName(JDBC_DRIVER);
-        // endregion
-
-        // region создание соединения
-        try {
-            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-        } catch (Exception exc) {
-            System.out.println(exc.getMessage());
-            exc.printStackTrace();
-        }
-        // endregion
-
-        // region запрос
-        statement = connection.createStatement();
-        statement.execute(QUERY);
-        // resultSet = statement.executeQuery(QUERY);
-        // endregion
-
+        resultSet = hsqldbDao.executeQuery(QUERY);
+        
         // region вывод результата
         /*while (resultSet.next()) {
             int id = resultSet.getInt("id");
@@ -52,7 +36,6 @@ public class Main {
         }*/
         // endregion
 
-        statement.close();
-        connection.close();
+        hsqldbDao.disconnect();
     }
 }
