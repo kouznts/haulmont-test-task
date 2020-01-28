@@ -1,83 +1,83 @@
 ﻿insert into patient
 (forename, patronymic, surname, phone)
-values ('Павел', 'Ипатиевич', 'Камкин', '8680602898')
+values ('Павел', 'Ипатиевич', 'Камкин', '8680602898');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Семён', 'Никифорович', 'Угольников', '6319654015')
+values ('Семён', 'Никифорович', 'Угольников', '6319654015');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Клара', 'Вячеславовна', 'Марченко', '333629152')
+values ('Клара', 'Вячеславовна', 'Марченко', '333629152');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Гаврила', 'Федотович', 'Юренев', '1413564532')
+values ('Гаврила', 'Федотович', 'Юренев', '1413564532');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Всеслава', 'Ипполитовна', 'Цулукидзе', '1248099054')
+values ('Всеслава', 'Ипполитовна', 'Цулукидзе', '1248099054');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Лада', 'Иларионовна', 'Ширманова', '8379928492')
+values ('Лада', 'Иларионовна', 'Ширманова', '8379928492');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Виктор', 'Климентович', 'Бубенцов', '8748985663')
+values ('Виктор', 'Климентович', 'Бубенцов', '8748985663');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Назар', 'Родионович', 'Сиянковский', '5937962546')
+values ('Назар', 'Родионович', 'Сиянковский', '5937962546');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Алина', 'Фёдоровна', 'Хамидуллина', '3666409258')
+values ('Алина', 'Фёдоровна', 'Хамидуллина', '3666409258');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Феликс', 'Эрнстович', 'Ильюшин', '1283986768')
+values ('Феликс', 'Эрнстович', 'Ильюшин', '1283986768');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Екатерина', 'Ильевна', 'Яшнова', '6847421526')
+values ('Екатерина', 'Ильевна', 'Яшнова', '6847421526');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Фадей', 'Алексеевич', 'Башкатов', '4444106570')
+values ('Фадей', 'Алексеевич', 'Башкатов', '4444106570');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Полина', 'Феликсовна', 'Фомичёва', '5660971105')
+values ('Полина', 'Феликсовна', 'Фомичёва', '5660971105');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Остап', 'Мартьянович', 'Смольников', '8056789645')
+values ('Остап', 'Мартьянович', 'Смольников', '8056789645');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Моисей', 'Назарович', 'Рытов', '5908566149')
+values ('Моисей', 'Назарович', 'Рытов', '5908566149');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Олег', 'Евгениевич', 'Северов', '5625970261')
+values ('Олег', 'Евгениевич', 'Северов', '5625970261');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Яков', 'Никитевич', 'Ануфриев', '3252727636')
+values ('Яков', 'Никитевич', 'Ануфриев', '3252727636');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Иван', 'Мечиславович', 'Кутичев', '7539953025')
+values ('Иван', 'Мечиславович', 'Кутичев', '7539953025');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Евгения', 'Степановна', 'Евсеева', '1313006891')
+values ('Евгения', 'Степановна', 'Евсеева', '1313006891');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Агафья', 'Ильевна', 'Казнова', '7196860248')
+values ('Агафья', 'Ильевна', 'Казнова', '7196860248');
 
 insert into patient
 (forename, patronymic, surname, phone)
-values ('Тамара', 'Мефодиевна', 'Слепцова', '1805387414')
+values ('Тамара', 'Мефодиевна', 'Слепцова', '1805387414');
