@@ -16,50 +16,25 @@ public abstract class Dao {
         this.connectionUrl = connectionUrl;
     }
 
-    private void registerDriverManager() {
-        try {
-            Class.forName(jdbcDriver);
-        } catch (ClassNotFoundException exc) {
-            exc.printStackTrace();
-        }
+    public void connect(String user, String password) throws ClassNotFoundException, SQLException {
+        Class.forName(jdbcDriver);
+        connection = DriverManager.getConnection(connectionUrl, user, password);
     }
 
-    protected void connect(String user, String password) {
-        registerDriverManager();
-
-        try {
-            connection = DriverManager.getConnection(connectionUrl, user, password);
-        } catch (SQLException exc) {
-            connection = null;
-            exc.printStackTrace();
-        }
+    protected void disconnect(Connection connection) throws SQLException {
+        connection.close();
     }
 
-    public void disconnect(Connection connection) {
-        try {
-            connection.close();
-            connection = null;
-        } catch (SQLException exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    public boolean executeQuery(final String sqlQuery) {
+    protected boolean executeQuery(final String sqlQuery) throws SQLException {
         boolean result = false;
 
-        try {
-            if (connection != null) {
-                Statement statement = connection.createStatement();
-                statement.execute(sqlQuery);
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            statement.execute(sqlQuery);
 
-                statement.close();
-                statement = null;
+            statement.close();
 
-                result = true;
-            }
-        } catch (SQLException exc) {
-            System.err.println("SQLException: error code " + String.valueOf(exc.getErrorCode()) + ", " + exc.getMessage());
-            System.err.println("SQL query: " + sqlQuery);
+            result = true;
         }
 
         return result;
