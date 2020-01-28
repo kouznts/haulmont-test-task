@@ -1,9 +1,6 @@
 package com.haulmont.testtask.Dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class Dao {
     private String jdbcDriver = null;
@@ -21,22 +18,35 @@ public abstract class Dao {
         connection = DriverManager.getConnection(connectionUrl, user, password);
     }
 
-    protected void disconnect(Connection connection) throws SQLException {
-        connection.close();
+    public void disconnect() throws SQLException {
+        if (connection != null) {
+            connection.close();
+        }
     }
 
-    protected boolean executeQuery(final String sqlQuery) throws SQLException {
+    public boolean execute(final String sqlQuery) throws SQLException {
         boolean result = false;
 
         if (connection != null) {
             Statement statement = connection.createStatement();
-            statement.execute(sqlQuery);
+            result = statement.execute(sqlQuery);
 
             statement.close();
-
-            result = true;
         }
 
         return result;
+    }
+
+    public ResultSet executeQuery(final String sqlQuery) throws SQLException {
+        ResultSet resultSet = null;
+
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlQuery);
+
+            statement.close();
+        }
+
+        return resultSet;
     }
 }
