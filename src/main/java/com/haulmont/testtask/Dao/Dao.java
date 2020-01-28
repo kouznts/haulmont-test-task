@@ -1,20 +1,22 @@
 package com.haulmont.testtask.Dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public abstract class Dao {
-    protected String jdbcDriver = null;
-    protected String connectionUrl = null;
-    protected Properties connectionProperties = null;
+    private String jdbcDriver = null;
+    private String connectionUrl = null;
 
-    public Dao(String jdbcDriver) {
+    private Connection connection = null;
+
+    protected Dao(String jdbcDriver, String connectionUrl) {
         this.jdbcDriver = jdbcDriver;
+        this.connectionUrl = connectionUrl;
     }
 
-    protected void registerDriverManager() {
+    private void registerDriverManager() {
         try {
             Class.forName(jdbcDriver);
         } catch (ClassNotFoundException exc) {
@@ -22,18 +24,15 @@ public abstract class Dao {
         }
     }
 
-    public abstract void setUrl(String host, String database, int port);
-
-    public abstract Connection getConnection();
-
-    public void connect(String login, String password) {
+    protected void connect(String user, String password) {
         registerDriverManager();
 
-        connectionProperties = new Properties();
-        connectionProperties.setProperty("password", password);
-        connectionProperties.setProperty("user", login);
-        connectionProperties.setProperty("useUnicode", "true");
-        connectionProperties.setProperty("characterEncoding", "utf8");
+        try {
+            connection = DriverManager.getConnection(connectionUrl, user, password);
+        } catch (SQLException exc) {
+            connection = null;
+            exc.printStackTrace();
+        }
     }
 
     public void disconnect(Connection connection) {
@@ -45,16 +44,17 @@ public abstract class Dao {
         }
     }
 
-    public boolean execSqlQuery(final String sqlQuery) {
+    public boolean executeQuery(final String sqlQuery) {
         boolean result = false;
 
         try {
-            if (getConnection() != null) {
-                Statement statement = getConnection().createStatement();
+            if (connection != null) {
+                Statement statement = connection.createStatement();
                 statement.execute(sqlQuery);
-                statement.close();
 
+                statement.close();
                 statement = null;
+
                 result = true;
             }
         } catch (SQLException exc) {
