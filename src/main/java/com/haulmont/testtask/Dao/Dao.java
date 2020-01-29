@@ -1,67 +1,52 @@
 package com.haulmont.testtask.Dao;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
+import java.sql.*;
 
 public abstract class Dao {
-    protected String jdbcDriver = null;
-    protected String connectionUrl = null;
-    protected Properties connectionProperties = null;
+    private String jdbcDriver = null;
+    private String connectionUrl = null;
 
-    public Dao(String jdbcDriver) {
+    private Connection connection = null;
+
+    protected Dao(String jdbcDriver, String connectionUrl) {
         this.jdbcDriver = jdbcDriver;
+        this.connectionUrl = connectionUrl;
     }
 
-    protected void registerDriverManager() {
-        try {
-            Class.forName(jdbcDriver);
-        } catch (ClassNotFoundException exc) {
-            exc.printStackTrace();
-        }
+    public void connect(String user, String password) throws ClassNotFoundException, SQLException {
+        Class.forName(jdbcDriver);
+        connection = DriverManager.getConnection(connectionUrl, user, password);
     }
 
-    public abstract void setUrl(String host, String database, int port);
-
-    public abstract Connection getConnection();
-
-    public void connect(String login, String password) {
-        registerDriverManager();
-
-        connectionProperties = new Properties();
-        connectionProperties.setProperty("password", password);
-        connectionProperties.setProperty("user", login);
-        connectionProperties.setProperty("useUnicode", "true");
-        connectionProperties.setProperty("characterEncoding", "utf8");
-    }
-
-    public void disconnect(Connection connection) {
-        try {
+    public void disconnect() throws SQLException {
+        if (connection != null) {
             connection.close();
-            connection = null;
-        } catch (SQLException exc) {
-            exc.printStackTrace();
         }
     }
 
-    public boolean execSqlQuery(final String sqlQuery) {
+    public boolean execute(final String sqlQuery) throws SQLException {
         boolean result = false;
 
-        try {
-            if (getConnection() != null) {
-                Statement statement = getConnection().createStatement();
-                statement.execute(sqlQuery);
-                statement.close();
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            result = statement.execute(sqlQuery);
 
-                statement = null;
-                result = true;
-            }
-        } catch (SQLException exc) {
-            System.err.println("SQLException: error code " + String.valueOf(exc.getErrorCode()) + ", " + exc.getMessage());
-            System.err.println("SQL query: " + sqlQuery);
+            statement.close();
         }
 
         return result;
+    }
+
+    public ResultSet executeQuery(final String sqlQuery) throws SQLException {
+        ResultSet resultSet = null;
+
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlQuery);
+
+            statement.close();
+        }
+
+        return resultSet;
     }
 }

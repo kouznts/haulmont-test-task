@@ -1,33 +1,41 @@
 package com.haulmont.testtask;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import com.haulmont.testtask.Dao.HsqldbDao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Main {
-    public static final String URL = "jdbc:hsqldb:file:demodb";
-    public static final String USER = "SA";
-    public static final String PASSWORD = "";
+    private static final String CONNECTION_URL = "jdbc:hsqldb:file:testdb";
+    private static final String USER = "SA";
+    private static final String PASSWORD = "";
 
-    private static final String CREATE_TABLE_QUERY =
-            "CREATE TABLE users "
-                    + "(id BIGINT IDENTITY PRIMARY KEY,"
-                    + " username VARCHAR(50));";
+    private static final String QUERY = "select * from patient";
 
-    public static void main(String[] args) {
-        try {
-            Class.forName("org.hsqldb.jdbcDriver");
-        } catch (Exception exc) {
-            System.out.println(exc.getMessage());
-            exc.printStackTrace();
-        }
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        HsqldbDao hsqldbDao = new HsqldbDao(CONNECTION_URL);
+        hsqldbDao.connect(USER, PASSWORD);
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement()) {
+        ResultSet resultSet = null;
+        resultSet = hsqldbDao.executeQuery(QUERY);
 
-           statement.executeUpdate(CREATE_TABLE_QUERY);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        // region вывод результата
+        /*while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String forename = resultSet.getString("forename");
+            String patronymic = resultSet.getString("patronymic");
+            String surname = resultSet.getString("surname");
+            String phone = resultSet.getString("phone");
+
+            System.out.println("\n================\n");
+            System.out.println(id);
+            System.out.println(forename);
+            System.out.println(patronymic);
+            System.out.println(surname);
+            System.out.println(phone);
+        }*/
+        // endregion
+
+        hsqldbDao.disconnect();
     }
 }
