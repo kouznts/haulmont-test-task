@@ -16,7 +16,7 @@ public interface DoctorDao {
 
     int insertDoctor(Doctor doctor) throws SQLException, ClassNotFoundException;
 
-    boolean updateDoctor(Doctor doctor);
+    int updateDoctor(Doctor doctor) throws SQLException, ClassNotFoundException;
 
     boolean deleteDoctor(long id);
 

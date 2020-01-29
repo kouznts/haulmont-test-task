@@ -23,6 +23,10 @@ public class Doctor {
         this.specializationId = specializationId;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getForename() {
         return forename;
     }

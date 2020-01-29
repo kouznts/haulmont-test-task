@@ -7,4 +7,6 @@ public final class SqlHelper {
     public static final String INSERT = "INSERT";
     public static final String INTO = "INTO";
     public static final String VALUES = "VALUES";
+    public static final String UPDATE = "UPDATE";
+    public static final String SET = "SET";
 }

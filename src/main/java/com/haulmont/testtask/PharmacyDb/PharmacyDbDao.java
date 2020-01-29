@@ -5,10 +5,10 @@ import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableDoctorSpecializatio
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableMedicalPrescription;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoablePatient;
 
-public interface DaoablePharmacyDb {
+public interface PharmacyDbDao {
     static final String DOCTOR = "doctor";
 
-    DoctorDao getDaoableDoctor();
+    DoctorDao getDoctorDao();
 
     DaoableDoctorSpecialization getDaoableDoctorSpecialization();
 
