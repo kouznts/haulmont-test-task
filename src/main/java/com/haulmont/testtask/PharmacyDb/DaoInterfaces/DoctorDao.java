@@ -1,11 +1,11 @@
-package com.haulmont.testtask.PharmacyDb.DaoableEntities;
+package com.haulmont.testtask.PharmacyDb.DaoInterfaces;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface DaoableDoctor {
+public interface DoctorDao {
     String ID = "id";
     String FORENAME = "forename";
     String PATRONYMIC = "patronymic";
@@ -14,7 +14,7 @@ public interface DaoableDoctor {
 
     Doctor findDoctor(long id) throws SQLException, ClassNotFoundException;
 
-    long insertDoctor(Doctor doctor);
+    int insertDoctor(Doctor doctor) throws SQLException, ClassNotFoundException;
 
     boolean updateDoctor(Doctor doctor);
 

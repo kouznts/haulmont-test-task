@@ -1,7 +1,7 @@
 package com.haulmont.testtask.PharmacyDb.HsqldbDaoEntities;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoableDoctor;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
 
 import java.sql.ResultSet;
@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static com.haulmont.testtask.PharmacyDb.DaoablePharmacyDb.DOCTOR;
-import static com.haulmont.testtask.SqlHelper.getSelectAllFromTableWhereAttrEqualsVal;
+import static com.haulmont.testtask.SqlHelper.*;
 
-public class HsqldbDaoDoctor extends HsqldbDao implements DaoableDoctor {
-    public HsqldbDaoDoctor(String dbUrl, String user, String password) {
+public class HsqldbDaoDoctorDao extends HsqldbDao implements DoctorDao {
+    public HsqldbDaoDoctorDao(String dbUrl, String user, String password) {
         super(dbUrl, user, password);
     }
 
@@ -20,7 +20,7 @@ public class HsqldbDaoDoctor extends HsqldbDao implements DaoableDoctor {
     public Doctor findDoctor(long id) throws SQLException, ClassNotFoundException {
         connect();
 
-        final String query = getSelectAllFromTableWhereAttrEqualsVal(DOCTOR, ID, Long.toString(id));
+        final String query = String.format("%s * %s %s %s %s = %s", SELECT, FROM, DOCTOR, WHERE, ID, Long.toString(id));
         ResultSet resultSet = executeQuery(query);
 
         Doctor doctor = null;
@@ -38,8 +38,21 @@ public class HsqldbDaoDoctor extends HsqldbDao implements DaoableDoctor {
     }
 
     @Override
-    public long insertDoctor(Doctor doctor) {
-        return 0;
+    public int insertDoctor(Doctor doctor) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = INSERT + ' ' + INTO + ' ' + DOCTOR +
+                " (" + FORENAME + ", " + PATRONYMIC + ", " + SURNAME + ", " + SPECIALIZATION_ID + ") " +
+                VALUES + " (" +
+                '\'' + doctor.getForename() + "\', " +
+                '\'' + doctor.getPatronymic() + "\', " +
+                '\'' + doctor.getSurname() + "\', " +
+                Long.toString(doctor.getSpecializationId()) + ");";
+
+        int changedRowsNum = executeUpdate(query);
+
+        disconnect();
+        return changedRowsNum;
     }
 
     @Override

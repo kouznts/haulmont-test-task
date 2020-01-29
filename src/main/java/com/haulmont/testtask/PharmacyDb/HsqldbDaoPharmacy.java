@@ -1,11 +1,11 @@
 package com.haulmont.testtask.PharmacyDb;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoableDoctor;
-import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoableDoctorSpecialization;
-import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoableMedicalPrescription;
-import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoablePatient;
-import com.haulmont.testtask.PharmacyDb.HsqldbDaoEntities.HsqldbDaoDoctor;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableDoctorSpecialization;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableMedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoablePatient;
+import com.haulmont.testtask.PharmacyDb.HsqldbDaoEntities.HsqldbDaoDoctorDao;
 
 public class HsqldbDaoPharmacy extends HsqldbDao implements DaoablePharmacyDb {
     public HsqldbDaoPharmacy(String dbUrl, String user, String password) {
@@ -13,8 +13,8 @@ public class HsqldbDaoPharmacy extends HsqldbDao implements DaoablePharmacyDb {
     }
 
     @Override
-    public DaoableDoctor getDaoableDoctor() {
-        return new HsqldbDaoDoctor(super.dbUrl, super.user, super.password);
+    public DoctorDao getDaoableDoctor() {
+        return new HsqldbDaoDoctorDao(super.dbUrl, super.user, super.password);
     }
 
     @Override

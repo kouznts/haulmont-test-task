@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb.DaoableEntities;
+package com.haulmont.testtask.PharmacyDb.DaoInterfaces;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.DtoPatient;
 

@@ -7,12 +7,36 @@ public class Doctor {
     private String surname;
     private long specializationId;
 
+    public Doctor(String forename, String patronymic, String surname, long specializationId) {
+        this.id = -1;
+        this.forename = forename;
+        this.patronymic = patronymic;
+        this.surname = surname;
+        this.specializationId = specializationId;
+    }
+
     public Doctor(long id, String forename, String patronymic, String surname, long specializationId) {
         this.id = id;
         this.forename = forename;
         this.patronymic = patronymic;
         this.surname = surname;
         this.specializationId = specializationId;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public long getSpecializationId() {
+        return specializationId;
     }
 
     @Override

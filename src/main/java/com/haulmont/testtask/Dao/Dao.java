@@ -54,4 +54,17 @@ public abstract class Dao {
 
         return resultSet;
     }
+
+    public int executeUpdate(final String sqlQuery) throws SQLException {
+        int changedRowsNum = -1;
+
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            changedRowsNum = statement.executeUpdate(sqlQuery);
+
+            statement.close();
+        }
+
+        return changedRowsNum;
+    }
 }
