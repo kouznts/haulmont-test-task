@@ -1,12 +1,12 @@
 ﻿-- отображение списка врачей
 select * from doctor;
 
--- добавление нового врача
+-- добавление
 insert into doctor
 (forename, patronymic, surname, specialization_id)
 values ('ИМЯ', 'ОТЧЕСТВО', 'ФАМИЛИЯ', 0);
 
--- редактирование врача
+-- редактирование
 update doctor
 set
     forename = 'Добрыня',
@@ -15,5 +15,5 @@ set
     specialization_id = 0
 where id = 0;
 
--- удаление пациента
+-- удаление
 delete from doctor where id = 0;

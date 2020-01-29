@@ -18,7 +18,7 @@ public class Main {
 
         ResultSet resultSet = null;
         resultSet = hsqldbDao.executeQuery(QUERY);
-        
+
         // region вывод результата
         /*while (resultSet.next()) {
             int id = resultSet.getInt("id");

@@ -1,12 +1,12 @@
 ﻿-- отображение списка пациентов
 select * from patient;
 
--- добавление нового пациента
+-- добавление
 insert into patient
 (forename, patronymic, surname, phone)
 values ('ИМЯ', 'ОТЧЕСТВО', 'ФАМИЛИЯ', '00000000000');
 
--- редактирование пациента
+-- редактирование
 update patient
 set
     forename = 'Добрыня',
@@ -15,5 +15,5 @@ set
     phone = '0123456789'
 where id = 0;
 
--- удаление пациента
+-- удаление
 delete from patient where id = 0;

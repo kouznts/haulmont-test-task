@@ -1,12 +1,12 @@
 ﻿-- отображения списка рецептов
 select * from medical_prescription;
 
--- добавление нового рецепта
+-- добавление
 insert into medical_prescription
 (description, patient_id, doctor_id, creation_date, validity_date, priority)
 VALUES ('ОПИСАНИЕ', 0, 0, CURRENT_TIMESTAMP, TIMESTAMP '2020-04-30 23:59:59', 3);
 
--- редактирование рецепта
+-- редактирование
 update medical_prescription
 set
     description = 'ОПИСАНИЕ',
@@ -17,7 +17,7 @@ set
     priority = 3
 where id = 0;
 
--- удаление рецепта
+-- удаление
 delete from medical_prescription where id = 0;
 
 -- фильтрация списка рецептов по описанию, приоритету и пациенту
