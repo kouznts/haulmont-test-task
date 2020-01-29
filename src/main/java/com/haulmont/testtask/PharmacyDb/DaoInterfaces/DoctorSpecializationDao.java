@@ -2,16 +2,20 @@ package com.haulmont.testtask.PharmacyDb.DaoInterfaces;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DoctorSpecializationDao {
-    DoctorSpecialization findDoctorSpecialization(long id);
+    String ID = "id";
+    String NAME = "name";
 
-    long insertDoctorSpecialization(DoctorSpecialization doctorSpecialization);
+    DoctorSpecialization findDoctorSpecialization(long id) throws SQLException, ClassNotFoundException;
 
-    boolean updateDoctorSpecialization(DoctorSpecialization doctorSpecialization);
+    int insertDoctorSpecialization(DoctorSpecialization doctorSpecialization) throws SQLException, ClassNotFoundException;
 
-    boolean deleteDoctorSpecialization(long id);
+    int updateDoctorSpecialization(DoctorSpecialization doctorSpecialization) throws SQLException, ClassNotFoundException;
 
-    List<DoctorSpecialization> getAllDoctorSpecializations();
+    int deleteDoctorSpecialization(long id) throws SQLException, ClassNotFoundException;
+
+    List<DoctorSpecialization> getAllDoctorSpecializations() throws SQLException, ClassNotFoundException;
 }

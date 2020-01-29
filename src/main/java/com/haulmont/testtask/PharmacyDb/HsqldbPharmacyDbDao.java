@@ -1,11 +1,12 @@
 package com.haulmont.testtask.PharmacyDb;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableMedicalPrescription;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoablePatient;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorDao;
+import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorSpecializationDao;
 
 public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     public HsqldbPharmacyDbDao(String dbUrl, String user, String password) {
@@ -18,9 +19,8 @@ public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     }
 
     @Override
-    public DoctorSpecializationDao getDaoableDoctorSpecialization() {
-        //return new HsqldbDaoDoctorSpecialization();
-        return null;
+    public DoctorSpecializationDao getDoctorSpecializationDao() {
+        return new HsqldbDoctorSpecializationDao(super.dbUrl, super.user, super.password);
     }
 
     @Override
