@@ -1,41 +1,47 @@
 package com.haulmont.testtask;
 
-import com.haulmont.testtask.Dao.HsqldbDao;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
+import com.haulmont.testtask.PharmacyDb.HsqldbPharmacyDbDao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {
-    private static final String CONNECTION_URL = "jdbc:hsqldb:file:testdb";
+    private static final String DB_URL = "jdbc:hsqldb:file:testdb";
     private static final String USER = "SA";
     private static final String PASSWORD = "";
 
-    private static final String QUERY = "select * from patient";
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        HsqldbDao hsqldbDao = new HsqldbDao(CONNECTION_URL);
-        hsqldbDao.connect(USER, PASSWORD);
+        HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
+        DoctorDao doctorDao = hsqldbPharmacyDbDao.getDoctorDao();
+        Doctor doctor;
 
-        ResultSet resultSet = null;
-        resultSet = hsqldbDao.executeQuery(QUERY);
+        /*
+        doctor = doctorDao.findDoctor(9);
+        System.out.println(doctor);
+        System.out.println();*/
 
-        // region вывод результата
-        /*while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String forename = resultSet.getString("forename");
-            String patronymic = resultSet.getString("patronymic");
-            String surname = resultSet.getString("surname");
-            String phone = resultSet.getString("phone");
+        /*Doctor newDoctor = new Doctor("Иван", "Васильевич", "Васильев", 10);
+        doctorDao.insertDoctor(newDoctor);
+        doctor = doctorDao.findDoctor(11);
+        System.out.println(doctor);
+        System.out.println();*/
 
-            System.out.println("\n================\n");
-            System.out.println(id);
-            System.out.println(forename);
-            System.out.println(patronymic);
-            System.out.println(surname);
-            System.out.println(phone);
-        }*/
-        // endregion
+        /*doctor = doctorDao.findDoctor(11);
+        System.out.println(doctor);
+        System.out.println();
 
-        hsqldbDao.disconnect();
+        doctor = new Doctor(11, "Горик", "Васильевич", "Васильев", 3);
+        doctorDao.updateDoctor(doctor);
+        doctor = doctorDao.findDoctor(11);
+        System.out.println(doctor);*/
+
+        doctor = doctorDao.findDoctor(11);
+        System.out.println(doctor);
+        System.out.println();
+
+        doctorDao.deleteDoctor(11);
+        doctor = doctorDao.findDoctor(11);
+        System.out.println(doctor);
     }
 }
