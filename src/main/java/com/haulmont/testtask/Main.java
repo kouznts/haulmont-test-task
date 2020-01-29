@@ -19,10 +19,10 @@ public class Main {
         System.out.println(doctor);
         System.out.println();
 
-        //Doctor newDoctor = new Doctor("Василий", "Васильевич", "Васильев", 10);
-        //doctorDao.insertDoctor(newDoctor);
-        doctor = doctorDao.findDoctor(10);
+        /*Doctor newDoctor = new Doctor("Иван", "Васильевич", "Васильев", 10);
+        doctorDao.insertDoctor(newDoctor);
+        doctor = doctorDao.findDoctor(11);
         System.out.println(doctor);
-        System.out.println();
+        System.out.println();*/
     }
 }

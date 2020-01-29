@@ -41,13 +41,11 @@ public class HsqldbDaoDoctorDao extends HsqldbDao implements DoctorDao {
     public int insertDoctor(Doctor doctor) throws SQLException, ClassNotFoundException {
         connect();
 
-        final String query = INSERT + ' ' + INTO + ' ' + DOCTOR +
-                " (" + FORENAME + ", " + PATRONYMIC + ", " + SURNAME + ", " + SPECIALIZATION_ID + ") " +
-                VALUES + " (" +
-                '\'' + doctor.getForename() + "\', " +
-                '\'' + doctor.getPatronymic() + "\', " +
-                '\'' + doctor.getSurname() + "\', " +
-                Long.toString(doctor.getSpecializationId()) + ");";
+        final String query = String.format("%s %s %s (%s, %s, %s, %s) %s (\'%s\', \'%s\', \'%s\', %s);",
+                INSERT, INTO, DOCTOR,
+                FORENAME, PATRONYMIC, SURNAME, SPECIALIZATION_ID,
+                VALUES,
+                doctor.getForename(), doctor.getPatronymic(), doctor.getSurname(), Long.toString(doctor.getSpecializationId()));
 
         int changedRowsNum = executeUpdate(query);
 
