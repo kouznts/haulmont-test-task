@@ -9,4 +9,5 @@ public final class SqlHelper {
     public static final String VALUES = "VALUES";
     public static final String UPDATE = "UPDATE";
     public static final String SET = "SET";
+    public static final String DELETE = "DELETE";
 }

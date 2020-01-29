@@ -18,7 +18,7 @@ public interface DoctorDao {
 
     int updateDoctor(Doctor doctor) throws SQLException, ClassNotFoundException;
 
-    boolean deleteDoctor(long id);
+    int deleteDoctor(long id) throws SQLException, ClassNotFoundException;
 
     List<Doctor> getAllDoctors();
 }

@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb.HsqldbDaoEntities;
+package com.haulmont.testtask.PharmacyDb.HsqldbDaos;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
@@ -8,11 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.DaoablePharmacyDb.DOCTOR;
+import static com.haulmont.testtask.PharmacyDb.PharmacyDbDao.DOCTOR;
 import static com.haulmont.testtask.SqlHelper.*;
 
-public class HsqldbDaoDoctorDao extends HsqldbDao implements DoctorDao {
-    public HsqldbDaoDoctorDao(String dbUrl, String user, String password) {
+public class HsqldbDoctorDao extends HsqldbDao implements DoctorDao {
+    public HsqldbDoctorDao(String dbUrl, String user, String password) {
         super(dbUrl, user, password);
     }
 
@@ -54,13 +54,37 @@ public class HsqldbDaoDoctorDao extends HsqldbDao implements DoctorDao {
     }
 
     @Override
-    public boolean updateDoctor(Doctor doctor) {
-        return false;
+    public int updateDoctor(Doctor doctor) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = String.format("%s %s %s " +
+                        "%s = \'%s\', " +
+                        "%s = \'%s\', " +
+                        "%s = \'%s\', " +
+                        "%s = %s " +
+                        "%s %s = %s;",
+                UPDATE, DOCTOR, SET,
+                FORENAME, doctor.getForename(),
+                PATRONYMIC, doctor.getPatronymic(),
+                SURNAME, doctor.getSurname(),
+                SPECIALIZATION_ID, Long.toString(doctor.getSpecializationId()),
+                WHERE, ID, doctor.getId());
+
+        int changedRowsNum = executeUpdate(query);
+
+        disconnect();
+        return changedRowsNum;
     }
 
     @Override
-    public boolean deleteDoctor(long id) {
-        return false;
+    public int deleteDoctor(long id) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = String.format("%s %s %s %s %s = %s", DELETE, FROM, DOCTOR, WHERE, ID, Long.toString(id));
+        int changedRowsNum = executeUpdate(query);
+
+        disconnect();
+        return changedRowsNum;
     }
 
     @Override
