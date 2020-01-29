@@ -3,19 +3,24 @@ package com.haulmont.testtask.Dao;
 import java.sql.*;
 
 public abstract class Dao {
-    private String jdbcDriver = null;
-    private String connectionUrl = null;
+    protected String jdbcDriver = null;
+    protected String dbUrl = null;
+
+    protected String user = null;
+    protected String password = null;
 
     private Connection connection = null;
 
-    protected Dao(String jdbcDriver, String connectionUrl) {
+    protected Dao(String jdbcDriver, String dbUrl, String user, String password) {
         this.jdbcDriver = jdbcDriver;
-        this.connectionUrl = connectionUrl;
+        this.dbUrl = dbUrl;
+        this.user = user;
+        this.password = password;
     }
 
-    public void connect(String user, String password) throws ClassNotFoundException, SQLException {
+    public void connect() throws ClassNotFoundException, SQLException {
         Class.forName(jdbcDriver);
-        connection = DriverManager.getConnection(connectionUrl, user, password);
+        connection = DriverManager.getConnection(dbUrl, user, password);
     }
 
     public void disconnect() throws SQLException {
