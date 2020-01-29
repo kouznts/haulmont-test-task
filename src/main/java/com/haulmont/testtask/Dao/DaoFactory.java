@@ -3,10 +3,10 @@ package com.haulmont.testtask.Dao;
 public abstract class DaoFactory {
     public enum DaoTypes {HSQLDB}
 
-    public static HsqldbDao getDao(DaoTypes daoType, String connectionUrl) {
+    public static HsqldbDao getDao(DaoTypes daoType, String dbUrl, String user, String password) {
         switch (daoType) {
             case HSQLDB:
-                return new HsqldbDao(connectionUrl);
+                return new HsqldbDao(dbUrl, user, password);
             default:
                 return null;
         }

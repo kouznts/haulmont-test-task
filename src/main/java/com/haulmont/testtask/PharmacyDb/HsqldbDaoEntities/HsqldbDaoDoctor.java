@@ -23,12 +23,15 @@ public class HsqldbDaoDoctor extends HsqldbDao implements DaoableDoctor {
         final String query = getSelectAllFromTableWhereAttrEqualsVal(DOCTOR, ID, Long.toString(id));
         ResultSet resultSet = executeQuery(query);
 
-        Doctor doctor = new Doctor(
-                resultSet.getLong(ID),
-                resultSet.getString(FORENAME),
-                resultSet.getString(PATRONYMIC),
-                resultSet.getString(SURNAME),
-                resultSet.getLong(SPECIALIZATION_ID));
+        Doctor doctor = null;
+        while (resultSet.next()) {
+            doctor = new Doctor(
+                    resultSet.getLong(ID),
+                    resultSet.getString(FORENAME),
+                    resultSet.getString(PATRONYMIC),
+                    resultSet.getString(SURNAME),
+                    resultSet.getLong(SPECIALIZATION_ID));
+        }
 
         disconnect();
         return doctor;

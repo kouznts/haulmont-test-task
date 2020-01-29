@@ -19,16 +19,19 @@ public class HsqldbDaoPharmacy extends HsqldbDao implements DaoablePharmacyDb {
 
     @Override
     public DaoableDoctorSpecialization getDaoableDoctorSpecialization() {
-        return new HsqldbDaoDoctorSpecialization();
+        //return new HsqldbDaoDoctorSpecialization();
+        return null;
     }
 
     @Override
     public DaoableMedicalPrescription getDaoableMedicalPrescription() {
-        return new HsqldbDaoMedicalPrescription();
+        //return new HsqldbDaoMedicalPrescription();
+        return null;
     }
 
     @Override
     public DaoablePatient getDaoablePatient() {
-        return new HsqldbDaoPatient();
+        //return new HsqldbDaoPatient();
+        return null;
     }
 }

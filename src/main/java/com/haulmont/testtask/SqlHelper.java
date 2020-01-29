@@ -11,8 +11,9 @@ public final class SqlHelper {
             String attr,
             String val
     ) {
-        return SELECT + ' ' + ALL + ' ' +
+        String temp = SELECT + ' ' + ALL + ' ' +
                 FROM + ' ' + table + ' ' +
                 WHERE + ' ' + attr + ' ' + '=' + ' ' + val;
+        return temp;
     }
 }
