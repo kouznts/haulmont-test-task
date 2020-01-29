@@ -1,6 +1,6 @@
 package com.haulmont.testtask.PharmacyDb.DaoableEntities;
 
-import com.haulmont.testtask.PharmacyDb.DtoEntities.DtoMedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Dtos.DtoMedicalPrescription;
 
 import java.util.List;
 

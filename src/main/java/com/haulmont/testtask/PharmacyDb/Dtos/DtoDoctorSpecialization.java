@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb.DtoEntities;
+package com.haulmont.testtask.PharmacyDb.Dtos;
 
 public class DtoDoctorSpecialization {
     private long id;

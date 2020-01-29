@@ -6,6 +6,8 @@ import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoableMedicalPrescripti
 import com.haulmont.testtask.PharmacyDb.DaoableEntities.DaoablePatient;
 
 public interface DaoablePharmacyDb {
+    static final String DOCTOR = "doctor";
+
     DaoableDoctor getDaoableDoctor();
 
     DaoableDoctorSpecialization getDaoableDoctorSpecialization();
