@@ -2,7 +2,7 @@ package com.haulmont.testtask.PharmacyDb;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableDoctorSpecialization;
+import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableMedicalPrescription;
 import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoablePatient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorDao;
@@ -18,7 +18,7 @@ public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     }
 
     @Override
-    public DaoableDoctorSpecialization getDaoableDoctorSpecialization() {
+    public DoctorSpecializationDao getDaoableDoctorSpecialization() {
         //return new HsqldbDaoDoctorSpecialization();
         return null;
     }
