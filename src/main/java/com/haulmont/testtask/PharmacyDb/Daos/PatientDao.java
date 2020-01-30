@@ -1,17 +1,23 @@
 package com.haulmont.testtask.PharmacyDb.Daos;
 
-import com.haulmont.testtask.PharmacyDb.Dtos.DtoPatient;
+import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 
 import java.util.List;
 
 public interface PatientDao {
-    DtoPatient findPatient(long id);
+    String ID = "id";
+    String FORENAME = "forename";
+    String PATRONYMIC = "patronymic";
+    String SURNAME = "surname";
+    String PHONE = "phone";
 
-    long insertPatient(DtoPatient patient);
+    Patient findPatient(long id);
 
-    boolean updatePatient(DtoPatient patient);
+    int insertPatient(Patient patient);
 
-    boolean deletePatient(long id);
+    int updatePatient(Patient patient);
 
-    List<DtoPatient> getAllPatients();
+    int deletePatient(long id);
+
+    List<Patient> getAllPatients();
 }
