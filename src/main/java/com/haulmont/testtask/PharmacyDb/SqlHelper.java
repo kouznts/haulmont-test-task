@@ -1,4 +1,4 @@
-package com.haulmont.testtask;
+package com.haulmont.testtask.PharmacyDb;
 
 public final class SqlHelper {
     public static final String SELECT = "SELECT";
@@ -10,4 +10,7 @@ public final class SqlHelper {
     public static final String UPDATE = "UPDATE";
     public static final String SET = "SET";
     public static final String DELETE = "DELETE";
+    public static final String TIMESTAMP = "TIMESTAMP";
+    public static final String LIKE = "LIKE";
+    public static final String AND = "AND";
 }

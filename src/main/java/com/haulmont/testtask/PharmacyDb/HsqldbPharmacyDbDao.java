@@ -1,11 +1,14 @@
 package com.haulmont.testtask.PharmacyDb;
 
-import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableDoctorSpecialization;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoableMedicalPrescription;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DaoablePatient;
-import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorDao;
+        import com.haulmont.testtask.Dao.HsqldbDao;
+        import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
+        import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
+        import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
+        import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
+        import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorDao;
+        import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbDoctorSpecializationDao;
+        import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbMedicalPrescriptionDao;
+        import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPatientDao;
 
 public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     public HsqldbPharmacyDbDao(String dbUrl, String user, String password) {
@@ -18,20 +21,17 @@ public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     }
 
     @Override
-    public DaoableDoctorSpecialization getDaoableDoctorSpecialization() {
-        //return new HsqldbDaoDoctorSpecialization();
-        return null;
+    public DoctorSpecializationDao getDoctorSpecializationDao() {
+        return new HsqldbDoctorSpecializationDao(super.dbUrl, super.user, super.password);
     }
 
     @Override
-    public DaoableMedicalPrescription getDaoableMedicalPrescription() {
-        //return new HsqldbDaoMedicalPrescription();
-        return null;
+    public MedicalPrescriptionDao getMedicalPrescriptionDao() {
+        return new HsqldbMedicalPrescriptionDao(super.dbUrl, super.user, super.password);
     }
 
     @Override
-    public DaoablePatient getDaoablePatient() {
-        //return new HsqldbDaoPatient();
-        return null;
+    public PatientDao getPatientDao() {
+        return new HsqldbPatientDao(super.dbUrl, super.user, super.password);
     }
 }

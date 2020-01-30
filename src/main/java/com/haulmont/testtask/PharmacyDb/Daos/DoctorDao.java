@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb.DaoInterfaces;
+package com.haulmont.testtask.PharmacyDb.Daos;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
 
@@ -20,5 +20,5 @@ public interface DoctorDao {
 
     int deleteDoctor(long id) throws SQLException, ClassNotFoundException;
 
-    List<Doctor> getAllDoctors();
+    List<Doctor> getAllDoctors() throws SQLException, ClassNotFoundException;
 }
