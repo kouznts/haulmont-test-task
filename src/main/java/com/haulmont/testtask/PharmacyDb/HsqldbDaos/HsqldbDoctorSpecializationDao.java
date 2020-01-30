@@ -1,7 +1,7 @@
 package com.haulmont.testtask.PharmacyDb.HsqldbDaos;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorSpecializationDao;
+import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
 
 import java.sql.ResultSet;

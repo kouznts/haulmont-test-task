@@ -1,10 +1,10 @@
-package com.haulmont.testtask.PharmacyDb.DaoInterfaces;
+package com.haulmont.testtask.PharmacyDb.Daos;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.DtoPatient;
 
 import java.util.List;
 
-public interface DaoablePatient {
+public interface PatientDao {
     DtoPatient findPatient(long id);
 
     long insertPatient(DtoPatient patient);

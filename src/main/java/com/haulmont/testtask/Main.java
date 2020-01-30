@@ -1,6 +1,6 @@
 package com.haulmont.testtask;
 
-import com.haulmont.testtask.PharmacyDb.DaoInterfaces.DoctorSpecializationDao;
+import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
 import com.haulmont.testtask.PharmacyDb.HsqldbPharmacyDbDao;
 
