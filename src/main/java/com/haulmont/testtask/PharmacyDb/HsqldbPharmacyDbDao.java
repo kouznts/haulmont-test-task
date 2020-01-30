@@ -1,7 +1,7 @@
 package com.haulmont.testtask.PharmacyDb;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.Daos.DaoableMedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
@@ -25,7 +25,7 @@ public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     }
 
     @Override
-    public DaoableMedicalPrescription getDaoableMedicalPrescription() {
+    public MedicalPrescriptionDao getDaoableMedicalPrescription() {
         //return new HsqldbDaoMedicalPrescription();
         return null;
     }

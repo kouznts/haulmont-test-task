@@ -2,7 +2,7 @@ package com.haulmont.testtask.PharmacyDb;
 
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
-import com.haulmont.testtask.PharmacyDb.Daos.DaoableMedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 
 public interface PharmacyDbDao {
@@ -15,7 +15,7 @@ public interface PharmacyDbDao {
 
     DoctorSpecializationDao getDoctorSpecializationDao();
 
-    DaoableMedicalPrescription getDaoableMedicalPrescription();
+    MedicalPrescriptionDao getDaoableMedicalPrescription();
 
     PatientDao getPatientDao();
 }
