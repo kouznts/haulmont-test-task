@@ -1,9 +1,7 @@
 package com.haulmont.testtask;
 
-import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
-import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
-import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
-import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
+import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
 import com.haulmont.testtask.PharmacyDb.HsqldbPharmacyDbDao;
 
 import java.sql.SQLException;
@@ -16,29 +14,35 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
-        PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
-        Patient patient;
+        MedicalPrescriptionDao medicalPrescriptionDao = hsqldbPharmacyDbDao.getMedicalPrescriptionDao();
+        MedicalPrescription medicalPrescription;
 
-        /*patient = patientDao.findPatient(9);
-        System.out.println(patient);
+        /*medicalPrescription = medicalPrescriptionDao.findMedicalPrescription(9);
+        System.out.println(medicalPrescription);
         System.out.println();*/
 
-        /*Patient newPatient = new Patient("Михал", "Палыч", "Терентьев", "80000000000");
-        patientDao.insertPatient(newPatient);
-        patient = patientDao.findPatient(43);
-        System.out.println(patient);
+        /*Date date = new Date();
+        long time = date.getTime();
+        Timestamp timestamp = new Timestamp(time);
+
+        MedicalPrescription newMedicalPrescription = new MedicalPrescription(
+                "ТЕСТ", 5, 5, timestamp, timestamp, (byte) 3);
+        medicalPrescriptionDao.insertMedicalPrescription(newMedicalPrescription);
+        System.out.println(newMedicalPrescription);
         System.out.println();*/
 
-        /*patient = new Patient(0, "Якоб", "Якович", "Якобсон", "100");
-        patientDao.updatePatient(patient);
-        patient = patientDao.findPatient(0);
-        System.out.println(patient);*/
+        /*Date date = new Date();
+        long time = date.getTime();
+        Timestamp timestamp = new Timestamp(time);
 
-        patientDao.deletePatient(0);
-        patient = patientDao.findPatient(0);
-        System.out.println(patient);
+        medicalPrescription = new MedicalPrescription(
+                10, "ТЕСТ-ТЕСТ", 5, 5, timestamp, timestamp, (byte) 2);
+        medicalPrescriptionDao.updateMedicalPrescription(medicalPrescription);
+        System.out.println(medicalPrescription);*/
 
-        List<Patient> patients = patientDao.getAllPatients();
-        System.out.println(patients);
+        /*medicalPrescriptionDao.deleteMedicalPrescription(10);*/
+
+        List<MedicalPrescription> medicalPrescriptions = medicalPrescriptionDao.getAllMedicalPrescriptions();
+        System.out.println(medicalPrescriptions);
     }
 }

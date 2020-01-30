@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.haulmont.testtask.PharmacyDb.PharmacyDbDao.DOCTOR_SPECIALIZATION;
-import static com.haulmont.testtask.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.SqlHelper.*;
 
 public class HsqldbDoctorSpecializationDao extends HsqldbDao implements DoctorSpecializationDao {
     public HsqldbDoctorSpecializationDao(String dbUrl, String user, String password) {

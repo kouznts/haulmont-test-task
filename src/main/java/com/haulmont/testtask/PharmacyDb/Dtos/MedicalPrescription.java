@@ -71,4 +71,15 @@ public class MedicalPrescription {
     public byte getPriority() {
         return priority;
     }
+
+    @Override
+    public String toString() {
+        return Long.toString(id) + '\n' +
+                description + '\n' +
+                Long.toString(patientId) + '\n' +
+                Long.toString(doctorId) + '\n' +
+                creationDate + '\n' +
+                validityDate + '\n' +
+                priority;
+    }
 }

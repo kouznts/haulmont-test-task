@@ -8,14 +8,14 @@ import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 public interface PharmacyDbDao {
     String DOCTOR = "doctor";
     String DOCTOR_SPECIALIZATION = "doctor_specialization";
-
+    String MEDICAL_PRESCRIPTION = "medical_prescription";
     String PATIENT = "patient";
 
     DoctorDao getDoctorDao();
 
     DoctorSpecializationDao getDoctorSpecializationDao();
 
-    MedicalPrescriptionDao getDaoableMedicalPrescription();
+    MedicalPrescriptionDao getMedicalPrescriptionDao();
 
     PatientDao getPatientDao();
 }

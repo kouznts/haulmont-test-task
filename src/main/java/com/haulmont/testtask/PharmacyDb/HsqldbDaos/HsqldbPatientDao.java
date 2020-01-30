@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.PharmacyDbDao.DOCTOR;
 import static com.haulmont.testtask.PharmacyDb.PharmacyDbDao.PATIENT;
-import static com.haulmont.testtask.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.SqlHelper.*;
 
 public class HsqldbPatientDao extends HsqldbDao implements PatientDao {
     public HsqldbPatientDao(String dbUrl, String user, String password) {
