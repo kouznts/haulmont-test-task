@@ -9,11 +9,13 @@ public interface PharmacyDbDao {
     String DOCTOR = "doctor";
     String DOCTOR_SPECIALIZATION = "doctor_specialization";
 
+    String PATIENT = "patient";
+
     DoctorDao getDoctorDao();
 
     DoctorSpecializationDao getDoctorSpecializationDao();
 
     DaoableMedicalPrescription getDaoableMedicalPrescription();
 
-    PatientDao getDaoablePatient();
+    PatientDao getPatientDao();
 }

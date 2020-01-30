@@ -2,6 +2,7 @@ package com.haulmont.testtask.PharmacyDb.Daos;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PatientDao {
@@ -11,13 +12,13 @@ public interface PatientDao {
     String SURNAME = "surname";
     String PHONE = "phone";
 
-    Patient findPatient(long id);
+    Patient findPatient(long id) throws SQLException, ClassNotFoundException;
 
-    int insertPatient(Patient patient);
+    int insertPatient(Patient patient) throws SQLException, ClassNotFoundException;
 
-    int updatePatient(Patient patient);
+    int updatePatient(Patient patient) throws SQLException, ClassNotFoundException;
 
-    int deletePatient(long id);
+    int deletePatient(long id) throws SQLException, ClassNotFoundException;
 
-    List<Patient> getAllPatients();
+    List<Patient> getAllPatients() throws SQLException, ClassNotFoundException;
 }

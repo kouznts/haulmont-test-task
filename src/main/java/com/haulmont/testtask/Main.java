@@ -1,7 +1,9 @@
 package com.haulmont.testtask;
 
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
+import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
+import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbPharmacyDbDao;
 
 import java.sql.SQLException;
@@ -14,29 +16,29 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
-        DoctorSpecializationDao doctorSpecializationDao = hsqldbPharmacyDbDao.getDoctorSpecializationDao();
-        DoctorSpecialization doctorSpecialization;
+        PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
+        Patient patient;
 
-        /*doctorSpecialization = doctorSpecializationDao.findDoctorSpecialization(9);
-        System.out.println(doctorSpecialization);
+        /*patient = patientDao.findPatient(9);
+        System.out.println(patient);
         System.out.println();*/
 
-        /*DoctorSpecialization newDoctorSpecialization = new DoctorSpecialization("Иван");
-        doctorSpecializationDao.insertDoctorSpecialization(newDoctorSpecialization);
-        doctorSpecialization = doctorSpecializationDao.findDoctorSpecialization(11);
-        System.out.println(doctorSpecialization);
+        /*Patient newPatient = new Patient("Михал", "Палыч", "Терентьев", "80000000000");
+        patientDao.insertPatient(newPatient);
+        patient = patientDao.findPatient(43);
+        System.out.println(patient);
         System.out.println();*/
 
-        /*doctorSpecialization = new DoctorSpecialization(0, "Горик");
-        doctorSpecializationDao.updateDoctorSpecialization(doctorSpecialization);
-        doctorSpecialization = doctorSpecializationDao.findDoctorSpecialization(0);
-        System.out.println(doctorSpecialization);*/
+        /*patient = new Patient(0, "Якоб", "Якович", "Якобсон", "100");
+        patientDao.updatePatient(patient);
+        patient = patientDao.findPatient(0);
+        System.out.println(patient);*/
 
-        doctorSpecializationDao.deleteDoctorSpecialization(0);
-        doctorSpecialization = doctorSpecializationDao.findDoctorSpecialization(0);
-        System.out.println(doctorSpecialization);
+        patientDao.deletePatient(0);
+        patient = patientDao.findPatient(0);
+        System.out.println(patient);
 
-        List<DoctorSpecialization> doctorSpecializations = doctorSpecializationDao.getAllDoctorSpecializations();
-        System.out.println(doctorSpecializations);
+        List<Patient> patients = patientDao.getAllPatients();
+        System.out.println(patients);
     }
 }
