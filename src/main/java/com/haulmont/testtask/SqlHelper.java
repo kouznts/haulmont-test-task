@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb;
+package com.haulmont.testtask;
 
 public final class SqlHelper {
     public static final String SELECT = "SELECT";

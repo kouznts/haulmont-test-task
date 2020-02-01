@@ -1,4 +1,4 @@
-package com.haulmont.testtask.PharmacyDb.Dtos;
+package com.haulmont.testtask.Pharmacy.Db.Dtos;
 
 import java.sql.Timestamp;
 
