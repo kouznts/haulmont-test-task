@@ -1,9 +1,4 @@
-package com.haulmont.testtask.PharmacyDb;
-
-import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
-import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
-import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
-import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
+package com.haulmont.testtask.Pharmacy.Db.Daos;
 
 public interface PharmacyDbDao {
     String DOCTOR = "doctor";

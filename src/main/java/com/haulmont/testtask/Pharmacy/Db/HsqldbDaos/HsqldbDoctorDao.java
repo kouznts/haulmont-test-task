@@ -1,16 +1,16 @@
-package com.haulmont.testtask.PharmacyDb.HsqldbDaos;
+package com.haulmont.testtask.Pharmacy.Db.HsqldbDaos;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
-import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
+import com.haulmont.testtask.Pharmacy.Db.Daos.DoctorDao;
+import com.haulmont.testtask.Pharmacy.Db.Dtos.Doctor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.PharmacyDbDao.DOCTOR;
-import static com.haulmont.testtask.PharmacyDb.SqlHelper.*;
+import static com.haulmont.testtask.Pharmacy.Db.Daos.PharmacyDbDao.DOCTOR;
+import static com.haulmont.testtask.SqlHelper.*;
 
 public class HsqldbDoctorDao extends HsqldbDao implements DoctorDao {
     public HsqldbDoctorDao(String dbUrl, String user, String password) {
