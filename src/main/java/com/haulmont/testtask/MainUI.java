@@ -4,10 +4,10 @@ import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.vaadin.annotations.Theme;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.sql.SQLException;
@@ -23,14 +23,27 @@ public class MainUI extends UI {
     private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
 
     private Grid<Patient> gridPatients = new Grid<>(Patient.class);
+    private TextField tfFilterText = new TextField();
 
     @Override
     protected void init(VaadinRequest request) {
         VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
-        layout.setMargin(true);
 
-        layout.addComponents(gridPatients);
+        tfFilterText.setPlaceholder("фильтр по ...");
+        tfFilterText.addValueChangeListener(ev -> showAllPatients());
+        tfFilterText.setValueChangeMode(ValueChangeMode.LAZY);
+
+        Button btnClearTfFilterText = new Button(VaadinIcons.CLOSE);
+        btnClearTfFilterText.setDescription("Очистить фильтер");
+        btnClearTfFilterText.addClickListener(ev -> tfFilterText.clear());
+
+        CssLayout filtering = new CssLayout();
+        filtering.addComponents(tfFilterText, btnClearTfFilterText);
+        filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+
+        gridPatients.setColumns("surname", "forename", "patronymic", "phone", "id");
+
+        layout.addComponents(filtering, gridPatients);
 
         showAllPatients();
 
@@ -40,7 +53,6 @@ public class MainUI extends UI {
     public void showAllPatients() {
         try {
             List<Patient> patients = patientDao.getAllPatients();
-            gridPatients.setColumns("surname", "forename", "patronymic", "phone", "id");
             gridPatients.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {
             exc.printStackTrace();
