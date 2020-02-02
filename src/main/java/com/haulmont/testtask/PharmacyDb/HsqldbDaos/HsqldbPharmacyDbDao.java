@@ -1,7 +1,7 @@
-package com.haulmont.testtask.Pharmacy.Db.HsqldbDaos;
+package com.haulmont.testtask.PharmacyDb.HsqldbDaos;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.Pharmacy.Db.Daos.*;
+import com.haulmont.testtask.PharmacyDb.Daos.*;
 
 public class HsqldbPharmacyDbDao extends HsqldbDao implements PharmacyDbDao {
     public HsqldbPharmacyDbDao(String dbUrl, String user, String password) {

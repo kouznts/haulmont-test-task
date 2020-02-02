@@ -1,16 +1,16 @@
-package com.haulmont.testtask.Pharmacy.Db.HsqldbDaos;
+package com.haulmont.testtask.PharmacyDb.HsqldbDaos;
 
 import com.haulmont.testtask.Dao.HsqldbDao;
-import com.haulmont.testtask.Pharmacy.Db.Daos.MedicalPrescriptionDao;
-import com.haulmont.testtask.Pharmacy.Db.Dtos.MedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.Pharmacy.Db.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
-import static com.haulmont.testtask.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
+import static com.haulmont.testtask.Dao.SqlHelper.*;
 
 public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPrescriptionDao {
     public HsqldbMedicalPrescriptionDao(String dbUrl, String user, String password) {

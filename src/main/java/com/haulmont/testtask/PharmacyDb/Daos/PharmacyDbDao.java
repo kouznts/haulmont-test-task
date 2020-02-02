@@ -1,4 +1,4 @@
-package com.haulmont.testtask.Pharmacy.Db.Daos;
+package com.haulmont.testtask.PharmacyDb.Daos;
 
 public interface PharmacyDbDao {
     String DOCTOR = "doctor";
