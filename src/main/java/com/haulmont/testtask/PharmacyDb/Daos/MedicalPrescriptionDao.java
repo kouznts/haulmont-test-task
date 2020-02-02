@@ -1,6 +1,6 @@
-package com.haulmont.testtask.Pharmacy.Db.Daos;
+package com.haulmont.testtask.PharmacyDb.Daos;
 
-import com.haulmont.testtask.Pharmacy.Db.Dtos.MedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
 
 import java.sql.SQLException;
 import java.util.List;

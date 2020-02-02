@@ -1,4 +1,4 @@
-package com.haulmont.testtask;
+package com.haulmont.testtask.Dao;
 
 public final class SqlHelper {
     public static final String SELECT = "SELECT";

@@ -1,6 +1,6 @@
-package com.haulmont.testtask.Pharmacy.Views;
+package com.haulmont.testtask.PharmacyUi.Views;
 
-import com.haulmont.testtask.Pharmacy.Designs.PatientDesign;
+import com.haulmont.testtask.PharmacyUi.Designs.PatientDesign;
 import com.vaadin.ui.Button;
 
 public class PatientView extends PatientDesign {

@@ -29,3 +29,5 @@ hs_err_pid*
 testdb.lck
 testdb.properties
 testdb.script
+
+target/
