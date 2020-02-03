@@ -64,7 +64,6 @@ public class PatientForm extends FormLayout {
         this.patient = patient;
         binder.setBean(patient);
 
-        deleteBtn.setVisible(true);
         deleteBtn.setVisible(patient.isPersisted());
         setVisible(true);
         forename.selectAll();
@@ -72,7 +71,13 @@ public class PatientForm extends FormLayout {
 
     private void save() throws SQLException, ClassNotFoundException {
         updatePatientDto();
-        patientDao.updatePatient(patient);
+
+        if (patient.isPersisted()) {
+            patientDao.updatePatient(patient);
+        } else {
+            patientDao.insertPatient(patient);
+        }
+
         mainUi.updatePatientsGrid();
         setVisible(false);
     }
