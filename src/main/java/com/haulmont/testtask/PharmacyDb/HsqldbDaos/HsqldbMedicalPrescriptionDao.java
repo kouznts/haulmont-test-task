@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
 import static com.haulmont.testtask.Dao.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
 
 public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPrescriptionDao {
     public HsqldbMedicalPrescriptionDao(String dbUrl, String user, String password) {
@@ -110,7 +110,15 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
 
         ResultSet resultSet = executeQuery(query);
 
+        List<MedicalPrescription> medicalPrescriptions = getMedicalPrescriptionsFromResultSet(resultSet);
+
+        disconnect();
+        return medicalPrescriptions;
+    }
+
+    private List<MedicalPrescription> getMedicalPrescriptionsFromResultSet(ResultSet resultSet) throws SQLException {
         List<MedicalPrescription> medicalPrescriptions = new LinkedList<MedicalPrescription>();
+
         MedicalPrescription medicalPrescription;
         while (resultSet.next()) {
             medicalPrescription = new MedicalPrescription(
@@ -125,7 +133,6 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
             medicalPrescriptions.add(medicalPrescription);
         }
 
-        disconnect();
         return medicalPrescriptions;
     }
 
@@ -134,30 +141,34 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
         connect();
 
         final String query = String.format("%s * %s %s " +
-                        "%s %s %s %s %s " +
+                        "%s %s ( %s ) %s %s (\'%s\') %s " +
                         "%s = %s %s " +
                         "%s = %s;",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
-                WHERE, DESCRIPTION, LIKE, '%' + description + '%', AND,
+                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%', AND,
                 PATIENT_ID, patientId, AND,
                 PRIORITY, priority);
 
         ResultSet resultSet = executeQuery(query);
 
-        List<MedicalPrescription> medicalPrescriptions = new LinkedList<MedicalPrescription>();
-        MedicalPrescription medicalPrescription;
-        while (resultSet.next()) {
-            medicalPrescription = new MedicalPrescription(
-                    resultSet.getLong(ID),
-                    resultSet.getString(DESCRIPTION),
-                    resultSet.getLong(PATIENT_ID),
-                    resultSet.getLong(DOCTOR_ID),
-                    resultSet.getTimestamp(CREATION_DATE),
-                    resultSet.getTimestamp(VALIDITY_DATE),
-                    resultSet.getByte(PRIORITY));
+        List<MedicalPrescription> medicalPrescriptions = getMedicalPrescriptionsFromResultSet(resultSet);
 
-            medicalPrescriptions.add(medicalPrescription);
-        }
+        disconnect();
+        return medicalPrescriptions;
+    }
+
+    @Override
+    public List<MedicalPrescription> getMedicalPrescriptionsByDescription(String description) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = String.format("%s * %s %s " +
+                        "%s %s ( %s ) %s %s (\'%s\')",
+                SELECT, FROM, MEDICAL_PRESCRIPTION,
+                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%');
+
+        ResultSet resultSet = executeQuery(query);
+
+        List<MedicalPrescription> medicalPrescriptions = getMedicalPrescriptionsFromResultSet(resultSet);
 
         disconnect();
         return medicalPrescriptions;

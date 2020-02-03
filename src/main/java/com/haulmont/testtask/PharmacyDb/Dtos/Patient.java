@@ -7,6 +7,14 @@ public class Patient {
     private String surname;
     private String phone;
 
+    public Patient() {
+        id = -1;
+        forename = "";
+        patronymic = "";
+        surname = "";
+        phone = "";
+    }
+
     public Patient(String forename, String patronymic, String surname, String phone) {
         this.id = -1;
         this.forename = forename;
@@ -41,6 +49,26 @@ public class Patient {
 
     public String getPhone() {
         return phone;
+    }
+
+    public void setForename(String newForename) {
+        forename = newForename;
+    }
+
+    public void setPatronymic(String newPatronymic) {
+        patronymic = newPatronymic;
+    }
+
+    public void setSurname(String newSurname) {
+        surname = newSurname;
+    }
+
+    public void setPhone(String newPhone) {
+        phone = newPhone;
+    }
+
+    public boolean isPersisted() {
+        return id > -1;
     }
 
     @Override
