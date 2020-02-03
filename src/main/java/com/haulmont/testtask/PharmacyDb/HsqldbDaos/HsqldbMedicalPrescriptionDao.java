@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
 import static com.haulmont.testtask.Dao.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.MEDICAL_PRESCRIPTION;
 
 public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPrescriptionDao {
     public HsqldbMedicalPrescriptionDao(String dbUrl, String user, String password) {
@@ -134,11 +134,11 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
         connect();
 
         final String query = String.format("%s * %s %s " +
-                        "%s %s %s %s %s " +
+                        "%s %s ( %s ) %s %s ( %s ) %s " +
                         "%s = %s %s " +
                         "%s = %s;",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
-                WHERE, DESCRIPTION, LIKE, '%' + description + '%', AND,
+                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%', AND,
                 PATIENT_ID, patientId, AND,
                 PRIORITY, priority);
 

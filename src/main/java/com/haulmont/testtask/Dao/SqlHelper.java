@@ -13,4 +13,5 @@ public final class SqlHelper {
     public static final String TIMESTAMP = "TIMESTAMP";
     public static final String LIKE = "LIKE";
     public static final String AND = "AND";
+    public static final String LOWER = "LOWER";
 }

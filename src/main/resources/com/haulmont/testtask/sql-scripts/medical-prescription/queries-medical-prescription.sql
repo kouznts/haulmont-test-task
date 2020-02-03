@@ -23,7 +23,7 @@ delete from medical_prescription where id = 0;
 -- фильтрация списка рецептов по описанию, приоритету и пациенту
 select * from medical_prescription
 where
-description like '%ОПИСАНИЕ%' and
+lower(description) like lower('%ОПИСАНИЕ%') and
 patient_id = 0 and
 priority = 3;
 
