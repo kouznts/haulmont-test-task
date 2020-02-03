@@ -32,7 +32,7 @@ public class MainUI extends UI {
         VerticalLayout layout = new VerticalLayout();
 
         tfFilterText.setPlaceholder("Отфильтровать по описанию ...");
-        tfFilterText.addValueChangeListener(ev -> showAllPatients());
+        tfFilterText.addValueChangeListener(ev -> showPatients());
         tfFilterText.setValueChangeMode(ValueChangeMode.LAZY);
 
         Button btnClearTfFilterText = new Button(VaadinIcons.CLOSE);
@@ -43,7 +43,7 @@ public class MainUI extends UI {
         filtering.addComponents(tfFilterText, btnClearTfFilterText);
         filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        //gridPrescriptions.setColumns("surname", "forename", "patronymic", "phone", "id");
+        gridPatients.setColumns("surname", "forename", "patronymic", "phone");
 
         HorizontalLayout mainLayout = new HorizontalLayout(gridPatients, patientForm);
         mainLayout.setSizeFull();
@@ -52,12 +52,12 @@ public class MainUI extends UI {
 
         layout.addComponents(filtering, mainLayout);
 
-        showAllPatients();
+        showPatients();
 
         setContent(layout);
     }
 
-    public void showAllPatients() {
+    public void showPatients() {
         try {
             List<Patient> patients;
 
@@ -65,7 +65,7 @@ public class MainUI extends UI {
             if (searchSurname.equals(""))
                 patients = patientDao.getAllPatients();
             else
-                patients = patientDao.getAllPatientsBySurname(searchSurname);
+                patients = patientDao.getPatientsBySurname(searchSurname);
 
             gridPatients.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {

@@ -17,3 +17,8 @@ where id = 0;
 
 -- удаление
 delete from patient where id = 0;
+
+-- фильтрация списка пациентов по фамилии
+select * from patient
+where
+lower(surname) like lower('%ОПИСАНИЕ%');

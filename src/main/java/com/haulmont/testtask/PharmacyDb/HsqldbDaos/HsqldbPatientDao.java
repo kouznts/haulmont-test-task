@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.PATIENT;
 import static com.haulmont.testtask.Dao.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.PATIENT;
 
 public class HsqldbPatientDao extends HsqldbDao implements PatientDao {
     public HsqldbPatientDao(String dbUrl, String user, String password) {
@@ -95,7 +95,15 @@ public class HsqldbPatientDao extends HsqldbDao implements PatientDao {
         final String query = String.format("%s * %s %s", SELECT, FROM, PATIENT);
         ResultSet resultSet = executeQuery(query);
 
+        List<Patient> patients = getPatientsFromResultSet(resultSet);
+
+        disconnect();
+        return patients;
+    }
+
+    private List<Patient> getPatientsFromResultSet(ResultSet resultSet) throws SQLException {
         List<Patient> patients = new LinkedList<Patient>();
+
         Patient patient;
         while (resultSet.next()) {
             patient = new Patient(
@@ -107,6 +115,22 @@ public class HsqldbPatientDao extends HsqldbDao implements PatientDao {
 
             patients.add(patient);
         }
+
+        return patients;
+    }
+
+    @Override
+    public List<Patient> getPatientsBySurname(String surname) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = String.format("%s * %s %s " +
+                        "%s %s ( %s ) %s %s (\'%s\')",
+                SELECT, FROM, PATIENT,
+                WHERE, LOWER, SURNAME, LIKE, LOWER, '%' + surname + '%');
+
+        ResultSet resultSet = executeQuery(query);
+
+        List<Patient> patients = getPatientsFromResultSet(resultSet);
 
         disconnect();
         return patients;

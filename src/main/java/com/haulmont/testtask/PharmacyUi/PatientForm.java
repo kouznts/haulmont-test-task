@@ -71,13 +71,13 @@ public class PatientForm extends FormLayout {
 
     private void save() throws SQLException, ClassNotFoundException {
         patientDao.insertPatient(patient);
-        mainUi.showAllMedicalPrescriptions();
+        mainUi.showPatients();
         setVisible(false);
     }
 
     private void delete() throws SQLException, ClassNotFoundException {
         patientDao.deletePatient(patient.getId());
-        mainUi.showAllMedicalPrescriptions();
+        mainUi.showPatients();
         setVisible(false);
     }
 }

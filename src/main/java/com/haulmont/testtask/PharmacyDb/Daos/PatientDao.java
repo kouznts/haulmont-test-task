@@ -21,4 +21,6 @@ public interface PatientDao {
     int deletePatient(long id) throws SQLException, ClassNotFoundException;
 
     List<Patient> getAllPatients() throws SQLException, ClassNotFoundException;
+
+    List<Patient> getPatientsBySurname(String surname) throws SQLException, ClassNotFoundException;
 }
