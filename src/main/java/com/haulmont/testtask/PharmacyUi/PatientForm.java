@@ -22,8 +22,8 @@ public class PatientForm extends FormLayout {
     private TextField surname = new TextField("Фамилия");
     private TextField phone = new TextField("Телефон");
 
-    private Button btnSave = new Button("Сохранить");
-    private Button btnDelete = new Button("Удалить");
+    private Button saveBtn = new Button("Сохранить");
+    private Button deleteBtn = new Button("Удалить");
 
     private MainUI mainUi;
     private Binder<Patient> binder = new Binder<>(Patient.class);
@@ -35,15 +35,15 @@ public class PatientForm extends FormLayout {
         this.mainUi = mainUi;
 
         setSizeUndefined();
-        HorizontalLayout buttons = new HorizontalLayout(btnSave, btnDelete);
-        addComponents(forename, patronymic, surname, phone);
+        HorizontalLayout buttons = new HorizontalLayout(saveBtn, deleteBtn);
+        addComponents(forename, patronymic, surname, phone, buttons);
 
-        btnSave.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        btnSave.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        saveBtn.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         binder.bindInstanceFields(this);
 
-        btnSave.addClickListener(ev -> {
+        saveBtn.addClickListener(event -> {
             try {
                 save();
             } catch (SQLException | ClassNotFoundException exc) {
@@ -51,7 +51,7 @@ public class PatientForm extends FormLayout {
             }
         });
 
-        btnDelete.addClickListener(ev -> {
+        deleteBtn.addClickListener(event -> {
             try {
                 delete();
             } catch (SQLException | ClassNotFoundException exc) {
@@ -64,15 +64,24 @@ public class PatientForm extends FormLayout {
         this.patient = patient;
         binder.setBean(patient);
 
-        btnDelete.setVisible(patient.isPersisted());
+        deleteBtn.setVisible(true);
+        deleteBtn.setVisible(patient.isPersisted());
         setVisible(true);
         forename.selectAll();
     }
 
     private void save() throws SQLException, ClassNotFoundException {
-        patientDao.insertPatient(patient);
+        updatePatientDto();
+        patientDao.updatePatient(patient);
         mainUi.updatePatientsGrid();
         setVisible(false);
+    }
+
+    private void updatePatientDto() {
+        patient.setForename(forename.getValue());
+        patient.setPatronymic(patronymic.getValue());
+        patient.setSurname(surname.getValue());
+        patient.setPhone(phone.getValue());
     }
 
     private void delete() throws SQLException, ClassNotFoundException {

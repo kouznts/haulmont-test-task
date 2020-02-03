@@ -51,8 +51,24 @@ public class Patient {
         return phone;
     }
 
+    public void setForename(String newForename) {
+        forename = newForename;
+    }
+
+    public void setPatronymic(String newPatronymic) {
+        patronymic = newPatronymic;
+    }
+
+    public void setSurname(String newSurname) {
+        surname = newSurname;
+    }
+
+    public void setPhone(String newPhone) {
+        phone = newPhone;
+    }
+
     public boolean isPersisted() {
-        return id != -1;
+        return id > -1;
     }
 
     @Override
