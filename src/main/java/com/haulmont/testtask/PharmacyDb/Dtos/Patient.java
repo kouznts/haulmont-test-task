@@ -43,6 +43,10 @@ public class Patient {
         return phone;
     }
 
+    public boolean isPersisted() {
+        return id != -1;
+    }
+
     @Override
     public String toString() {
         return Long.toString(id) + '\n' +

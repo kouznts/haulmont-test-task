@@ -3,6 +3,7 @@ package com.haulmont.testtask;
 import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
+import com.haulmont.testtask.PharmacyUi.PatientForm;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinRequest;
@@ -15,11 +16,13 @@ import java.util.List;
 
 @Theme(ValoTheme.THEME_NAME)
 public class MainUI extends UI {
-    private static final String DB_URL = "jdbc:hsqldb:file:testdb";
-    private static final String USER = "SA";
-    private static final String PASSWORD = "";
-
+    public static final String DB_URL = "jdbc:hsqldb:file:testdb";
+    public static final String USER = "SA";
+    public static final String PASSWORD = "";
     private HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
+
+    private PatientForm patientForm = new PatientForm(this);
+
     private MedicalPrescriptionDao prescriptionDao = hsqldbPharmacyDbDao.getMedicalPrescriptionDao();
 
     private Grid<MedicalPrescription> gridPrescriptions = new Grid<>(MedicalPrescription.class);
@@ -43,7 +46,12 @@ public class MainUI extends UI {
 
         //gridPrescriptions.setColumns("surname", "forename", "patronymic", "phone", "id");
 
-        layout.addComponents(filtering, gridPrescriptions);
+        HorizontalLayout mainLayout = new HorizontalLayout(gridPrescriptions, patientForm);
+        mainLayout.setSizeFull();
+        gridPrescriptions.setSizeFull();
+        mainLayout.setExpandRatio(gridPrescriptions, 1);
+
+        layout.addComponents(filtering, mainLayout);
 
         showAllMedicalPrescriptions();
 
