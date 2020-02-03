@@ -141,7 +141,7 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
         connect();
 
         final String query = String.format("%s * %s %s " +
-                        "%s %s ( %s ) %s %s ( %s ) %s " +
+                        "%s %s ( %s ) %s %s (\'%s\') %s " +
                         "%s = %s %s " +
                         "%s = %s;",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
@@ -162,7 +162,7 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
         connect();
 
         final String query = String.format("%s * %s %s " +
-                        "%s %s ( %s ) %s %s ( %s )",
+                        "%s %s ( %s ) %s %s (\'%s\')",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
                 WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%');
 
