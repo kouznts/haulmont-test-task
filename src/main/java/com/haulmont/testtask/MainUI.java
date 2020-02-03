@@ -1,7 +1,7 @@
 package com.haulmont.testtask;
 
-import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
-import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
+import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.haulmont.testtask.PharmacyUi.PatientForm;
 import com.vaadin.annotations.Theme;
@@ -21,19 +21,18 @@ public class MainUI extends UI {
     public static final String PASSWORD = "";
     private HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
+    private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
     private PatientForm patientForm = new PatientForm(this);
 
-    private MedicalPrescriptionDao prescriptionDao = hsqldbPharmacyDbDao.getMedicalPrescriptionDao();
-
-    private Grid<MedicalPrescription> gridPrescriptions = new Grid<>(MedicalPrescription.class);
+    private Grid<Patient> gridPatients = new Grid<>(Patient.class);
     private TextField tfFilterText = new TextField();
 
     @Override
     protected void init(VaadinRequest request) {
         VerticalLayout layout = new VerticalLayout();
 
-        tfFilterText.setPlaceholder("отфильтровать по описанию ...");
-        tfFilterText.addValueChangeListener(ev -> showAllMedicalPrescriptions());
+        tfFilterText.setPlaceholder("Отфильтровать по описанию ...");
+        tfFilterText.addValueChangeListener(ev -> showAllPatients());
         tfFilterText.setValueChangeMode(ValueChangeMode.LAZY);
 
         Button btnClearTfFilterText = new Button(VaadinIcons.CLOSE);
@@ -46,29 +45,29 @@ public class MainUI extends UI {
 
         //gridPrescriptions.setColumns("surname", "forename", "patronymic", "phone", "id");
 
-        HorizontalLayout mainLayout = new HorizontalLayout(gridPrescriptions, patientForm);
+        HorizontalLayout mainLayout = new HorizontalLayout(gridPatients, patientForm);
         mainLayout.setSizeFull();
-        gridPrescriptions.setSizeFull();
-        mainLayout.setExpandRatio(gridPrescriptions, 1);
+        gridPatients.setSizeFull();
+        mainLayout.setExpandRatio(gridPatients, 1);
 
         layout.addComponents(filtering, mainLayout);
 
-        showAllMedicalPrescriptions();
+        showAllPatients();
 
         setContent(layout);
     }
 
-    public void showAllMedicalPrescriptions() {
+    public void showAllPatients() {
         try {
-            List<MedicalPrescription> prescriptions;
+            List<Patient> patients;
 
-            String filterDescription = tfFilterText.getValue();
-            if (filterDescription.equals(""))
-                prescriptions = prescriptionDao.getAllMedicalPrescriptions();
+            String searchSurname = tfFilterText.getValue();
+            if (searchSurname.equals(""))
+                patients = patientDao.getAllPatients();
             else
-                prescriptions = prescriptionDao.getMedicalPrescriptionsByDescription(filterDescription);
+                patients = patientDao.getAllPatientsBySurname(searchSurname);
 
-            gridPrescriptions.setItems(prescriptions);
+            gridPatients.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {
             exc.printStackTrace();
         }
