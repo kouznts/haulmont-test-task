@@ -7,6 +7,14 @@ public class Patient {
     private String surname;
     private String phone;
 
+    public Patient() {
+        id = -1;
+        forename = "";
+        patronymic = "";
+        surname = "";
+        phone = "";
+    }
+
     public Patient(String forename, String patronymic, String surname, String phone) {
         this.id = -1;
         this.forename = forename;

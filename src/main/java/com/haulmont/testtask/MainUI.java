@@ -24,7 +24,7 @@ public class MainUI extends UI {
     private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
     private PatientForm patientForm = new PatientForm(this);
 
-    private Grid<Patient> gridPatients = new Grid<>(Patient.class);
+    private Grid<Patient> patientsGrid = new Grid<>(Patient.class);
     private TextField tfFilterText = new TextField();
 
     @Override
@@ -32,42 +32,61 @@ public class MainUI extends UI {
         VerticalLayout layout = new VerticalLayout();
 
         tfFilterText.setPlaceholder("Отфильтровать по описанию ...");
-        tfFilterText.addValueChangeListener(ev -> showPatients());
+        tfFilterText.addValueChangeListener(event -> updatePatientsGrid());
         tfFilterText.setValueChangeMode(ValueChangeMode.LAZY);
 
         Button btnClearTfFilterText = new Button(VaadinIcons.CLOSE);
         btnClearTfFilterText.setDescription("Очистить фильтр");
-        btnClearTfFilterText.addClickListener(ev -> tfFilterText.clear());
+        btnClearTfFilterText.addClickListener(event -> tfFilterText.clear());
 
         CssLayout filtering = new CssLayout();
         filtering.addComponents(tfFilterText, btnClearTfFilterText);
         filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        gridPatients.setColumns("surname", "forename", "patronymic", "phone");
+        Button addPatientBtn = new Button("Добавить пациента");
+        addPatientBtn.addClickListener(event -> {
+            patientsGrid.asSingleSelect().clear();
+            patientForm.setPatient(new Patient());
+        });
 
-        HorizontalLayout mainLayout = new HorizontalLayout(gridPatients, patientForm);
+        HorizontalLayout toolbar = new HorizontalLayout(filtering, addPatientBtn);
+
+        patientsGrid.setColumns("surname", "forename", "patronymic", "phone");
+
+        HorizontalLayout mainLayout = new HorizontalLayout(patientsGrid, patientForm);
         mainLayout.setSizeFull();
-        gridPatients.setSizeFull();
-        mainLayout.setExpandRatio(gridPatients, 1);
+        patientsGrid.setSizeFull();
+        mainLayout.setExpandRatio(patientsGrid, 1);
 
-        layout.addComponents(filtering, mainLayout);
+        layout.addComponents(toolbar, mainLayout);
 
-        showPatients();
+        updatePatientsGrid();
 
         setContent(layout);
+
+        patientForm.setVisible(false);
+
+        patientsGrid.asSingleSelect().addValueChangeListener(event -> {
+            if (event.getValue() == null) {
+                patientForm.setVisible(false);
+            } else {
+                patientForm.setPatient((event.getValue()));
+            }
+        });
     }
 
-    public void showPatients() {
+    public void updatePatientsGrid() {
         try {
             List<Patient> patients;
 
             String searchSurname = tfFilterText.getValue();
-            if (searchSurname.equals(""))
+            if (searchSurname.equals("")) {
                 patients = patientDao.getAllPatients();
-            else
+            } else {
                 patients = patientDao.getPatientsBySurname(searchSurname);
+            }
 
-            gridPatients.setItems(patients);
+            patientsGrid.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {
             exc.printStackTrace();
         }
