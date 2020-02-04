@@ -19,51 +19,65 @@ public class MainUI extends UI {
     public static final String DB_URL = "jdbc:hsqldb:file:testdb";
     public static final String USER = "SA";
     public static final String PASSWORD = "";
+
     private HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
     private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
     private PatientForm patientForm = new PatientForm(this);
 
+    private TextField filterTf = new TextField();
+    private Button clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
+    private CssLayout filteringLayout = new CssLayout();
+
+    private Button addPatientBtn = new Button("Добавить пациента");
+    private HorizontalLayout toolbarLayout = new HorizontalLayout(filteringLayout, addPatientBtn);
+
     private Grid<Patient> patientsGrid = new Grid<>(Patient.class);
-    private TextField tfFilterText = new TextField();
+    private HorizontalLayout horizontalLayout = new HorizontalLayout();
+
+    private VerticalLayout mainLayout = new VerticalLayout();
 
     @Override
     protected void init(VaadinRequest request) {
-        VerticalLayout layout = new VerticalLayout();
+        setFilterTextField();
+        setClearFilterTfBtn();
+        filteringLayout.addComponents(filterTf, clearFilterTfBtn);
+        filteringLayout.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        tfFilterText.setPlaceholder("Отфильтровать по описанию ...");
-        tfFilterText.addValueChangeListener(event -> updatePatientsGrid());
-        tfFilterText.setValueChangeMode(ValueChangeMode.LAZY);
+        setAddPatientBtn();
+        toolbarLayout.addComponents(filteringLayout, addPatientBtn);
 
-        Button btnClearTfFilterText = new Button(VaadinIcons.CLOSE);
-        btnClearTfFilterText.setDescription("Очистить фильтр");
-        btnClearTfFilterText.addClickListener(event -> tfFilterText.clear());
+        setPatientsGrid();
+        horizontalLayout.addComponents(patientsGrid, patientForm);
+        horizontalLayout.setSizeFull();
+        horizontalLayout.setExpandRatio(patientsGrid, 1);
 
-        CssLayout filtering = new CssLayout();
-        filtering.addComponents(tfFilterText, btnClearTfFilterText);
-        filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+        mainLayout.addComponents(toolbarLayout, horizontalLayout);
+        updatePatientsGrid();
+        setContent(mainLayout);
+    }
 
-        Button addPatientBtn = new Button("Добавить пациента");
+    private void setFilterTextField() {
+        filterTf.setPlaceholder("Поиск по фамилии ...");
+        filterTf.addValueChangeListener(event -> updatePatientsGrid());
+        filterTf.setValueChangeMode(ValueChangeMode.LAZY);
+    }
+
+    private void setClearFilterTfBtn() {
+        clearFilterTfBtn.setDescription("Очистить фильтр");
+        clearFilterTfBtn.addClickListener(event -> filterTf.clear());
+    }
+
+    private void setAddPatientBtn() {
         addPatientBtn.addClickListener(event -> {
             patientsGrid.asSingleSelect().clear();
             patientForm.setPatient(new Patient());
         });
+    }
 
-        HorizontalLayout toolbar = new HorizontalLayout(filtering, addPatientBtn);
-
+    private void setPatientsGrid() {
         patientsGrid.setColumns("surname", "forename", "patronymic", "phone");
-
-        HorizontalLayout mainLayout = new HorizontalLayout(patientsGrid, patientForm);
-        mainLayout.setSizeFull();
         patientsGrid.setSizeFull();
-        mainLayout.setExpandRatio(patientsGrid, 1);
-
-        layout.addComponents(toolbar, mainLayout);
-
-        updatePatientsGrid();
-
-        setContent(layout);
-
         patientForm.setVisible(false);
 
         patientsGrid.asSingleSelect().addValueChangeListener(event -> {
@@ -79,7 +93,7 @@ public class MainUI extends UI {
         try {
             List<Patient> patients;
 
-            String searchSurname = tfFilterText.getValue();
+            String searchSurname = filterTf.getValue();
             if (searchSurname.equals("")) {
                 patients = patientDao.getAllPatients();
             } else {
