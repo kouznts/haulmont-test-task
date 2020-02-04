@@ -17,10 +17,9 @@ import java.util.List;
 
 @Theme(ValoTheme.THEME_NAME)
 public class MainUI extends UI {
-    public static final String DB_URL = "jdbc:hsqldb:file:testdb";
-    public static final String USER = "SA";
-    public static final String PASSWORD = "";
-
+    private static final String DB_URL = "jdbc:hsqldb:file:testdb";
+    private static final String USER = "SA";
+    private static final String PASSWORD = "";
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
     private PatientDao patientDao = pharmacyDbDao.getPatientDao();
@@ -34,7 +33,11 @@ public class MainUI extends UI {
     private HorizontalLayout toolbarLayout = new HorizontalLayout(filteringLayout, addPatientBtn);
 
     private Grid<Patient> patientsGrid = new Grid<>(Patient.class);
-    private HorizontalLayout horizontalLayout = new HorizontalLayout();
+    private HorizontalLayout gridLayout = new HorizontalLayout();
+
+    private Button updatePatientBtn = new Button("Изменить");
+    private Button deletePatientBtn = new Button("Удалить");
+    private HorizontalLayout buttonsLayout = new HorizontalLayout();
 
     private VerticalLayout mainLayout = new VerticalLayout();
 
@@ -45,16 +48,19 @@ public class MainUI extends UI {
         filteringLayout.addComponents(filterTf, clearFilterTfBtn);
         filteringLayout.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
+        addWindow(patientWindow);
         setAddPatientBtn();
         toolbarLayout.addComponents(filteringLayout, addPatientBtn);
 
         setPatientsGrid();
-        horizontalLayout.addComponents(patientsGrid);
-        addWindow(patientWindow);
-        horizontalLayout.setSizeFull();
-        horizontalLayout.setExpandRatio(patientsGrid, 1);
+        gridLayout.addComponents(patientsGrid);
+        gridLayout.setSizeFull();
+        gridLayout.setExpandRatio(patientsGrid, 1);
 
-        mainLayout.addComponents(toolbarLayout, horizontalLayout);
+setButtons();
+        buttonsLayout.addComponents(updatePatientBtn, deletePatientBtn);
+
+        mainLayout.addComponents(toolbarLayout, gridLayout, buttonsLayout);
         updatePatientsGrid();
         setContent(mainLayout);
     }
@@ -84,11 +90,20 @@ public class MainUI extends UI {
 
         patientsGrid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() == null) {
-                patientWindow.setVisible(false);
+                updatePatientBtn.setVisible(false);
+                deletePatientBtn.setVisible(false);
             } else {
+                updatePatientBtn.setVisible(true);
+                deletePatientBtn.setVisible(true);
+
                 patientWindow.setPatient((event.getValue()));
             }
         });
+    }
+
+    private void setButtons() {
+        updatePatientBtn.setVisible(false);
+        deletePatientBtn.setVisible(false);
     }
 
     public void updatePatientsGrid() {
