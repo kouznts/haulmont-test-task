@@ -19,7 +19,6 @@ public class PatientWindow extends Window {
     private TextField surname;
     private TextField phone;
     private Button saveBtn;
-    private Button deleteBtn;
     private HorizontalLayout buttons;
 
     private PatientDao patientDao;
@@ -35,8 +34,7 @@ public class PatientWindow extends Window {
         surname = new TextField("Фамилия");
         phone = new TextField("Телефон");
         saveBtn = new Button("Сохранить");
-        deleteBtn = new Button("Удалить");
-        buttons = new HorizontalLayout(saveBtn, deleteBtn);
+        buttons = new HorizontalLayout(saveBtn);
         patientDao = pharmacyDbDao.getPatientDao();
         this.mainUi = mainUi;
         binder = new Binder<>(Patient.class);
@@ -51,14 +49,12 @@ public class PatientWindow extends Window {
         setContent(mainLayout);
 
         setSaveBtn();
-        setDeleteBtn();
     }
 
     public void setPatient(Patient patient) {
         this.patient = patient;
         binder.setBean(patient);
 
-        deleteBtn.setVisible(patient.isPersisted());
         setVisible(true);
         forename.selectAll();
     }
@@ -70,17 +66,6 @@ public class PatientWindow extends Window {
         saveBtn.addClickListener(event -> {
             try {
                 savePatientDtoIntoDb();
-            } catch (SQLException | ClassNotFoundException exc) {
-                Notification.show(exc.getMessage());
-                exc.printStackTrace();
-            }
-        });
-    }
-
-    private void setDeleteBtn() {
-        deleteBtn.addClickListener(event -> {
-            try {
-                deletePatientDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
                 Notification.show(exc.getMessage());
                 exc.printStackTrace();
@@ -108,7 +93,7 @@ public class PatientWindow extends Window {
         patient.setPhone(phone.getValue());
     }
 
-    private void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {
+    public void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {
         patientDao.deletePatient(patient.getId());
         mainUi.updatePatientsGrid();
         setVisible(false);

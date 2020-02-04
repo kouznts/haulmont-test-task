@@ -23,7 +23,6 @@ public class MainUI extends UI {
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
     private PatientDao patientDao = pharmacyDbDao.getPatientDao();
-    private PatientWindow patientWindow = new PatientWindow(this);
 
     private TextField filterTf = new TextField();
     private Button clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
@@ -41,6 +40,8 @@ public class MainUI extends UI {
 
     private VerticalLayout mainLayout = new VerticalLayout();
 
+    private Patient selectedPatient;
+
     @Override
     protected void init(VaadinRequest request) {
         setFilterTextField();
@@ -48,7 +49,6 @@ public class MainUI extends UI {
         filteringLayout.addComponents(filterTf, clearFilterTfBtn);
         filteringLayout.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        addWindow(patientWindow);
         setAddPatientBtn();
         toolbarLayout.addComponents(filteringLayout, addPatientBtn);
 
@@ -57,7 +57,7 @@ public class MainUI extends UI {
         gridLayout.setSizeFull();
         gridLayout.setExpandRatio(patientsGrid, 1);
 
-setButtons();
+        setButtons();
         buttonsLayout.addComponents(updatePatientBtn, deletePatientBtn);
 
         mainLayout.addComponents(toolbarLayout, gridLayout, buttonsLayout);
@@ -79,6 +79,11 @@ setButtons();
     private void setAddPatientBtn() {
         addPatientBtn.addClickListener(event -> {
             patientsGrid.asSingleSelect().clear();
+
+            PatientWindow patientWindow = new PatientWindow(this);
+            addWindow(patientWindow);
+            patientWindow.setVisible(true);
+
             patientWindow.setPatient(new Patient());
         });
     }
@@ -86,24 +91,44 @@ setButtons();
     private void setPatientsGrid() {
         patientsGrid.setColumns("surname", "forename", "patronymic", "phone");
         patientsGrid.setSizeFull();
-        patientWindow.setVisible(false);
 
         patientsGrid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() == null) {
-                updatePatientBtn.setVisible(false);
-                deletePatientBtn.setVisible(false);
+                setButtonsInvisible();
             } else {
                 updatePatientBtn.setVisible(true);
                 deletePatientBtn.setVisible(true);
-
-                patientWindow.setPatient((event.getValue()));
+                selectedPatient = event.getValue();
             }
         });
     }
 
-    private void setButtons() {
+    private void setButtonsInvisible() {
+        patientsGrid.asSingleSelect().clear();
         updatePatientBtn.setVisible(false);
         deletePatientBtn.setVisible(false);
+    }
+
+    private void setButtons() {
+        setButtonsInvisible();
+
+        deletePatientBtn.addClickListener(event -> {
+            try {
+                PatientWindow patientWindow = new PatientWindow(this);
+                addWindow(patientWindow);
+                patientWindow.setVisible(false);
+
+                patientWindow.setPatient(selectedPatient);
+                patientWindow.close();
+                patientWindow.deletePatientDtoFromDb();
+            } catch (SQLException | ClassNotFoundException exc) {
+                Notification.show(exc.getMessage());
+                exc.printStackTrace();
+            } finally {
+                setButtonsInvisible();
+                selectedPatient = null;
+            }
+        });
     }
 
     public void updatePatientsGrid() {
