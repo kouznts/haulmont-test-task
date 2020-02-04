@@ -6,42 +6,50 @@ import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.sql.SQLException;
 
 import static com.haulmont.testtask.MainUI.*;
 
-public class PatientForm extends FormLayout {
-    private MainUI mainUi;
-    private Binder<Patient> binder = new Binder<>(Patient.class);
-
-    private PatientDao patientDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD).getPatientDao();
-    private Patient patient;
-
-    private TextField forename = new TextField("Имя");
-    private TextField patronymic = new TextField("Отчество");
-    private TextField surname = new TextField("Фамилия");
-    private TextField phone = new TextField("Телефон");
-
-    private Button saveBtn = new Button("Сохранить");
-    private Button deleteBtn = new Button("Удалить");
-
+public class PatientWindow extends Window {
+    private VerticalLayout mainLayout;
+    private TextField forename;
+    private TextField patronymic;
+    private TextField surname;
+    private TextField phone;
+    private Button saveBtn;
+    private Button deleteBtn;
     private HorizontalLayout buttons;
 
-    public PatientForm(MainUI mainUi) {
+    private PatientDao patientDao;
+    private Patient patient;
+
+    private MainUI mainUi;
+    private Binder<Patient> binder;
+
+    public PatientWindow(MainUI mainUi) {
+        mainLayout = new VerticalLayout();
+        forename = new TextField("Имя");
+        patronymic = new TextField("Отчество");
+        surname = new TextField("Фамилия");
+        phone = new TextField("Телефон");
+        saveBtn = new Button("Сохранить");
+        deleteBtn = new Button("Удалить");
+        buttons = new HorizontalLayout(saveBtn, deleteBtn);
+        patientDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD).getPatientDao();
         this.mainUi = mainUi;
+        binder = new Binder<>(Patient.class);
 
         binder.bindInstanceFields(this);
 
-        buttons = new HorizontalLayout(saveBtn, deleteBtn);
-
         setSizeUndefined();
-        addComponents(forename, patronymic, surname, phone, buttons);
+        setModal(true);
+        setResizable(false);
+
+        mainLayout.addComponents(forename, patronymic, surname, phone, buttons);
+        setContent(mainLayout);
 
         setSaveBtn();
         setDeleteBtn();
@@ -64,6 +72,7 @@ public class PatientForm extends FormLayout {
             try {
                 savePatientDtoIntoDb();
             } catch (SQLException | ClassNotFoundException exc) {
+                Notification.show(exc.getMessage());
                 exc.printStackTrace();
             }
         });
@@ -74,6 +83,7 @@ public class PatientForm extends FormLayout {
             try {
                 deletePatientDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
+                Notification.show(exc.getMessage());
                 exc.printStackTrace();
             }
         });

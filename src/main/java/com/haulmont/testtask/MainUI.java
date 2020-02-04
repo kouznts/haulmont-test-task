@@ -3,7 +3,7 @@ package com.haulmont.testtask;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
-import com.haulmont.testtask.PharmacyUi.PatientForm;
+import com.haulmont.testtask.PharmacyUi.PatientWindow;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinRequest;
@@ -23,7 +23,7 @@ public class MainUI extends UI {
     private HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
     private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
-    private PatientForm patientForm = new PatientForm(this);
+    private PatientWindow patientWindow = new PatientWindow(this);
 
     private TextField filterTf = new TextField();
     private Button clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
@@ -48,7 +48,8 @@ public class MainUI extends UI {
         toolbarLayout.addComponents(filteringLayout, addPatientBtn);
 
         setPatientsGrid();
-        horizontalLayout.addComponents(patientsGrid, patientForm);
+        horizontalLayout.addComponents(patientsGrid);
+        addWindow(patientWindow);
         horizontalLayout.setSizeFull();
         horizontalLayout.setExpandRatio(patientsGrid, 1);
 
@@ -58,7 +59,7 @@ public class MainUI extends UI {
     }
 
     private void setFilterTextField() {
-        filterTf.setPlaceholder("Поиск по фамилии ...");
+        filterTf.setPlaceholder("Поиск по фамилии...");
         filterTf.addValueChangeListener(event -> updatePatientsGrid());
         filterTf.setValueChangeMode(ValueChangeMode.LAZY);
     }
@@ -71,20 +72,20 @@ public class MainUI extends UI {
     private void setAddPatientBtn() {
         addPatientBtn.addClickListener(event -> {
             patientsGrid.asSingleSelect().clear();
-            patientForm.setPatient(new Patient());
+            patientWindow.setPatient(new Patient());
         });
     }
 
     private void setPatientsGrid() {
         patientsGrid.setColumns("surname", "forename", "patronymic", "phone");
         patientsGrid.setSizeFull();
-        patientForm.setVisible(false);
+        patientWindow.setVisible(false);
 
         patientsGrid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() == null) {
-                patientForm.setVisible(false);
+                patientWindow.setVisible(false);
             } else {
-                patientForm.setPatient((event.getValue()));
+                patientWindow.setPatient((event.getValue()));
             }
         });
     }
@@ -102,6 +103,7 @@ public class MainUI extends UI {
 
             patientsGrid.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {
+            Notification.show(exc.getMessage());
             exc.printStackTrace();
         }
     }
