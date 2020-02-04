@@ -89,7 +89,17 @@ public class MainUI extends UI {
     }
 
     private void setPatientsGrid() {
-        patientsGrid.setColumns("surname", "forename", "patronymic", "phone");
+        patientsGrid.setColumns(
+                PatientDao.SURNAME,
+                PatientDao.FORENAME,
+                PatientDao.PATRONYMIC,
+                PatientDao.PHONE);
+
+        patientsGrid.getColumn(PatientDao.SURNAME).setCaption("Фамилия");
+        patientsGrid.getColumn(PatientDao.FORENAME).setCaption("Имя");
+        patientsGrid.getColumn(PatientDao.PATRONYMIC).setCaption("Отчество");
+        patientsGrid.getColumn(PatientDao.PHONE).setCaption("Телефон");
+
         patientsGrid.setSizeFull();
 
         patientsGrid.asSingleSelect().addValueChangeListener(event -> {
@@ -127,7 +137,7 @@ public class MainUI extends UI {
                 patientWindow.setPatient(selectedPatient);
                 patientWindow.deletePatientDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
-                Notification.show(exc.getMessage());
+                Notification.show("Невозможно удалить пациента");
                 exc.printStackTrace();
             } finally {
                 setButtonsInvisible();
