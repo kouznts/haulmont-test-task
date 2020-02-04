@@ -1,6 +1,7 @@
 package com.haulmont.testtask;
 
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
+import com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.haulmont.testtask.PharmacyUi.PatientWindow;
@@ -20,9 +21,9 @@ public class MainUI extends UI {
     public static final String USER = "SA";
     public static final String PASSWORD = "";
 
-    private HsqldbPharmacyDbDao hsqldbPharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
+    public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
-    private PatientDao patientDao = hsqldbPharmacyDbDao.getPatientDao();
+    private PatientDao patientDao = pharmacyDbDao.getPatientDao();
     private PatientWindow patientWindow = new PatientWindow(this);
 
     private TextField filterTf = new TextField();

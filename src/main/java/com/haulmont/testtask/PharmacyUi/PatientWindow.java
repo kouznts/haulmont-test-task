@@ -3,7 +3,6 @@ package com.haulmont.testtask.PharmacyUi;
 import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
-import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
@@ -11,7 +10,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import java.sql.SQLException;
 
-import static com.haulmont.testtask.MainUI.*;
+import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 
 public class PatientWindow extends Window {
     private VerticalLayout mainLayout;
@@ -38,7 +37,7 @@ public class PatientWindow extends Window {
         saveBtn = new Button("Сохранить");
         deleteBtn = new Button("Удалить");
         buttons = new HorizontalLayout(saveBtn, deleteBtn);
-        patientDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD).getPatientDao();
+        patientDao = pharmacyDbDao.getPatientDao();
         this.mainUi = mainUi;
         binder = new Binder<>(Patient.class);
 
