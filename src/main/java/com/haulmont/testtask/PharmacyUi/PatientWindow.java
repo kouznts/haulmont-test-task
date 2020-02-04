@@ -19,6 +19,7 @@ public class PatientWindow extends Window {
     private TextField surname;
     private TextField phone;
     private Button saveBtn;
+    private Button cancelBtn;
     private HorizontalLayout buttons;
 
     private PatientDao patientDao;
@@ -33,8 +34,9 @@ public class PatientWindow extends Window {
         patronymic = new TextField("Отчество");
         surname = new TextField("Фамилия");
         phone = new TextField("Телефон");
-        saveBtn = new Button("Сохранить");
-        buttons = new HorizontalLayout(saveBtn);
+        saveBtn = new Button("ОК");
+        cancelBtn = new Button("Отменить");
+        buttons = new HorizontalLayout(saveBtn, cancelBtn);
         patientDao = pharmacyDbDao.getPatientDao();
         this.mainUi = mainUi;
         binder = new Binder<>(Patient.class);
@@ -49,6 +51,7 @@ public class PatientWindow extends Window {
         setContent(mainLayout);
 
         setSaveBtn();
+        setCancelBtn();
     }
 
     public void setPatient(Patient patient) {
@@ -73,7 +76,7 @@ public class PatientWindow extends Window {
         });
     }
 
-    private void savePatientDtoIntoDb() throws SQLException, ClassNotFoundException {
+    public void savePatientDtoIntoDb() throws SQLException, ClassNotFoundException {
         updatePatientDto();
 
         if (patient.isPersisted()) {
@@ -91,6 +94,12 @@ public class PatientWindow extends Window {
         patient.setPatronymic(patronymic.getValue());
         patient.setSurname(surname.getValue());
         patient.setPhone(phone.getValue());
+    }
+
+    private void setCancelBtn() {
+        cancelBtn.addClickListener(event -> {
+            close();
+        });
     }
 
     public void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {

@@ -112,14 +112,19 @@ public class MainUI extends UI {
     private void setButtons() {
         setButtonsInvisible();
 
+        updatePatientBtn.addClickListener(event -> {
+            PatientWindow patientWindow = new PatientWindow(this);
+            addWindow(patientWindow);
+            patientWindow.setPatient(selectedPatient);
+        });
+
         deletePatientBtn.addClickListener(event -> {
             try {
                 PatientWindow patientWindow = new PatientWindow(this);
                 addWindow(patientWindow);
-                patientWindow.setVisible(false);
+                patientWindow.close();
 
                 patientWindow.setPatient(selectedPatient);
-                patientWindow.close();
                 patientWindow.deletePatientDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
                 Notification.show(exc.getMessage());
