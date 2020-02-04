@@ -17,6 +17,12 @@ import java.sql.SQLException;
 import static com.haulmont.testtask.MainUI.*;
 
 public class PatientForm extends FormLayout {
+    private MainUI mainUi;
+    private Binder<Patient> binder = new Binder<>(Patient.class);
+
+    private PatientDao patientDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD).getPatientDao();
+    private Patient patient;
+
     private TextField forename = new TextField("Имя");
     private TextField patronymic = new TextField("Отчество");
     private TextField surname = new TextField("Фамилия");
@@ -25,39 +31,20 @@ public class PatientForm extends FormLayout {
     private Button saveBtn = new Button("Сохранить");
     private Button deleteBtn = new Button("Удалить");
 
-    private MainUI mainUi;
-    private Binder<Patient> binder = new Binder<>(Patient.class);
-
-    private PatientDao patientDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD).getPatientDao();
-    private Patient patient;
+    private HorizontalLayout buttons;
 
     public PatientForm(MainUI mainUi) {
         this.mainUi = mainUi;
 
-        setSizeUndefined();
-        HorizontalLayout buttons = new HorizontalLayout(saveBtn, deleteBtn);
-        addComponents(forename, patronymic, surname, phone, buttons);
-
-        saveBtn.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-
         binder.bindInstanceFields(this);
 
-        saveBtn.addClickListener(event -> {
-            try {
-                save();
-            } catch (SQLException | ClassNotFoundException exc) {
-                exc.printStackTrace();
-            }
-        });
+        buttons = new HorizontalLayout(saveBtn, deleteBtn);
 
-        deleteBtn.addClickListener(event -> {
-            try {
-                delete();
-            } catch (SQLException | ClassNotFoundException exc) {
-                exc.printStackTrace();
-            }
-        });
+        setSizeUndefined();
+        addComponents(forename, patronymic, surname, phone, buttons);
+
+        setSaveBtn();
+        setDeleteBtn();
     }
 
     public void setPatient(Patient patient) {
@@ -69,7 +56,30 @@ public class PatientForm extends FormLayout {
         forename.selectAll();
     }
 
-    private void save() throws SQLException, ClassNotFoundException {
+    private void setSaveBtn() {
+        saveBtn.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+
+        saveBtn.addClickListener(event -> {
+            try {
+                savePatientDtoIntoDb();
+            } catch (SQLException | ClassNotFoundException exc) {
+                exc.printStackTrace();
+            }
+        });
+    }
+
+    private void setDeleteBtn() {
+        deleteBtn.addClickListener(event -> {
+            try {
+                deletePatientDtoFromDb();
+            } catch (SQLException | ClassNotFoundException exc) {
+                exc.printStackTrace();
+            }
+        });
+    }
+
+    private void savePatientDtoIntoDb() throws SQLException, ClassNotFoundException {
         updatePatientDto();
 
         if (patient.isPersisted()) {
@@ -89,7 +99,7 @@ public class PatientForm extends FormLayout {
         patient.setPhone(phone.getValue());
     }
 
-    private void delete() throws SQLException, ClassNotFoundException {
+    private void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {
         patientDao.deletePatient(patient.getId());
         mainUi.updatePatientsGrid();
         setVisible(false);
