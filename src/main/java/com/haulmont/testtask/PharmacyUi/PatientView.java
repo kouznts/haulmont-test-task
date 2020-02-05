@@ -88,7 +88,7 @@ public class PatientView extends VerticalLayout implements View {
         addPatientBtn.addClickListener(event -> {
             patientsGrid.asSingleSelect().clear();
 
-            PatientWindow patientWindow = new PatientWindow(mainUi);
+            PatientWindow patientWindow = new PatientWindow(mainUi, this);
             mainUi.addWindow(patientWindow);
             patientWindow.setVisible(true);
 
@@ -131,14 +131,14 @@ public class PatientView extends VerticalLayout implements View {
         setButtonsInvisible();
 
         updatePatientBtn.addClickListener(event -> {
-            PatientWindow patientWindow = new PatientWindow(mainUi);
+            PatientWindow patientWindow = new PatientWindow(mainUi, this);
             mainUi.addWindow(patientWindow);
             patientWindow.setPatient(selectedPatient);
         });
 
         deletePatientBtn.addClickListener(event -> {
             try {
-                PatientWindow patientWindow = new PatientWindow(mainUi);
+                PatientWindow patientWindow = new PatientWindow(mainUi, this);
                 mainUi.addWindow(patientWindow);
                 patientWindow.close();
 
@@ -154,7 +154,7 @@ public class PatientView extends VerticalLayout implements View {
         });
     }
 
-    private void updatePatientsGrid() {
+    public void updatePatientsGrid() {
         try {
             List<Patient> patients;
 
