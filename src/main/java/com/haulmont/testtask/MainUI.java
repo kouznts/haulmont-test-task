@@ -4,9 +4,11 @@ import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
+import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.haulmont.testtask.PharmacyUi.PatientWindow;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
@@ -63,6 +65,29 @@ public class MainUI extends UI {
         mainLayout.addComponents(toolbarLayout, gridLayout, buttonsLayout);
         updatePatientsGrid();
         setContent(mainLayout);
+
+        // region навигатор
+        Label title = new Label("Menu");
+        title.addStyleName(ValoTheme.MENU_TITLE);
+
+        Button view1 = new Button("View 1", e -> getNavigator().navigateTo("view1"));
+        view1.addStyleName(ValoTheme.MENU_ITEM);
+        Button view2 = new Button("View 2", e -> getNavigator().navigateTo("view2"));
+        view2.addStyleName(ValoTheme.MENU_ITEM);
+
+        CssLayout menu = new CssLayout(title, view1, view2);
+        menu.addStyleName(ValoTheme.MENU_ROOT);
+
+        CssLayout viewContainer = new CssLayout();
+
+        HorizontalLayout mainLayout = new HorizontalLayout(menu, viewContainer);
+        mainLayout.setSizeFull();
+        setContent(mainLayout);
+
+        Navigator navigator = new Navigator(this, this);
+        navigator.addView("", new PatientView());
+        navigator.addView("view1", new PatientView());
+        // endregion
     }
 
     private void setFilterTextField() {
