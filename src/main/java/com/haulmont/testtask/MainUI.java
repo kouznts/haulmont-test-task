@@ -49,7 +49,7 @@ public class MainUI extends UI {
 
         medicalPrescriptionViewBtn = new Button(MEDICAL_PRESCRIPTIONS_VIEW,
                 event -> getNavigator().navigateTo(MEDICAL_PRESCRIPTIONS_VIEW));
-        doctorSpecializationViewBtn.addStyleName(ValoTheme.MENU_ITEM);
+        medicalPrescriptionViewBtn.addStyleName(ValoTheme.MENU_ITEM);
 
         menu = new CssLayout(title,
                 patientViewBtn,

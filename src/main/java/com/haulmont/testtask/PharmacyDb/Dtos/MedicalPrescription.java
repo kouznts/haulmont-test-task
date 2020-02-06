@@ -1,7 +1,6 @@
 package com.haulmont.testtask.PharmacyDb.Dtos;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class MedicalPrescription {
     public static final String ID = "id";
@@ -16,8 +15,8 @@ public class MedicalPrescription {
     private String description;
     private long patientId;
     private long doctorId;
-    private LocalDateTime creationDate;
-    private LocalDateTime validityDate;
+    private Timestamp creationDate;
+    private Timestamp validityDate;
     private byte priority;
 
     public MedicalPrescription() {
@@ -34,27 +33,10 @@ public class MedicalPrescription {
             String description,
             long patientId,
             long doctorId,
-            LocalDateTime creationDate,
-            LocalDateTime validityDate,
+            Timestamp creationDate,
+            Timestamp validityDate,
             byte priority) {
         this.id = -1;
-        this.description = description;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.creationDate = creationDate;
-        this.validityDate = validityDate;
-        this.priority = priority;
-    }
-
-    public MedicalPrescription(
-            long id,
-            String description,
-            long patientId,
-            long doctorId,
-            LocalDateTime creationDate,
-            LocalDateTime validityDate,
-            byte priority) {
-        this.id = id;
         this.description = description;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -75,8 +57,8 @@ public class MedicalPrescription {
         this.description = description;
         this.patientId = patientId;
         this.doctorId = doctorId;
-        this.creationDate = creationDate.toLocalDateTime();
-        this.validityDate = validityDate.toLocalDateTime();
+        this.creationDate = creationDate;
+        this.validityDate = validityDate;
         this.priority = priority;
     }
 
@@ -96,11 +78,11 @@ public class MedicalPrescription {
         return doctorId;
     }
 
-    public LocalDateTime getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    public LocalDateTime getValidityDate() {
+    public Timestamp getValidityDate() {
         return validityDate;
     }
 
@@ -120,11 +102,11 @@ public class MedicalPrescription {
         doctorId = newDoctorId;
     }
 
-    public void setCreationDate(LocalDateTime newCreationDate) {
+    public void setCreationDate(Timestamp newCreationDate) {
         creationDate = newCreationDate;
     }
 
-    public void setValidityDate(LocalDateTime newValidityDate) {
+    public void setValidityDate(Timestamp newValidityDate) {
         validityDate = newValidityDate;
     }
 

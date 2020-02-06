@@ -9,6 +9,8 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 
@@ -73,8 +75,8 @@ public class MedicalPrescriptionWindow extends Window {
         description.setValue(prescription.getDescription());
         patientId.setValue(Long.toString(prescription.getPatientId()));
         doctorId.setValue(Long.toString(prescription.getDoctorId()));
-        creationDate.setValue(prescription.getCreationDate());
-        validityDate.setValue(prescription.getValidityDate());
+        creationDate.setValue(prescription.getCreationDate().toLocalDateTime());
+        validityDate.setValue(prescription.getValidityDate().toLocalDateTime());
         priority.setValue(Byte.toString(prescription.getPriority()));
     }
 
@@ -109,8 +111,8 @@ public class MedicalPrescriptionWindow extends Window {
         prescription.setDescription(description.getValue());
         prescription.setPatientId(Byte.parseByte(patientId.getValue()));
         prescription.setDoctorId(Byte.parseByte(doctorId.getValue()));
-        prescription.setCreationDate(creationDate.getValue());
-        prescription.setValidityDate(validityDate.getValue());
+        prescription.setCreationDate(Timestamp.valueOf(creationDate.getValue()));
+        prescription.setValidityDate(Timestamp.valueOf(validityDate.getValue()));
         prescription.setPriority(Byte.parseByte(priority.getValue()));
     }
 
