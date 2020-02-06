@@ -1,6 +1,7 @@
 package com.haulmont.testtask.PharmacyDb.Daos;
 
 import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
+import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface DoctorDao {
     int deleteDoctor(long id) throws SQLException, ClassNotFoundException;
 
     List<Doctor> getAllDoctors() throws SQLException, ClassNotFoundException;
+
+    List<Doctor> getDoctorsBySurname(String surname) throws SQLException, ClassNotFoundException;
 }

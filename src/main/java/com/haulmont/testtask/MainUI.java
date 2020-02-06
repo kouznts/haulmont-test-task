@@ -1,19 +1,15 @@
 package com.haulmont.testtask;
 
-import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao;
-import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
-import com.haulmont.testtask.PharmacyUi.PatientWindow;
+import com.haulmont.testtask.PharmacyUi.DefaultView;
+import com.haulmont.testtask.PharmacyUi.DoctorView;
+import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.vaadin.annotations.Theme;
-import com.vaadin.icons.VaadinIcons;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-
-import java.sql.SQLException;
-import java.util.List;
 
 @Theme(ValoTheme.THEME_NAME)
 public class MainUI extends UI {
@@ -22,145 +18,40 @@ public class MainUI extends UI {
     private static final String PASSWORD = "";
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
-    private PatientDao patientDao = pharmacyDbDao.getPatientDao();
+    private HorizontalLayout mainLayout;
+    private static final String PATIENT_VIEW = "Пациенты";
+    private static final String DOCTOR_VIEW = "Врачи";
 
-    private TextField filterTf = new TextField();
-    private Button clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
-    private CssLayout filteringLayout = new CssLayout();
-
-    private Button addPatientBtn = new Button("Добавить пациента");
-    private HorizontalLayout toolbarLayout = new HorizontalLayout(filteringLayout, addPatientBtn);
-
-    private Grid<Patient> patientsGrid = new Grid<>(Patient.class);
-    private HorizontalLayout gridLayout = new HorizontalLayout();
-
-    private Button updatePatientBtn = new Button("Изменить");
-    private Button deletePatientBtn = new Button("Удалить");
-    private HorizontalLayout buttonsLayout = new HorizontalLayout();
-
-    private VerticalLayout mainLayout = new VerticalLayout();
-
-    private Patient selectedPatient;
+    private Label title;
+    private Button patientView;
+    private Button doctorView;
+    private CssLayout menu;
+    private CssLayout viewContainer;
 
     @Override
     protected void init(VaadinRequest request) {
-        setFilterTextField();
-        setClearFilterTfBtn();
-        filteringLayout.addComponents(filterTf, clearFilterTfBtn);
-        filteringLayout.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+        title = new Label("Меню");
+        title.addStyleName(ValoTheme.MENU_TITLE);
 
-        setAddPatientBtn();
-        toolbarLayout.addComponents(filteringLayout, addPatientBtn);
+        patientView = new Button(PATIENT_VIEW, event -> getNavigator().navigateTo(PATIENT_VIEW));
+        patientView.addStyleName(ValoTheme.MENU_ITEM);
 
-        setPatientsGrid();
-        gridLayout.addComponents(patientsGrid);
-        gridLayout.setSizeFull();
-        gridLayout.setExpandRatio(patientsGrid, 1);
+        doctorView = new Button(DOCTOR_VIEW, event -> getNavigator().navigateTo(DOCTOR_VIEW));
+        doctorView.addStyleName(ValoTheme.MENU_ITEM);
 
-        setButtons();
-        buttonsLayout.addComponents(updatePatientBtn, deletePatientBtn);
+        menu = new CssLayout(title, patientView, doctorView);
+        menu.addStyleName(ValoTheme.MENU_ROOT);
 
-        mainLayout.addComponents(toolbarLayout, gridLayout, buttonsLayout);
-        updatePatientsGrid();
+        viewContainer = new CssLayout();
+
+        mainLayout = new HorizontalLayout(menu, viewContainer);
+        mainLayout.setSizeFull();
+        viewContainer.setSizeFull();
         setContent(mainLayout);
-    }
 
-    private void setFilterTextField() {
-        filterTf.setPlaceholder("Поиск по фамилии...");
-        filterTf.addValueChangeListener(event -> updatePatientsGrid());
-        filterTf.setValueChangeMode(ValueChangeMode.LAZY);
-    }
-
-    private void setClearFilterTfBtn() {
-        clearFilterTfBtn.setDescription("Очистить фильтр");
-        clearFilterTfBtn.addClickListener(event -> filterTf.clear());
-    }
-
-    private void setAddPatientBtn() {
-        addPatientBtn.addClickListener(event -> {
-            patientsGrid.asSingleSelect().clear();
-
-            PatientWindow patientWindow = new PatientWindow(this);
-            addWindow(patientWindow);
-            patientWindow.setVisible(true);
-
-            patientWindow.setPatient(new Patient());
-        });
-    }
-
-    private void setPatientsGrid() {
-        patientsGrid.setColumns(
-                PatientDao.SURNAME,
-                PatientDao.FORENAME,
-                PatientDao.PATRONYMIC,
-                PatientDao.PHONE);
-
-        patientsGrid.getColumn(PatientDao.SURNAME).setCaption("Фамилия");
-        patientsGrid.getColumn(PatientDao.FORENAME).setCaption("Имя");
-        patientsGrid.getColumn(PatientDao.PATRONYMIC).setCaption("Отчество");
-        patientsGrid.getColumn(PatientDao.PHONE).setCaption("Телефон");
-
-        patientsGrid.setSizeFull();
-
-        patientsGrid.asSingleSelect().addValueChangeListener(event -> {
-            if (event.getValue() == null) {
-                setButtonsInvisible();
-            } else {
-                updatePatientBtn.setVisible(true);
-                deletePatientBtn.setVisible(true);
-                selectedPatient = event.getValue();
-            }
-        });
-    }
-
-    private void setButtonsInvisible() {
-        patientsGrid.asSingleSelect().clear();
-        updatePatientBtn.setVisible(false);
-        deletePatientBtn.setVisible(false);
-    }
-
-    private void setButtons() {
-        setButtonsInvisible();
-
-        updatePatientBtn.addClickListener(event -> {
-            PatientWindow patientWindow = new PatientWindow(this);
-            addWindow(patientWindow);
-            patientWindow.setPatient(selectedPatient);
-        });
-
-        deletePatientBtn.addClickListener(event -> {
-            try {
-                PatientWindow patientWindow = new PatientWindow(this);
-                addWindow(patientWindow);
-                patientWindow.close();
-
-                patientWindow.setPatient(selectedPatient);
-                patientWindow.deletePatientDtoFromDb();
-            } catch (SQLException | ClassNotFoundException exc) {
-                Notification.show("Невозможно удалить пациента");
-                exc.printStackTrace();
-            } finally {
-                setButtonsInvisible();
-                selectedPatient = null;
-            }
-        });
-    }
-
-    public void updatePatientsGrid() {
-        try {
-            List<Patient> patients;
-
-            String searchSurname = filterTf.getValue();
-            if (searchSurname.equals("")) {
-                patients = patientDao.getAllPatients();
-            } else {
-                patients = patientDao.getPatientsBySurname(searchSurname);
-            }
-
-            patientsGrid.setItems(patients);
-        } catch (SQLException | ClassNotFoundException exc) {
-            Notification.show(exc.getMessage());
-            exc.printStackTrace();
-        }
+        Navigator navigator = new Navigator(this, viewContainer);
+        navigator.addView("", new DefaultView());
+        navigator.addView(PATIENT_VIEW, new PatientView(this));
+        navigator.addView(DOCTOR_VIEW, new DoctorView(this));
     }
 }

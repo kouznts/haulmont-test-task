@@ -1,8 +1,9 @@
-package com.haulmont.testtask.PharmacyUi;
+package com.haulmont.testtask.PharmacyUi.Windows;
 
 import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
+import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
@@ -26,9 +27,10 @@ public class PatientWindow extends Window {
     private Patient patient;
 
     private MainUI mainUi;
+    private PatientView patientView;
     private Binder<Patient> binder;
 
-    public PatientWindow(MainUI mainUi) {
+    public PatientWindow(MainUI mainUi, PatientView patientView) {
         mainLayout = new VerticalLayout();
         forename = new TextField("Имя");
         patronymic = new TextField("Отчество");
@@ -39,6 +41,7 @@ public class PatientWindow extends Window {
         buttons = new HorizontalLayout(saveBtn, cancelBtn);
         patientDao = pharmacyDbDao.getPatientDao();
         this.mainUi = mainUi;
+        this.patientView = patientView;
         binder = new Binder<>(Patient.class);
 
         binder.bindInstanceFields(this);
@@ -85,7 +88,7 @@ public class PatientWindow extends Window {
             patientDao.insertPatient(patient);
         }
 
-        mainUi.updatePatientsGrid();
+        patientView.updatePatientsGrid();
         setVisible(false);
     }
 
@@ -104,7 +107,7 @@ public class PatientWindow extends Window {
 
     public void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {
         patientDao.deletePatient(patient.getId());
-        mainUi.updatePatientsGrid();
+        patientView.updatePatientsGrid();
         setVisible(false);
     }
 }
