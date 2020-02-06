@@ -3,6 +3,14 @@ package com.haulmont.testtask.PharmacyDb.Dtos;
 import java.sql.Timestamp;
 
 public class MedicalPrescription {
+    public static final String ID = "id";
+    public static final String DESCRIPTION = "description";
+    public static final String PATIENT_ID = "patientId";
+    public static final String DOCTOR_ID = "doctorId";
+    public static final String CREATION_DATE = "creationDate";
+    public static final String VALIDITY_DATE = "validityDate";
+    public static final String PRIORITY = "priority";
+
     private long id;
     private String description;
     private long patientId;
