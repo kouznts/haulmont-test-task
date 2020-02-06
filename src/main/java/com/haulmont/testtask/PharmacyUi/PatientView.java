@@ -99,15 +99,15 @@ public class PatientView extends VerticalLayout implements View {
 
     private void setPatientsGrid() {
         patientsGrid.setColumns(
-                PatientDao.SURNAME,
-                PatientDao.FORENAME,
-                PatientDao.PATRONYMIC,
-                PatientDao.PHONE);
+                Patient.SURNAME,
+                Patient.FORENAME,
+                Patient.PATRONYMIC,
+                Patient.PHONE);
 
-        patientsGrid.getColumn(PatientDao.SURNAME).setCaption("Фамилия");
-        patientsGrid.getColumn(PatientDao.FORENAME).setCaption("Имя");
-        patientsGrid.getColumn(PatientDao.PATRONYMIC).setCaption("Отчество");
-        patientsGrid.getColumn(PatientDao.PHONE).setCaption("Телефон");
+        patientsGrid.getColumn(Patient.SURNAME).setCaption("Фамилия");
+        patientsGrid.getColumn(Patient.FORENAME).setCaption("Имя");
+        patientsGrid.getColumn(Patient.PATRONYMIC).setCaption("Отчество");
+        patientsGrid.getColumn(Patient.PHONE).setCaption("Телефон");
 
         patientsGrid.setSizeFull();
 

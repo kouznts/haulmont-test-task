@@ -99,15 +99,15 @@ public class DoctorView extends VerticalLayout implements View {
 
     private void setDoctorsGrid() {
         doctorsGrid.setColumns(
-                DoctorDao.SURNAME,
-                DoctorDao.FORENAME,
-                DoctorDao.PATRONYMIC,
-                DoctorDao.SPECIALIZATION_ID);
+                Doctor.SURNAME,
+                Doctor.FORENAME,
+                Doctor.PATRONYMIC,
+                Doctor.SPECIALIZATION_ID);
 
-        doctorsGrid.getColumn(DoctorDao.SURNAME).setCaption("Фамилия");
-        doctorsGrid.getColumn(DoctorDao.FORENAME).setCaption("Имя");
-        doctorsGrid.getColumn(DoctorDao.PATRONYMIC).setCaption("Отчество");
-        doctorsGrid.getColumn(DoctorDao.SPECIALIZATION_ID).setCaption("Номер специализации");
+        doctorsGrid.getColumn(Doctor.SURNAME).setCaption("Фамилия");
+        doctorsGrid.getColumn(Doctor.FORENAME).setCaption("Имя");
+        doctorsGrid.getColumn(Doctor.PATRONYMIC).setCaption("Отчество");
+        doctorsGrid.getColumn(Doctor.SPECIALIZATION_ID).setCaption("Номер специализации");
 
         doctorsGrid.setSizeFull();
 

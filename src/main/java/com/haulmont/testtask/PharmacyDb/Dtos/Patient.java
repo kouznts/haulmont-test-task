@@ -1,6 +1,12 @@
 package com.haulmont.testtask.PharmacyDb.Dtos;
 
 public class Patient {
+    public static final String ID = "id";
+    public static final String FORENAME = "forename";
+    public static final String PATRONYMIC = "patronymic";
+    public static final String SURNAME = "surname";
+    public static final String PHONE = "phone";
+
     private long id;
     private String forename;
     private String patronymic;
