@@ -1,8 +1,9 @@
-package com.haulmont.testtask.PharmacyUi;
+package com.haulmont.testtask.PharmacyUi.Windows;
 
 import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
+import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;

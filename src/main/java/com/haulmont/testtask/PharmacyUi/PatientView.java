@@ -3,6 +3,7 @@ package com.haulmont.testtask.PharmacyUi;
 import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
+import com.haulmont.testtask.PharmacyUi.Windows.PatientWindow;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
