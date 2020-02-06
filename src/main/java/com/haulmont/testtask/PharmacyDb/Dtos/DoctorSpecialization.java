@@ -7,6 +7,11 @@ public class DoctorSpecialization {
     private long id;
     private String name;
 
+    public DoctorSpecialization() {
+        this.id = -1;
+        this.name = "";
+    }
+
     public DoctorSpecialization(String name) {
         this.id = -1;
         this.name = name;
@@ -23,6 +28,14 @@ public class DoctorSpecialization {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public boolean isPersisted() {
+        return id > -1;
     }
 
     @Override
