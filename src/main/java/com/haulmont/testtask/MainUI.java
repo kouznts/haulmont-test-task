@@ -2,6 +2,8 @@ package com.haulmont.testtask;
 
 import com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
+import com.haulmont.testtask.PharmacyUi.DefaultView;
+import com.haulmont.testtask.PharmacyUi.DoctorView;
 import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
@@ -17,8 +19,8 @@ public class MainUI extends UI {
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
     private HorizontalLayout mainLayout;
-    private static final String PATIENT_VIEW = "PATIENT VIEW";
-    private static final String DOCTOR_VIEW = "DOCTOR VIEW";
+    private static final String PATIENT_VIEW = "Пациенты";
+    private static final String DOCTOR_VIEW = "Врачи";
 
     private Label title;
     private Button patientView;
@@ -48,7 +50,8 @@ public class MainUI extends UI {
         setContent(mainLayout);
 
         Navigator navigator = new Navigator(this, viewContainer);
-        navigator.addView("", new PatientView(this));
+        navigator.addView("", new DefaultView());
         navigator.addView(PATIENT_VIEW, new PatientView(this));
+        navigator.addView(DOCTOR_VIEW, new DoctorView(this));
     }
 }
