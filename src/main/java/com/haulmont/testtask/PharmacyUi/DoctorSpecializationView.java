@@ -75,7 +75,7 @@ public class DoctorSpecializationView extends VerticalLayout implements View {
     }
 
     private void setFilterTextField() {
-        filterTf.setPlaceholder("Поиск по фамилии...");
+        filterTf.setPlaceholder("Поиск по названию...");
         filterTf.addValueChangeListener(event -> updateDoctorSpecializationsGrid());
         filterTf.setValueChangeMode(ValueChangeMode.LAZY);
     }
