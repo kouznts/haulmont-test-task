@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 
-public class PatientView extends VerticalLayout implements View {
+public class DoctorView extends VerticalLayout implements View {
     private MainUI mainUi;
 
     private PatientDao patientDao;
@@ -36,7 +36,7 @@ public class PatientView extends VerticalLayout implements View {
 
     private Patient selectedPatient;
 
-    public PatientView(MainUI mainUi) {
+    public DoctorView(MainUI mainUi) {
         // region поля
         this.mainUi = mainUi;
 

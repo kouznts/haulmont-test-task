@@ -44,6 +44,7 @@ public class MainUI extends UI {
 
         mainLayout = new HorizontalLayout(menu, viewContainer);
         mainLayout.setSizeFull();
+        viewContainer.setSizeFull();
         setContent(mainLayout);
 
         Navigator navigator = new Navigator(this, viewContainer);
