@@ -1,9 +1,9 @@
 package com.haulmont.testtask.PharmacyUi.Windows;
 
 import com.haulmont.testtask.MainUI;
-import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
-import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
-import com.haulmont.testtask.PharmacyUi.PatientView;
+import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
+import com.haulmont.testtask.PharmacyUi.DoctorView;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
@@ -18,31 +18,31 @@ public class DoctorWindow extends Window {
     private TextField forename;
     private TextField patronymic;
     private TextField surname;
-    private TextField phone;
+    private TextField specializationId;
     private Button saveBtn;
     private Button cancelBtn;
     private HorizontalLayout buttons;
 
-    private PatientDao patientDao;
-    private Patient patient;
+    private DoctorDao doctorDao;
+    private Doctor doctor;
 
     private MainUI mainUi;
-    private PatientView patientView;
-    private Binder<Patient> binder;
+    private DoctorView doctorView;
+    private Binder<Doctor> binder;
 
-    public DoctorWindow(MainUI mainUi, PatientView patientView) {
+    public DoctorWindow(MainUI mainUi, DoctorView doctorView) {
         mainLayout = new VerticalLayout();
         forename = new TextField("Имя");
         patronymic = new TextField("Отчество");
         surname = new TextField("Фамилия");
-        phone = new TextField("Телефон");
+        specializationId = new TextField("Номер специализации");
         saveBtn = new Button("ОК");
         cancelBtn = new Button("Отменить");
         buttons = new HorizontalLayout(saveBtn, cancelBtn);
-        patientDao = pharmacyDbDao.getPatientDao();
+        doctorDao = pharmacyDbDao.getDoctorDao();
         this.mainUi = mainUi;
-        this.patientView = patientView;
-        binder = new Binder<>(Patient.class);
+        this.doctorView = doctorView;
+        binder = new Binder<>(Doctor.class);
 
         binder.bindInstanceFields(this);
 
@@ -50,16 +50,16 @@ public class DoctorWindow extends Window {
         setModal(true);
         setResizable(false);
 
-        mainLayout.addComponents(forename, patronymic, surname, phone, buttons);
+        mainLayout.addComponents(forename, patronymic, surname, specializationId, buttons);
         setContent(mainLayout);
 
         setSaveBtn();
         setCancelBtn();
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-        binder.setBean(patient);
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+        binder.setBean(doctor);
 
         setVisible(true);
         forename.selectAll();
@@ -71,7 +71,7 @@ public class DoctorWindow extends Window {
 
         saveBtn.addClickListener(event -> {
             try {
-                savePatientDtoIntoDb();
+                saveDoctorDtoIntoDb();
             } catch (SQLException | ClassNotFoundException exc) {
                 Notification.show(exc.getMessage());
                 exc.printStackTrace();
@@ -79,24 +79,24 @@ public class DoctorWindow extends Window {
         });
     }
 
-    public void savePatientDtoIntoDb() throws SQLException, ClassNotFoundException {
-        updatePatientDto();
+    public void saveDoctorDtoIntoDb() throws SQLException, ClassNotFoundException {
+        updateDoctorDto();
 
-        if (patient.isPersisted()) {
-            patientDao.updatePatient(patient);
+        if (doctor.isPersisted()) {
+            doctorDao.updateDoctor(doctor);
         } else {
-            patientDao.insertPatient(patient);
+            doctorDao.insertDoctor(doctor);
         }
 
-        patientView.updatePatientsGrid();
+        doctorView.updateDoctorsGrid();
         setVisible(false);
     }
 
-    private void updatePatientDto() {
-        patient.setForename(forename.getValue());
-        patient.setPatronymic(patronymic.getValue());
-        patient.setSurname(surname.getValue());
-        patient.setPhone(phone.getValue());
+    private void updateDoctorDto() {
+        doctor.setForename(forename.getValue());
+        doctor.setPatronymic(patronymic.getValue());
+        doctor.setSurname(surname.getValue());
+        doctor.setSpecializationId(Long.getLong(specializationId.getValue()));
     }
 
     private void setCancelBtn() {
@@ -105,9 +105,9 @@ public class DoctorWindow extends Window {
         });
     }
 
-    public void deletePatientDtoFromDb() throws SQLException, ClassNotFoundException {
-        patientDao.deletePatient(patient.getId());
-        patientView.updatePatientsGrid();
+    public void deleteDoctorDtoFromDb() throws SQLException, ClassNotFoundException {
+        doctorDao.deleteDoctor(doctor.getId());
+        doctorView.updateDoctorsGrid();
         setVisible(false);
     }
 }
