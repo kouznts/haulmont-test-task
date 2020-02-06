@@ -99,11 +99,13 @@ public class PatientView extends VerticalLayout implements View {
 
     private void setPatientsGrid() {
         patientsGrid.setColumns(
+                Patient.ID,
                 Patient.SURNAME,
                 Patient.FORENAME,
                 Patient.PATRONYMIC,
                 Patient.PHONE);
 
+        patientsGrid.getColumn(Patient.ID).setCaption("Номер");
         patientsGrid.getColumn(Patient.SURNAME).setCaption("Фамилия");
         patientsGrid.getColumn(Patient.FORENAME).setCaption("Имя");
         patientsGrid.getColumn(Patient.PATRONYMIC).setCaption("Отчество");

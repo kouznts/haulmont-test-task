@@ -4,7 +4,6 @@ import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
 import com.haulmont.testtask.PharmacyUi.DoctorView;
-import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -28,7 +27,6 @@ public class DoctorWindow extends Window {
 
     private MainUI mainUi;
     private DoctorView doctorView;
-    private Binder<Doctor> binder;
 
     public DoctorWindow(MainUI mainUi, DoctorView doctorView) {
         mainLayout = new VerticalLayout();
@@ -42,9 +40,6 @@ public class DoctorWindow extends Window {
         doctorDao = pharmacyDbDao.getDoctorDao();
         this.mainUi = mainUi;
         this.doctorView = doctorView;
-        binder = new Binder<>(Doctor.class);
-
-        binder.bindInstanceFields(this);
 
         setSizeUndefined();
         setModal(true);
@@ -59,10 +54,18 @@ public class DoctorWindow extends Window {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
-        binder.setBean(doctor);
+
+        setFields(doctor);
 
         setVisible(true);
         forename.selectAll();
+    }
+
+    private void setFields(Doctor doctor) {
+        forename.setValue(doctor.getForename());
+        patronymic.setValue(doctor.getPatronymic());
+        surname.setValue(doctor.getSurname());
+        specializationId.setValue(Long.toString(doctor.getSpecializationId()));
     }
 
     private void setSaveBtn() {
@@ -73,7 +76,7 @@ public class DoctorWindow extends Window {
             try {
                 saveDoctorDtoIntoDb();
             } catch (SQLException | ClassNotFoundException exc) {
-                Notification.show(exc.getMessage());
+                Notification.show("Невозможно добавить врача");
                 exc.printStackTrace();
             }
         });
@@ -96,7 +99,7 @@ public class DoctorWindow extends Window {
         doctor.setForename(forename.getValue());
         doctor.setPatronymic(patronymic.getValue());
         doctor.setSurname(surname.getValue());
-        doctor.setSpecializationId(Long.getLong(specializationId.getValue()));
+        doctor.setSpecializationId(Long.parseLong(specializationId.getValue()));
     }
 
     private void setCancelBtn() {
