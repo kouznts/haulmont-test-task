@@ -1,6 +1,5 @@
 package com.haulmont.testtask.PharmacyDb.Dtos;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class MedicalPrescription {
@@ -79,6 +78,34 @@ public class MedicalPrescription {
 
     public byte getPriority() {
         return priority;
+    }
+
+    public void setDescription(String newDescription) {
+        description = newDescription;
+    }
+
+    public void setPatientId(long newPatientId) {
+        patientId = newPatientId;
+    }
+
+    public void setDoctorId(long newDoctorId) {
+        doctorId = newDoctorId;
+    }
+
+    public void setCreationDate(Date newCreationDate) {
+        creationDate = newCreationDate;
+    }
+
+    public void setValidityDate(Date newValidityDate) {
+        validityDate = newValidityDate;
+    }
+
+    public void setPriority(byte newPriority) {
+        priority = newPriority;
+    }
+
+    public boolean isPersisted() {
+        return id > -1;
     }
 
     @Override
