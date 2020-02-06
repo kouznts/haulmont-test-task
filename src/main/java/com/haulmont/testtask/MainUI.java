@@ -3,6 +3,7 @@ package com.haulmont.testtask;
 import com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao;
 import com.haulmont.testtask.PharmacyDb.HsqldbDaos.HsqldbPharmacyDbDao;
 import com.haulmont.testtask.PharmacyUi.DefaultView;
+import com.haulmont.testtask.PharmacyUi.DoctorSpecializationView;
 import com.haulmont.testtask.PharmacyUi.DoctorView;
 import com.haulmont.testtask.PharmacyUi.PatientView;
 import com.vaadin.annotations.Theme;
@@ -21,10 +22,12 @@ public class MainUI extends UI {
     private HorizontalLayout mainLayout;
     private static final String PATIENT_VIEW = "Пациенты";
     private static final String DOCTOR_VIEW = "Врачи";
+    private static final String DOCTOR_SPECIALIZATIONS_VIEW = "Специализации";
 
     private Label title;
-    private Button patientView;
-    private Button doctorView;
+    private Button patientViewBtn;
+    private Button doctorViewBtn;
+    private Button doctorSpecializationViewBtn;
     private CssLayout menu;
     private CssLayout viewContainer;
 
@@ -33,13 +36,16 @@ public class MainUI extends UI {
         title = new Label("Меню");
         title.addStyleName(ValoTheme.MENU_TITLE);
 
-        patientView = new Button(PATIENT_VIEW, event -> getNavigator().navigateTo(PATIENT_VIEW));
-        patientView.addStyleName(ValoTheme.MENU_ITEM);
+        patientViewBtn = new Button(PATIENT_VIEW, event -> getNavigator().navigateTo(PATIENT_VIEW));
+        patientViewBtn.addStyleName(ValoTheme.MENU_ITEM);
 
-        doctorView = new Button(DOCTOR_VIEW, event -> getNavigator().navigateTo(DOCTOR_VIEW));
-        doctorView.addStyleName(ValoTheme.MENU_ITEM);
+        doctorViewBtn = new Button(DOCTOR_VIEW, event -> getNavigator().navigateTo(DOCTOR_VIEW));
+        doctorViewBtn.addStyleName(ValoTheme.MENU_ITEM);
 
-        menu = new CssLayout(title, patientView, doctorView);
+        doctorSpecializationViewBtn = new Button(DOCTOR_SPECIALIZATIONS_VIEW, event -> getNavigator().navigateTo(DOCTOR_SPECIALIZATIONS_VIEW));
+        doctorSpecializationViewBtn.addStyleName(ValoTheme.MENU_ITEM);
+
+        menu = new CssLayout(title, patientViewBtn, doctorViewBtn, doctorSpecializationViewBtn);
         menu.addStyleName(ValoTheme.MENU_ROOT);
 
         viewContainer = new CssLayout();
@@ -53,5 +59,6 @@ public class MainUI extends UI {
         navigator.addView("", new DefaultView());
         navigator.addView(PATIENT_VIEW, new PatientView(this));
         navigator.addView(DOCTOR_VIEW, new DoctorView(this));
+        navigator.addView(DOCTOR_SPECIALIZATIONS_VIEW, new DoctorSpecializationView(this));
     }
 }
