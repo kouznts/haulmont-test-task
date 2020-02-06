@@ -7,6 +7,14 @@ public class Doctor {
     private String surname;
     private long specializationId;
 
+    public Doctor() {
+        this.id = -1;
+        this.forename = "";
+        this.patronymic = "";
+        this.surname = "";
+        this.specializationId = -1;
+    }
+
     public Doctor(String forename, String patronymic, String surname, long specializationId) {
         this.id = -1;
         this.forename = forename;
@@ -41,6 +49,26 @@ public class Doctor {
 
     public long getSpecializationId() {
         return specializationId;
+    }
+
+    public void setForename(String newForename) {
+        forename = newForename;
+    }
+
+    public void setPatronymic(String newPatronymic) {
+        patronymic = newPatronymic;
+    }
+
+    public void setSurname(String newSurname) {
+        surname = newSurname;
+    }
+
+    public void setSpecializationId(long newSpecializationId) {
+        specializationId = newSpecializationId;
+    }
+
+    public boolean isPersisted() {
+        return id > -1;
     }
 
     @Override
