@@ -18,4 +18,6 @@ public interface DoctorSpecializationDao {
     int deleteDoctorSpecialization(long id) throws SQLException, ClassNotFoundException;
 
     List<DoctorSpecialization> getAllDoctorSpecializations() throws SQLException, ClassNotFoundException;
+
+    List<DoctorSpecialization> getDoctorSpecializationsByName(String name) throws SQLException, ClassNotFoundException;
 }

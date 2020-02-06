@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.DOCTOR_SPECIALIZATION;
 import static com.haulmont.testtask.Dao.SqlHelper.*;
+import static com.haulmont.testtask.PharmacyDb.Daos.PharmacyDbDao.DOCTOR_SPECIALIZATION;
 
 public class HsqldbDoctorSpecializationDao extends HsqldbDao implements DoctorSpecializationDao {
     public HsqldbDoctorSpecializationDao(String dbUrl, String user, String password) {
@@ -86,7 +86,15 @@ public class HsqldbDoctorSpecializationDao extends HsqldbDao implements DoctorSp
         final String query = String.format("%s * %s %s", SELECT, FROM, DOCTOR_SPECIALIZATION);
         ResultSet resultSet = executeQuery(query);
 
+        List<DoctorSpecialization> doctorSpecializations = getDoctorSpecializationsFromResultSet(resultSet);
+
+        disconnect();
+        return doctorSpecializations;
+    }
+
+    private List<DoctorSpecialization> getDoctorSpecializationsFromResultSet(ResultSet resultSet) throws SQLException {
         List<DoctorSpecialization> doctorSpecializations = new LinkedList<DoctorSpecialization>();
+
         DoctorSpecialization doctorSpecialization;
         while (resultSet.next()) {
             doctorSpecialization = new DoctorSpecialization(
@@ -95,6 +103,22 @@ public class HsqldbDoctorSpecializationDao extends HsqldbDao implements DoctorSp
 
             doctorSpecializations.add(doctorSpecialization);
         }
+
+        return doctorSpecializations;
+    }
+
+    @Override
+    public List<DoctorSpecialization> getDoctorSpecializationsByName(String name) throws SQLException, ClassNotFoundException {
+        connect();
+
+        final String query = String.format("%s * %s %s " +
+                        "%s %s ( %s ) %s %s (\'%s\')",
+                SELECT, FROM, DOCTOR_SPECIALIZATION,
+                WHERE, LOWER, NAME, LIKE, LOWER, '%' + name + '%');
+
+        ResultSet resultSet = executeQuery(query);
+
+        List<DoctorSpecialization> doctorSpecializations = getDoctorSpecializationsFromResultSet(resultSet);
 
         disconnect();
         return doctorSpecializations;
