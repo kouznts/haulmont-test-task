@@ -1,6 +1,7 @@
 package com.haulmont.testtask.PharmacyDb.Dtos;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class MedicalPrescription {
     public static final String ID = "id";
@@ -15,16 +16,16 @@ public class MedicalPrescription {
     private String description;
     private long patientId;
     private long doctorId;
-    private Timestamp creationDate;
-    private Timestamp validityDate;
+    private Date creationDate;
+    private Date validityDate;
     private byte priority;
 
     public MedicalPrescription(
             String description,
             long patientId,
             long doctorId,
-            Timestamp creationDate,
-            Timestamp validityDate,
+            Date creationDate,
+            Date validityDate,
             byte priority) {
         this.id = -1;
         this.description = description;
@@ -40,8 +41,8 @@ public class MedicalPrescription {
             String description,
             long patientId,
             long doctorId,
-            Timestamp creationDate,
-            Timestamp validityDate,
+            Date creationDate,
+            Date validityDate,
             byte priority) {
         this.id = id;
         this.description = description;
@@ -68,11 +69,11 @@ public class MedicalPrescription {
         return doctorId;
     }
 
-    public Timestamp getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public Timestamp getValidityDate() {
+    public Date getValidityDate() {
         return validityDate;
     }
 
