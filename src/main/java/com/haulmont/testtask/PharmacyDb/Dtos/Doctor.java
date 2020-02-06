@@ -7,11 +7,11 @@ public class Doctor {
     public static final String SURNAME = "surname";
     public static final String SPECIALIZATION_ID = "specializationId";
 
-    private long id;
-    private String forename;
-    private String patronymic;
-    private String surname;
-    private long specializationId;
+    protected long id;
+    protected String forename;
+    protected String patronymic;
+    protected String surname;
+    protected long specializationId;
 
     public Doctor() {
         this.id = -1;
@@ -55,6 +55,10 @@ public class Doctor {
 
     public long getSpecializationId() {
         return specializationId;
+    }
+
+    protected void setId(long newId) {
+        id = newId;
     }
 
     public void setForename(String newForename) {
