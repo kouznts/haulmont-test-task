@@ -1,20 +1,20 @@
 package com.haulmont.testtask.PharmacyUi;
 
-        import com.haulmont.testtask.MainUI;
-        import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
-        import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
-        import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
-        import com.vaadin.icons.VaadinIcons;
-        import com.vaadin.navigator.View;
-        import com.vaadin.navigator.ViewChangeListener;
-        import com.vaadin.shared.ui.ValueChangeMode;
-        import com.vaadin.ui.*;
-        import com.vaadin.ui.themes.ValoTheme;
+import com.haulmont.testtask.MainUI;
+import com.haulmont.testtask.PharmacyDb.Daos.DoctorSpecializationDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.DoctorSpecialization;
+import com.haulmont.testtask.PharmacyUi.Windows.DoctorSpecializationWindow;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 
-        import java.sql.SQLException;
-        import java.util.List;
+import java.sql.SQLException;
+import java.util.List;
 
-        import static com.haulmont.testtask.MainUI.pharmacyDbDao;
+import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 
 public class DoctorSpecializationView extends VerticalLayout implements View {
     private MainUI mainUi;
@@ -93,7 +93,7 @@ public class DoctorSpecializationView extends VerticalLayout implements View {
             mainUi.addWindow(doctorSpecializationWindow);
             doctorSpecializationWindow.setVisible(true);
 
-            doctorSpecializationWindow.setDoctorSpecializatio(new Doctor());
+            doctorSpecializationWindow.setDoctorSpecialization(new DoctorSpecialization());
         });
     }
 
@@ -130,7 +130,7 @@ public class DoctorSpecializationView extends VerticalLayout implements View {
         updateDoctorSpecializationBtn.addClickListener(event -> {
             DoctorSpecializationWindow doctorSpecializationWindow = new DoctorSpecializationWindow(mainUi, this);
             mainUi.addWindow(doctorSpecializationWindow);
-            doctorSpecializationWindow.setDoctorSpecializatio(selectedDoctorSpecialization);
+            doctorSpecializationWindow.setDoctorSpecialization(selectedDoctorSpecialization);
         });
 
         deleteDoctorSpecializationBtn.addClickListener(event -> {
