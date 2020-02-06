@@ -142,7 +142,7 @@ public class DoctorSpecializationView extends VerticalLayout implements View {
                 doctorSpecializationWindow.setDoctorSpecialization(selectedDoctorSpecialization);
                 doctorSpecializationWindow.deleteDoctorSpecializationDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
-                Notification.show("Невозможно удалить доктора");
+                Notification.show("Невозможно удалить специализацию");
                 exc.printStackTrace();
             } finally {
                 setButtonsInvisible();
