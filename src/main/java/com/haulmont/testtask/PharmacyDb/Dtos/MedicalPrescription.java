@@ -19,6 +19,16 @@ public class MedicalPrescription {
     private Date validityDate;
     private byte priority;
 
+    public MedicalPrescription() {
+        id = -1;
+        description = "";
+        patientId = -1;
+        doctorId = -1;
+        creationDate = null;
+        validityDate = null;
+        priority = 3;
+    }
+
     public MedicalPrescription(
             String description,
             long patientId,
