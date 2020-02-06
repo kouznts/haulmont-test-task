@@ -1,7 +1,9 @@
 package com.haulmont.testtask.PharmacyUi;
 
 import com.haulmont.testtask.MainUI;
+import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Daos.PatientDao;
+import com.haulmont.testtask.PharmacyDb.Dtos.Doctor;
 import com.haulmont.testtask.PharmacyDb.Dtos.Patient;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
@@ -18,43 +20,43 @@ import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 public class DoctorView extends VerticalLayout implements View {
     private MainUI mainUi;
 
-    private PatientDao patientDao;
+    private DoctorDao doctorDao;
 
     private TextField filterTf;
     private Button clearFilterTfBtn;
     private CssLayout filteringLayout;
 
-    private Button addPatientBtn;
+    private Button addDoctorBtn;
     private HorizontalLayout toolbarLayout;
 
-    private Grid<Patient> patientsGrid;
+    private Grid<Doctor> doctorsGrid;
     private HorizontalLayout gridLayout;
 
-    private Button updatePatientBtn;
-    private Button deletePatientBtn;
+    private Button updateDoctorBtn;
+    private Button deleteDoctorBtn;
     private HorizontalLayout buttonsLayout;
 
-    private Patient selectedPatient;
+    private Doctor selectedDoctor;
 
     public DoctorView(MainUI mainUi) {
         // region поля
         this.mainUi = mainUi;
 
-        patientDao = pharmacyDbDao.getPatientDao();
+        doctorDao = pharmacyDbDao.getDoctorDao();
 
         filterTf = new TextField();
         clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
         filteringLayout = new CssLayout(filterTf, clearFilterTfBtn);
 
-        addPatientBtn = new Button("Добавить пациента");
-        toolbarLayout = new HorizontalLayout(filteringLayout, addPatientBtn);
+        addDoctorBtn = new Button("Добавить доктора");
+        toolbarLayout = new HorizontalLayout(filteringLayout, addDoctorBtn);
 
-        patientsGrid = new Grid<>(Patient.class);
-        gridLayout = new HorizontalLayout(patientsGrid);
+        doctorsGrid = new Grid<>(Doctor.class);
+        gridLayout = new HorizontalLayout(doctorsGrid);
 
-        updatePatientBtn = new Button("Изменить");
-        deletePatientBtn = new Button("Удалить");
-        buttonsLayout = new HorizontalLayout(updatePatientBtn, deletePatientBtn);
+        updateDoctorBtn = new Button("Изменить");
+        deleteDoctorBtn = new Button("Удалить");
+        buttonsLayout = new HorizontalLayout(updateDoctorBtn, deleteDoctorBtn);
         // endregion
 
         setFilterTextField();
@@ -65,7 +67,7 @@ public class DoctorView extends VerticalLayout implements View {
 
         setPatientsGrid();
         gridLayout.setSizeFull();
-        gridLayout.setExpandRatio(patientsGrid, 1);
+        gridLayout.setExpandRatio(doctorsGrid, 1);
 
         setButtons();
 
@@ -85,8 +87,8 @@ public class DoctorView extends VerticalLayout implements View {
     }
 
     private void setAddPatientBtn() {
-        addPatientBtn.addClickListener(event -> {
-            patientsGrid.asSingleSelect().clear();
+        addDoctorBtn.addClickListener(event -> {
+            doctorsGrid.asSingleSelect().clear();
 
             PatientWindow patientWindow = new PatientWindow(mainUi, this);
             mainUi.addWindow(patientWindow);
@@ -97,59 +99,59 @@ public class DoctorView extends VerticalLayout implements View {
     }
 
     private void setPatientsGrid() {
-        patientsGrid.setColumns(
+        doctorsGrid.setColumns(
                 PatientDao.SURNAME,
                 PatientDao.FORENAME,
                 PatientDao.PATRONYMIC,
                 PatientDao.PHONE);
 
-        patientsGrid.getColumn(PatientDao.SURNAME).setCaption("Фамилия");
-        patientsGrid.getColumn(PatientDao.FORENAME).setCaption("Имя");
-        patientsGrid.getColumn(PatientDao.PATRONYMIC).setCaption("Отчество");
-        patientsGrid.getColumn(PatientDao.PHONE).setCaption("Телефон");
+        doctorsGrid.getColumn(PatientDao.SURNAME).setCaption("Фамилия");
+        doctorsGrid.getColumn(PatientDao.FORENAME).setCaption("Имя");
+        doctorsGrid.getColumn(PatientDao.PATRONYMIC).setCaption("Отчество");
+        doctorsGrid.getColumn(PatientDao.PHONE).setCaption("Телефон");
 
-        patientsGrid.setSizeFull();
+        doctorsGrid.setSizeFull();
 
-        patientsGrid.asSingleSelect().addValueChangeListener(event -> {
+        doctorsGrid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() == null) {
                 setButtonsInvisible();
             } else {
-                updatePatientBtn.setVisible(true);
-                deletePatientBtn.setVisible(true);
-                selectedPatient = event.getValue();
+                updateDoctorBtn.setVisible(true);
+                deleteDoctorBtn.setVisible(true);
+                selectedDoctor = event.getValue();
             }
         });
     }
 
     private void setButtonsInvisible() {
-        patientsGrid.asSingleSelect().clear();
-        updatePatientBtn.setVisible(false);
-        deletePatientBtn.setVisible(false);
+        doctorsGrid.asSingleSelect().clear();
+        updateDoctorBtn.setVisible(false);
+        deleteDoctorBtn.setVisible(false);
     }
 
     private void setButtons() {
         setButtonsInvisible();
 
-        updatePatientBtn.addClickListener(event -> {
+        updateDoctorBtn.addClickListener(event -> {
             PatientWindow patientWindow = new PatientWindow(mainUi, this);
             mainUi.addWindow(patientWindow);
-            patientWindow.setPatient(selectedPatient);
+            patientWindow.setPatient(selectedDoctor);
         });
 
-        deletePatientBtn.addClickListener(event -> {
+        deleteDoctorBtn.addClickListener(event -> {
             try {
                 PatientWindow patientWindow = new PatientWindow(mainUi, this);
                 mainUi.addWindow(patientWindow);
                 patientWindow.close();
 
-                patientWindow.setPatient(selectedPatient);
+                patientWindow.setPatient(selectedDoctor);
                 patientWindow.deletePatientDtoFromDb();
             } catch (SQLException | ClassNotFoundException exc) {
                 Notification.show("Невозможно удалить пациента");
                 exc.printStackTrace();
             } finally {
                 setButtonsInvisible();
-                selectedPatient = null;
+                selectedDoctor = null;
             }
         });
     }
@@ -160,12 +162,12 @@ public class DoctorView extends VerticalLayout implements View {
 
             String searchSurname = filterTf.getValue();
             if (searchSurname.equals("")) {
-                patients = patientDao.getAllPatients();
+                patients = doctorDao.getAllPatients();
             } else {
-                patients = patientDao.getPatientsBySurname(searchSurname);
+                patients = doctorDao.getPatientsBySurname(searchSurname);
             }
 
-            patientsGrid.setItems(patients);
+            doctorsGrid.setItems(patients);
         } catch (SQLException | ClassNotFoundException exc) {
             Notification.show(exc.getMessage());
             exc.printStackTrace();
