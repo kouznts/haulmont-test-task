@@ -70,12 +70,12 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         setButtons();
 
         addComponents(toolbarLayout, gridLayout, buttonsLayout);
-        updatePrescriptionsGrid();
+        updateMedicalPrescriptionsGrid();
     }
 
     private void setFilterTextField() {
         filterTf.setPlaceholder("Поиск по описанию...");
-        filterTf.addValueChangeListener(event -> updatePrescriptionsGrid());
+        filterTf.addValueChangeListener(event -> updateMedicalPrescriptionsGrid());
         filterTf.setValueChangeMode(ValueChangeMode.LAZY);
     }
 
@@ -158,7 +158,7 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         });
     }
 
-    public void updatePrescriptionsGrid() {
+    public void updateMedicalPrescriptionsGrid() {
         try {
             List<MedicalPrescription> prescriptions;
 
