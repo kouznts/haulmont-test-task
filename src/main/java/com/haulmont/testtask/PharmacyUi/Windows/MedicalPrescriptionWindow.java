@@ -111,7 +111,7 @@ public class MedicalPrescriptionWindow extends Window {
         prescription.setDoctorId(Byte.parseByte(doctorId.getValue()));
         prescription.setCreationDate(creationDate.getValue());
         prescription.setValidityDate(validityDate.getValue());
-        priority.setPriority(Byte.parseByte(priority.getValue()));
+        prescription.setPriority(Byte.parseByte(priority.getValue()));
     }
 
     private void setCancelBtn() {

@@ -3,6 +3,7 @@ package com.haulmont.testtask.PharmacyUi;
 import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
+import com.haulmont.testtask.PharmacyUi.Windows.MedicalPrescriptionWindow;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -135,9 +136,9 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         setButtonsInvisible();
 
         updatePrescriptionBtn.addClickListener(event -> {
-            MedicalPrescriptionWindow prescriptionWindow = new MedicalPrescriptionView(mainUi, this);
-            mainUi.addWindow(doctorWindow);
-            prescriptionWindow.setDoctor(selectedPrescription);
+            MedicalPrescriptionWindow prescriptionWindow = new MedicalPrescriptionWindow(mainUi, this);
+            mainUi.addWindow(prescriptionWindow);
+            prescriptionWindow.setMedicalPrescription(selectedPrescription);
         });
 
         deletePrescriptionBtn.addClickListener(event -> {
