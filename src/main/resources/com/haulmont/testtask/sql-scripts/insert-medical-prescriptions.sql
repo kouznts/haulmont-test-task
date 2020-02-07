@@ -26,7 +26,7 @@ VALUES ('Трагическое снижает сублимированный ш
 insert into medical_prescription
 (description, patient_id, doctor_id, creation_date, validity_date, priority)
 VALUES ('Обязательство переоткладывает постулат. Диалектика, на первый взгляд, гомогенно иллюстрирует музыкальный гидрогенит. Граница, следовательно, иллюстрирует эмпирический CTR. Ошибка, если рассматривать процессы в рамках специальной теории относительности, диссонирует нормативный астероид. Александрийская школа параллельна. Референдум дает параллельный стиль.',
- 22, 3, TIMESTAMP '2020-01-27 14:00:00', TIMESTAMP '2020-02-08 14:00:00', 3);
+ 20, 3, TIMESTAMP '2020-01-27 14:00:00', TIMESTAMP '2020-02-08 14:00:00', 3);
 
 insert into medical_prescription
 (description, patient_id, doctor_id, creation_date, validity_date, priority)

@@ -29,4 +29,8 @@ priority = 3;
 
 -- отображение статистической информации по количеству рецептов,
 -- выписанных врачами
-select * from medical_prescription where doctor_id = 0;
+SELECT id, surname, forename, patronymic, count(id)
+FROM doctor
+INNER JOIN medical_prescription
+ON doctor.id = medical_prescription.doctor_id
+GROUP BY doctor.id
