@@ -1,10 +1,11 @@
 package com.haulmont.testtask.PharmacyDb.Dtos;
 
-public class DoctorMedicalPrescriptionNumber {
+public class DoctorMedicalPrescriptionsNumber {
     public static final String ID = "id";
     public static final String FORENAME = "forename";
     public static final String PATRONYMIC = "patronymic";
     public static final String SURNAME = "surname";
+    public static final String NUMBER = "number";
     public static final String PRESCRIPTIONS_NUMBER = "prescriptionsNumber";
 
     private long id;
@@ -13,7 +14,7 @@ public class DoctorMedicalPrescriptionNumber {
     private String surname;
     private long prescriptionsNumber;
 
-    public DoctorMedicalPrescriptionNumber() {
+    public DoctorMedicalPrescriptionsNumber() {
         this.id = -1;
         this.forename = "";
         this.patronymic = "";
@@ -21,7 +22,7 @@ public class DoctorMedicalPrescriptionNumber {
         this.prescriptionsNumber = -1;
     }
 
-    public DoctorMedicalPrescriptionNumber(String forename, String patronymic, String surname, long prescriptionsNumber) {
+    public DoctorMedicalPrescriptionsNumber(String forename, String patronymic, String surname, long prescriptionsNumber) {
         this.id = -1;
         this.forename = forename;
         this.patronymic = patronymic;
@@ -29,7 +30,7 @@ public class DoctorMedicalPrescriptionNumber {
         this.prescriptionsNumber = prescriptionsNumber;
     }
 
-    public DoctorMedicalPrescriptionNumber(long id, String forename, String patronymic, String surname, long prescriptionsNumber) {
+    public DoctorMedicalPrescriptionsNumber(long id, String forename, String patronymic, String surname, long prescriptionsNumber) {
         this.id = id;
         this.forename = forename;
         this.patronymic = patronymic;

@@ -26,11 +26,3 @@ where
 lower(description) like lower('%ОПИСАНИЕ%') and
 patient_id = 0 and
 priority = 3;
-
--- отображение статистической информации по количеству рецептов,
--- выписанных врачами
-SELECT id, surname, forename, patronymic, count(id)
-FROM doctor
-INNER JOIN medical_prescription
-ON doctor.id = medical_prescription.doctor_id
-GROUP BY doctor.id

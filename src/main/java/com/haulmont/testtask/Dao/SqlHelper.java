@@ -14,4 +14,10 @@ public final class SqlHelper {
     public static final String LIKE = "LIKE";
     public static final String AND = "AND";
     public static final String LOWER = "LOWER";
+    public static final String COUNT = "COUNT";
+    public static final String INNER = "INNER";
+    public static final String JOIN = "JOIN";
+    public static final String ON = "ON";
+    public static final String GROUP = "GROUP";
+    public static final String BY = "BY";
 }
