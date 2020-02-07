@@ -4,10 +4,8 @@ import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.MedicalPrescriptionDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.MedicalPrescription;
 import com.haulmont.testtask.PharmacyUi.Windows.MedicalPrescriptionWindow;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -21,8 +19,10 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
     private MedicalPrescriptionDao prescriptionDao;
 
-    private TextField filterTf;
-    private Button clearFilterTfBtn;
+    private TextField descriptionFilterField;
+    private TextField patientIdFilterField;
+    private TextField priorityFilterField;
+    private Button applyFiltersBtn;
     private CssLayout filteringLayout;
 
     private Button addPrescriptionBtn;
@@ -43,9 +43,15 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
         prescriptionDao = pharmacyDbDao.getMedicalPrescriptionDao();
 
-        filterTf = new TextField();
-        clearFilterTfBtn = new Button(VaadinIcons.CLOSE);
-        filteringLayout = new CssLayout(filterTf, clearFilterTfBtn);
+        descriptionFilterField = new TextField("Фильтр. по описанию");
+        patientIdFilterField = new TextField("по номеру пациента");
+        priorityFilterField = new TextField("по номеру врача");
+        applyFiltersBtn = new Button("Поиск");
+        filteringLayout = new CssLayout(
+                descriptionFilterField,
+                patientIdFilterField,
+                priorityFilterField,
+                applyFiltersBtn);
 
         addPrescriptionBtn = new Button("Добавить рецепт");
         toolbarLayout = new HorizontalLayout(filteringLayout, addPrescriptionBtn);
@@ -58,8 +64,6 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         buttonsLayout = new HorizontalLayout(updatePrescriptionBtn, deletePrescriptionBtn);
         // endregion
 
-        setFilterTextField();
-        setClearFilterTfBtn();
         filteringLayout.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
         setAddPrescriptionBtn();
@@ -74,16 +78,11 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         updateMedicalPrescriptionsGrid();
     }
 
-    private void setFilterTextField() {
-        filterTf.setPlaceholder("Поиск по описанию...");
-        filterTf.addValueChangeListener(event -> updateMedicalPrescriptionsGrid());
-        filterTf.setValueChangeMode(ValueChangeMode.LAZY);
-    }
-
-    private void setClearFilterTfBtn() {
-        clearFilterTfBtn.setDescription("Очистить фильтр");
-        clearFilterTfBtn.addClickListener(event -> filterTf.clear());
-    }
+    /*private void setFilterTextField() {
+        descriptionFilterField.setPlaceholder("Поиск по описанию...");
+        descriptionFilterField.addValueChangeListener(event -> updateMedicalPrescriptionsGrid());
+        descriptionFilterField.setValueChangeMode(ValueChangeMode.LAZY);
+    }*/
 
     private void setAddPrescriptionBtn() {
         addPrescriptionBtn.addClickListener(event -> {
@@ -163,7 +162,7 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         try {
             List<MedicalPrescription> prescriptions;
 
-            String searchDescription = filterTf.getValue();
+            String searchDescription = descriptionFilterField.getValue();
             if (searchDescription.equals("")) {
                 prescriptions = prescriptionDao.getAllMedicalPrescriptions();
             } else {
