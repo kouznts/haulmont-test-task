@@ -16,11 +16,13 @@ public class MainUI extends UI {
     private static final String PASSWORD = "";
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
-    private HorizontalLayout mainLayout;
     private static final String PATIENT_VIEW = "Пациенты";
     private static final String DOCTOR_VIEW = "Врачи";
     private static final String DOCTOR_SPECIALIZATIONS_VIEW = "Специализации";
     private static final String MEDICAL_PRESCRIPTIONS_VIEW = "Рецепты";
+    public static final String STATISTICS_VIEW = "Статистика";
+
+    private HorizontalLayout mainLayout;
 
     private Label title;
     private Button patientViewBtn;
@@ -71,5 +73,6 @@ public class MainUI extends UI {
         navigator.addView(DOCTOR_VIEW, new DoctorView(this));
         navigator.addView(DOCTOR_SPECIALIZATIONS_VIEW, new DoctorSpecializationView(this));
         navigator.addView(MEDICAL_PRESCRIPTIONS_VIEW, new MedicalPrescriptionView(this));
+        navigator.addView(STATISTICS_VIEW, new DoctorsMedicalPrescriptionsNumbersView());
     }
 }

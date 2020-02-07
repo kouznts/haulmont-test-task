@@ -1,6 +1,5 @@
 package com.haulmont.testtask.PharmacyUi;
 
-import com.haulmont.testtask.MainUI;
 import com.haulmont.testtask.PharmacyDb.Daos.DoctorDao;
 import com.haulmont.testtask.PharmacyDb.Dtos.DoctorMedicalPrescriptionsNumber;
 import com.vaadin.navigator.View;
@@ -17,17 +16,13 @@ import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 import static com.haulmont.testtask.PharmacyDb.Dtos.DoctorMedicalPrescriptionsNumber.*;
 
 public class DoctorsMedicalPrescriptionsNumbersView extends VerticalLayout implements View {
-    private MainUI mainUi;
-
     private DoctorDao doctorDao;
 
     private Grid<DoctorMedicalPrescriptionsNumber> grid;
     private HorizontalLayout gridLayout;
 
-    public DoctorsMedicalPrescriptionsNumbersView(MainUI mainUi) {
+    public DoctorsMedicalPrescriptionsNumbersView() {
         // region поля
-        this.mainUi = mainUi;
-
         doctorDao = pharmacyDbDao.getDoctorDao();
 
         grid = new Grid<>(DoctorMedicalPrescriptionsNumber.class);
@@ -48,18 +43,18 @@ public class DoctorsMedicalPrescriptionsNumbersView extends VerticalLayout imple
                 SURNAME,
                 FORENAME,
                 PATRONYMIC,
-                NUMBER);
+                PRESCRIPTIONS_NUMBER);
 
         grid.getColumn(ID).setCaption("Номер врача");
         grid.getColumn(SURNAME).setCaption("Фамилия");
         grid.getColumn(FORENAME).setCaption("Имя");
         grid.getColumn(PATRONYMIC).setCaption("Отчество");
-        grid.getColumn(NUMBER).setCaption("Кол-во рецептов");
+        grid.getColumn(PRESCRIPTIONS_NUMBER).setCaption("Кол-во рецептов");
 
         grid.setSizeFull();
     }
 
-    public void updateDoctorsGrid() {
+    private void updateDoctorsGrid() {
         try {
             List<DoctorMedicalPrescriptionsNumber> numbers;
             numbers = doctorDao.getAllDoctorsMedicalPrescriptionsNumbers();
