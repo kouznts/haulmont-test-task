@@ -29,8 +29,8 @@ public class MainUI extends UI {
     private Button doctorViewBtn;
     private Button doctorSpecializationViewBtn;
     private Button medicalPrescriptionViewBtn;
-    private CssLayout menu;
-    private CssLayout viewContainer;
+    private VerticalLayout menu;
+    private VerticalLayout viewContainer;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -53,18 +53,20 @@ public class MainUI extends UI {
                 event -> getNavigator().navigateTo(MEDICAL_PRESCRIPTIONS_VIEW));
         medicalPrescriptionViewBtn.addStyleName(ValoTheme.MENU_ITEM);
 
-        menu = new CssLayout(title,
+        menu = new VerticalLayout(title,
                 patientViewBtn,
                 doctorViewBtn,
                 doctorSpecializationViewBtn,
                 medicalPrescriptionViewBtn);
         menu.addStyleName(ValoTheme.MENU_ROOT);
 
-        viewContainer = new CssLayout();
+        viewContainer = new VerticalLayout();
 
         mainLayout = new HorizontalLayout(menu, viewContainer);
         mainLayout.setSizeFull();
         viewContainer.setSizeFull();
+        mainLayout.setExpandRatio(menu, 3);
+        mainLayout.setExpandRatio(viewContainer, 15);
         setContent(mainLayout);
 
         Navigator navigator = new Navigator(this, viewContainer);
