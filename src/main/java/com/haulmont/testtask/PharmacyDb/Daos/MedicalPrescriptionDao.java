@@ -24,7 +24,7 @@ public interface MedicalPrescriptionDao {
 
     List<MedicalPrescription> getAllMedicalPrescriptions() throws SQLException, ClassNotFoundException;
 
-    List<MedicalPrescription> getMedicalPrescriptionsByFilter(String description, long patientId, byte priority) throws SQLException, ClassNotFoundException;
-
     List<MedicalPrescription> getMedicalPrescriptionsByDescription(String description) throws SQLException, ClassNotFoundException;
+
+    List<MedicalPrescription> getMedicalPrescriptionsByFilters(String description, long patientId, byte priority) throws SQLException, ClassNotFoundException;
 }

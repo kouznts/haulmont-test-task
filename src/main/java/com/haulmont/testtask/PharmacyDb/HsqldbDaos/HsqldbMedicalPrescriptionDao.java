@@ -137,17 +137,13 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
     }
 
     @Override
-    public List<MedicalPrescription> getMedicalPrescriptionsByFilter(String description, long patientId, byte priority) throws SQLException, ClassNotFoundException {
+    public List<MedicalPrescription> getMedicalPrescriptionsByDescription(String description) throws SQLException, ClassNotFoundException {
         connect();
 
         final String query = String.format("%s * %s %s " +
-                        "%s %s ( %s ) %s %s (\'%s\') %s " +
-                        "%s = %s %s " +
-                        "%s = %s;",
+                        "%s %s ( %s ) %s %s (\'%s\')",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
-                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%', AND,
-                PATIENT_ID, patientId, AND,
-                PRIORITY, priority);
+                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%');
 
         ResultSet resultSet = executeQuery(query);
 
@@ -158,13 +154,31 @@ public class HsqldbMedicalPrescriptionDao extends HsqldbDao implements MedicalPr
     }
 
     @Override
-    public List<MedicalPrescription> getMedicalPrescriptionsByDescription(String description) throws SQLException, ClassNotFoundException {
+    public List<MedicalPrescription> getMedicalPrescriptionsByFilters(String description, long patientId, byte priority) throws SQLException, ClassNotFoundException {
         connect();
 
+        StringBuilder sb = new StringBuilder();
+
+        final String descriptionPartOfQuery = String.format("%s ( %s ) %s %s (\'%s\')",
+                LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%');
+        sb.append(descriptionPartOfQuery);
+
+        if (patientId > -1) {
+            final String patientIdPartOfQuery = String.format("%s = %s", PATIENT_ID, patientId);
+            sb.append(' ' + AND + ' ');
+            sb.append(patientIdPartOfQuery);
+        }
+
+        if (priority > 0) {
+            final String priorityPartOfQuery = String.format("%s = %s", PRIORITY, priority);
+            sb.append(' ' + AND + ' ');
+            sb.append(priorityPartOfQuery);
+        }
+
         final String query = String.format("%s * %s %s " +
-                        "%s %s ( %s ) %s %s (\'%s\')",
+                        "%s %s",
                 SELECT, FROM, MEDICAL_PRESCRIPTION,
-                WHERE, LOWER, DESCRIPTION, LIKE, LOWER, '%' + description + '%');
+                WHERE, sb.toString());
 
         ResultSet resultSet = executeQuery(query);
 

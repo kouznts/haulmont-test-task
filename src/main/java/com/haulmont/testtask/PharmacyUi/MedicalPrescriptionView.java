@@ -43,10 +43,13 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
 
         prescriptionDao = pharmacyDbDao.getMedicalPrescriptionDao();
 
-        descriptionFilterField = new TextField("Фильтр. по описанию");
-        patientIdFilterField = new TextField("по номеру пациента");
-        priorityFilterField = new TextField("по номеру врача");
-        applyFiltersBtn = new Button("Поиск");
+        descriptionFilterField = new TextField();
+        patientIdFilterField = new TextField();
+        priorityFilterField = new TextField();
+        descriptionFilterField.setPlaceholder("Фильтр. по описанию");
+        patientIdFilterField.setPlaceholder("по номеру пациента");
+        priorityFilterField.setPlaceholder("по приоритету");
+        applyFiltersBtn = new Button("Поиск", event -> updateMedicalPrescriptionsGrid());
         filteringLayout = new CssLayout(
                 descriptionFilterField,
                 patientIdFilterField,
@@ -77,12 +80,6 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
         addComponents(toolbarLayout, gridLayout, buttonsLayout);
         updateMedicalPrescriptionsGrid();
     }
-
-    /*private void setFilterTextField() {
-        descriptionFilterField.setPlaceholder("Поиск по описанию...");
-        descriptionFilterField.addValueChangeListener(event -> updateMedicalPrescriptionsGrid());
-        descriptionFilterField.setValueChangeMode(ValueChangeMode.LAZY);
-    }*/
 
     private void setAddPrescriptionBtn() {
         addPrescriptionBtn.addClickListener(event -> {
@@ -163,10 +160,25 @@ public class MedicalPrescriptionView extends VerticalLayout implements View {
             List<MedicalPrescription> prescriptions;
 
             String searchDescription = descriptionFilterField.getValue();
+
+            long searchPatientId;
+            if (patientIdFilterField.getValue().equals("")) {
+                searchPatientId = -1L;
+            } else {
+                searchPatientId = Long.parseLong(patientIdFilterField.getValue());
+            }
+
+            byte searchPriority;
+            if (priorityFilterField.getValue().equals("")) {
+                searchPriority = 0;
+            } else {
+                searchPriority = Byte.parseByte(priorityFilterField.getValue());
+            }
+
             if (searchDescription.equals("")) {
                 prescriptions = prescriptionDao.getAllMedicalPrescriptions();
             } else {
-                prescriptions = prescriptionDao.getMedicalPrescriptionsByDescription(searchDescription);
+                prescriptions = prescriptionDao.getMedicalPrescriptionsByFilters(searchDescription, searchPatientId, searchPriority);
             }
 
             prescriptionsGrid.setItems(prescriptions);
