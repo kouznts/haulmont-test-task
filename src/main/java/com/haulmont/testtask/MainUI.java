@@ -16,19 +16,21 @@ public class MainUI extends UI {
     private static final String PASSWORD = "";
     public static PharmacyDbDao pharmacyDbDao = new HsqldbPharmacyDbDao(DB_URL, USER, PASSWORD);
 
-    private HorizontalLayout mainLayout;
     private static final String PATIENT_VIEW = "Пациенты";
     private static final String DOCTOR_VIEW = "Врачи";
     private static final String DOCTOR_SPECIALIZATIONS_VIEW = "Специализации";
     private static final String MEDICAL_PRESCRIPTIONS_VIEW = "Рецепты";
+    public static final String STATISTICS_VIEW = "Статистика";
+
+    private HorizontalLayout mainLayout;
 
     private Label title;
     private Button patientViewBtn;
     private Button doctorViewBtn;
     private Button doctorSpecializationViewBtn;
     private Button medicalPrescriptionViewBtn;
-    private CssLayout menu;
-    private CssLayout viewContainer;
+    private VerticalLayout menu;
+    private VerticalLayout viewContainer;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -51,18 +53,20 @@ public class MainUI extends UI {
                 event -> getNavigator().navigateTo(MEDICAL_PRESCRIPTIONS_VIEW));
         medicalPrescriptionViewBtn.addStyleName(ValoTheme.MENU_ITEM);
 
-        menu = new CssLayout(title,
+        menu = new VerticalLayout(title,
                 patientViewBtn,
                 doctorViewBtn,
                 doctorSpecializationViewBtn,
                 medicalPrescriptionViewBtn);
         menu.addStyleName(ValoTheme.MENU_ROOT);
 
-        viewContainer = new CssLayout();
+        viewContainer = new VerticalLayout();
 
         mainLayout = new HorizontalLayout(menu, viewContainer);
         mainLayout.setSizeFull();
         viewContainer.setSizeFull();
+        mainLayout.setExpandRatio(menu, 3);
+        mainLayout.setExpandRatio(viewContainer, 15);
         setContent(mainLayout);
 
         Navigator navigator = new Navigator(this, viewContainer);
@@ -71,5 +75,6 @@ public class MainUI extends UI {
         navigator.addView(DOCTOR_VIEW, new DoctorView(this));
         navigator.addView(DOCTOR_SPECIALIZATIONS_VIEW, new DoctorSpecializationView(this));
         navigator.addView(MEDICAL_PRESCRIPTIONS_VIEW, new MedicalPrescriptionView(this));
+        navigator.addView(STATISTICS_VIEW, new DoctorsMedicalPrescriptionsNumbersView());
     }
 }

@@ -14,6 +14,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.haulmont.testtask.MainUI.STATISTICS_VIEW;
 import static com.haulmont.testtask.MainUI.pharmacyDbDao;
 
 public class DoctorView extends VerticalLayout implements View {
@@ -26,6 +27,7 @@ public class DoctorView extends VerticalLayout implements View {
     private CssLayout filteringLayout;
 
     private Button addDoctorBtn;
+    private Button showStatisticsBtn;
     private HorizontalLayout toolbarLayout;
 
     private Grid<Doctor> doctorsGrid;
@@ -48,7 +50,9 @@ public class DoctorView extends VerticalLayout implements View {
         filteringLayout = new CssLayout(filterTf, clearFilterTfBtn);
 
         addDoctorBtn = new Button("Добавить доктора");
-        toolbarLayout = new HorizontalLayout(filteringLayout, addDoctorBtn);
+        showStatisticsBtn = new Button("Показать статистику",
+                event -> mainUi.getNavigator().navigateTo(STATISTICS_VIEW));
+        toolbarLayout = new HorizontalLayout(filteringLayout, addDoctorBtn, showStatisticsBtn);
 
         doctorsGrid = new Grid<>(Doctor.class);
         gridLayout = new HorizontalLayout(doctorsGrid);

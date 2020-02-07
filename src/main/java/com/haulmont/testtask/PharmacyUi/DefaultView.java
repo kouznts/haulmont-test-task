@@ -7,6 +7,5 @@ import com.vaadin.ui.VerticalLayout;
 public class DefaultView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
     }
 }

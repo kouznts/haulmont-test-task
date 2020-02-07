@@ -26,7 +26,3 @@ where
 lower(description) like lower('%ОПИСАНИЕ%') and
 patient_id = 0 and
 priority = 3;
-
--- отображение статистической информации по количеству рецептов,
--- выписанных врачами
-select * from medical_prescription where doctor_id = 0;
